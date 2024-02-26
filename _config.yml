@@ -32,6 +32,9 @@ timezone: Europe/Berlin
 include:
   - _pages
 
+exclude:
+  - scripts
+
 # Plugins (previously gems:)
 plugins:
   - jekyll-paginate
