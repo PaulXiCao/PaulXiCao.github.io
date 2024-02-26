@@ -1,0 +1,25 @@
+---
+title: pdf editing
+date: 2016-06-02 15:10:59.000000000 +02:00
+categories:
+- linux
+tags:
+- cmdline
+- pdf
+---
+<p>install the following program: pdftk</p>
+<ul>
+<li>simple cutting: <code>pdftk myDocument.pdf cat 1-9 26-end output removedPages.pdf</code></li>
+<li>cutting multiple files: <code>pdftk A=one.pdf B=two.pdf cat A1-7 B1-5 A8 output combined.pdf</code></li>
+<li>viewing + editing pdf metadata:
+<ul>
+<li>view: <code>pdftk input.pdf dump_data output metadata.txt</code></li>
+<li>edit: <code>vim metadata.txt</code></li>
+<li>make consistent: <code>pdftk input.pdf update_info metadata.txt output output.pdf</code></li>
+</ul>
+</li>
+</ul>
+<hr />
+<p><a href="https://www.pdflabs.com/docs/pdftk-cli-examples/">https://www.pdflabs.com/docs/pdftk-cli-examples/</a></p>
+<p><a href="https://www.maketecheasier.com/combine-multiple-pdf-files-with-pdftk/">https://www.maketecheasier.com/combine-multiple-pdf-files-with-pdftk/</a></p>
+<p>http://www.onurguzel.com/changing-pdf-metadata-under-linux/</p>

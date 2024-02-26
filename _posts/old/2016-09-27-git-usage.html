@@ -1,0 +1,54 @@
+---
+title: git usage
+date: 2016-09-27 08:24:47.000000000 +02:00
+categories:
+- linux
+tags:
+- bash
+- cmdline
+- git
+---
+<p>super easy explanation given in this <a href="https://rogerdudler.github.io/git-guide/index.de.html">link</a></p>
+<p>the usual workflow for changing is as follows:</p>
+<ol>
+<ol>
+<li>local changes</li>
+<li>add: local index</li>
+<li>commit: local head</li>
+</ol>
+</ol>
+<p>push: repository</p>
+<p>the commands:</p>
+<ul>
+<li>adding files:
+<ul>
+<li>git add &lt;file&gt;</li>
+<li>git add *</li>
+</ul>
+</li>
+<li>committing changes to local index:
+<ul>
+<li>git commit -m "msg"</li>
+</ul>
+</li>
+<li>pushing to the repo:
+<ul>
+<li>git push</li>
+<li>git push origin master</li>
+</ul>
+</li>
+<li>mit repo zu aktualisieren:
+<ul>
+<li>git pull</li>
+</ul>
+</li>
+<li>check status:
+<ul>
+<li>git status</li>
+</ul>
+</li>
+<li>set name/email:
+<pre><code class="gp">$</code> git config --global user.name <code class="s2">"John Doe"</code>
+<code class="gp">$</code> git config --global user.email johndoe@example.com</pre>
+</li>
+</ul>

@@ -1,0 +1,19 @@
+---
+title: 'git: find out which files are ignored and why'
+date: 2017-08-13 10:37:01.000000000 +02:00
+categories:
+- linux
+tags:
+- git
+- gitignore
+---
+<p>i had a very large global ignore list (tex/vim/linux/python specific stuff) and in this one repo git didnt add one specific folder. as it turned out the global ignore list blocked it.</p>
+<p>to figure out which files are ignored:<br />
+[code language="bash"]<br />
+$ cd &lt;git-folder&gt;<br />
+$ git ls-files --others -i --exclude-standard<br />
+[/code]</p>
+<p>and to figure out why one specific folder/file is ignored issue:<br />
+[code language="bash"]<br />
+$ git check-ignore &lt;path&gt;<br />
+[/code]</p>

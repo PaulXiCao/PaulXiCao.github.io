@@ -1,0 +1,54 @@
+---
+title: 'fast linker: mold'
+date: 2023-12-02 18:52:11.000000000 +01:00
+categories:
+- C++
+- CMake
+tags:
+- clang
+- gcc
+- linker
+- mold
+---
+<p><!-- wp:paragraph --></p>
+<p>Install mold on your linux box.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Enable mold for gcc/clang by supplying <code>-fuse-ld=mold</code>, e.g.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code --></p>
+<pre class="wp-block-syntaxhighlighter-code">clang -fuse-ld=mold a.cpp</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:paragraph --></p>
+<p>Enable in CMake by supplying arguments via cli, e.g.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code --></p>
+<pre class="wp-block-syntaxhighlighter-code">cmake -DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=mold" -DCMAKE_SHARED_LINKER_FLAGS="-fuse-ld=mold"</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:paragraph --></p>
+<p>or via CMakeUserPreset.json, e.g.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code --></p>
+<pre class="wp-block-syntaxhighlighter-code">{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "test",
+            "hidden": false,
+            "inherits": [
+                "base-test"
+            ],
+            "cacheVariables": {
+                "CMAKE_EXE_LINKER_FLAGS": "-fuse-ld=mold",
+                "CMAKE_SHARED_LINKER_FLAGS": "-fuse-ld=mold"
+            }
+        }
+    ]
+}</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:separator --></p>
+<hr class="wp-block-separator has-alpha-channel-opacity" />
+<!-- /wp:separator --></p>
+<p><!-- wp:paragraph --></p>
+<p>Source: <a href="https://gist.github.com/MawKKe/b8af6c1555f1c7aa4c2760350ed97fff">https://gist.github.com/MawKKe/b8af6c1555f1c7aa4c2760350ed97fff</a></p>
+<p><!-- /wp:paragraph --></p>

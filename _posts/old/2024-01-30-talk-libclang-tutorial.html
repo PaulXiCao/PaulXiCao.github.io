@@ -1,0 +1,59 @@
+---
+title: 'Talk: libclang tutorial'
+date: 2024-01-30 21:10:28.000000000 +01:00
+categories:
+- C++
+- C++ Talks
+tags:
+- clang
+- libclang
+- talk
+---
+<p><!-- wp:embed {"url":"https://youtu.be/VqCkCDFLSsc","type":"video","providerNameSlug":"youtube","responsive":true,"className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} --></p>
+<figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio">
+<div class="wp-block-embed__wrapper">
+https://youtu.be/VqCkCDFLSsc
+</div>
+</figure>
+<p><!-- /wp:embed --></p>
+<p><!-- wp:paragraph --></p>
+<p>Tutorial video about using libclang. ~30min from 2013.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><em>Libclang</em><br />Library to access clang's AST for source code. Contains utility functions to simplify workflow and apply changes.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>The AST is not a tree but rather a graph (there are methods which connect nodes that are not directly children of each other).</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Core classes: <code>Decl</code>, <code>Stmt</code>, <code>Type</code></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Glue classes</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>AST is complicated. There are multiple ways to go from one node to another.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Visiting nodes is complicated as there is no general base class. Use <code>RecursiveASTVisitor</code> (macro monster which outputs horrendous error messages in case of failure).</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><em>AST matchers</em><br />Supposedly really useful!</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><em>Tools</em><br />Make use of clang debug tools:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list --></p>
+<ul><!-- wp:list-item --></p>
+<li><code>clang -Xclang -ast-dump main.cpp</code></li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li><code>clang-check main.cpp -ast-list | grep foo</code></li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li><code>clang-check main.cpp -ast-dump-filter foo | less -R</code></li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li><code>clang-check main.cpp -ast-dump -ast-dump-filter foo --</code></li>
+<p><!-- /wp:list-item --></ul>
+<p><!-- /wp:list --></p>

@@ -1,0 +1,14 @@
+---
+title: 'Latex: continuous numbering of tables/figures across chapters'
+date: 2017-09-13 06:28:46.000000000 +02:00
+tags:
+- latex
+- numbering
+---
+<p>put this in your preamble</p>
+<p>[code language="latex"]<br />
+\usepackage{chngcntr}<br />
+\counterwithout{figure}{chapter}<br />
+\counterwithout{table}{chapter}<br />
+[/code]</p>
+<p><a href="https://tex.stackexchange.com/questions/28333/continuous-v-per-chapter-section-numbering-of-figures-tables-and-other-docume">https://tex.stackexchange.com/questions/28333/continuous-v-per-chapter-section-numbering-of-figures-tables-and-other-docume</a></p>

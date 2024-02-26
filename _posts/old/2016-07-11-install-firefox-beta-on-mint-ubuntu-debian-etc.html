@@ -1,0 +1,40 @@
+---
+title: Install Firefox-Next (beta) on Mint, Ubuntu, Debian, etc...
+date: 2016-07-11 23:36:43.000000000 +02:00
+categories:
+- linux
+tags:
+- beta
+- firefox
+- pinning
+---
+<ol>
+<li>Add mozilla ppa:
+<pre class="linux-code"><code>$ sudo add-apt-repository ppa:mozillateam/firefox-next</code></pre>
+</li>
+<li>get the ppa's origin name (bold):
+<pre class="lang-bsh prettyprint prettyprinted"><code><span class="pln">$ apt</span><span class="pun">-</span><span class="pln">cache policy
+</span><span class="pun">...</span>
+<span class="pln"> 500 http://ppa.launchpad.net/mozillateam/firefox-next/ubuntu/ trusty/main Translation-en
+ 500 http://ppa.launchpad.net/mozillateam/firefox-next/ubuntu/ trusty/main i386 Packages
+     release v=14.04,o=LP-PPA-mozillateam-firefox-next,a=trusty,n=trusty,l=Official PPA for Firefox Beta,c=main
+     origin ppa.launchpad.net
+ 500 http://ppa.launchpad.net/mozillateam/firefox-next/ubuntu/ trusty/main amd64 Packages
+     release v=14.04,o=<strong>LP-PPA-mozillateam-firefox-next</strong>,a=trusty,n=trusty,l=Official PPA for Firefox Beta,c=main
+     origin ppa.launchpad.net
+</span><span class="pun">...</span></code></pre>
+</li>
+<li>Pinn the mozilla ppa for higher priority:
+<pre class="lang-bsh prettyprint prettyprinted"><code><span class="pln">$ cat </span><span class="pun">/</span><span class="pln">etc</span><span class="pun">/</span><span class="pln">apt</span><span class="pun">/</span><span class="pln">preferences</span><span class="pun">.</span><span class="pln">d</span><span class="pun">/</span><span class="pln">firefox-beta-</span><span class="pln">pin</span><span class="pun">-8</span><span class="lit">00</span>
+<span class="typ">Package</span><span class="pun">:</span>  <span class="pun">*
+</span><span class="lit">Pin: release o=LP-PPA-mozillateam-firefox-next
+Pin-Priority: 800
+</span></code></pre>
+</li>
+<li>update/upgrade:
+<pre class="lang-bsh prettyprint prettyprinted"><code><span class="pln">$ sudo apt</span><span class="pun"> update &amp;&amp; sudo apt upgrade</span></code></pre>
+<hr />
+<p>Sources:</li>
+</ol>
+<p><a href="http://www.webupd8.org/2011/05/firefox-5-beta-channel-ubuntu-ppa.html">http://www.webupd8.org/2011/05/firefox-5-beta-channel-ubuntu-ppa.html</a></p>
+<p>http://askubuntu.com/questions/170235/how-do-i-cherry-pick-packages-from-a-ppa</p>

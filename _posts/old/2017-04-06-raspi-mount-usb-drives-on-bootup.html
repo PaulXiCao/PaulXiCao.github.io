@@ -1,0 +1,25 @@
+---
+title: 'raspi: mount usb drives on bootup'
+date: 2017-04-06 18:32:26.000000000 +02:00
+categories:
+- linux
+tags:
+- bootup
+- fstab
+- mount
+- raspi
+- rpi
+- usb
+---
+<p>to auto mount usb drives on bootup one can simply add some lines to the /etc/fstab file:</p>
+<p>UUID=e0a4c8da-67d1-423d-939c-4dc8249079f0 /mnt/small btrfs rw,defaults,nofail 0 0</p>
+<p>you need to change the following:</p>
+<ul>
+<li>the UUID you can find out through: ls -l /dev/disk/by-uuid/</li>
+<li>change the mount point</li>
+<li>change the file system</li>
+<li>pay attention: the nofail option will mount the drive only if it is plugged in</li>
+</ul>
+<div></div>
+<div></div>
+<div></div>

@@ -1,0 +1,32 @@
+---
+title: rsync backup only over night
+date: 2017-03-13 22:58:22.000000000 +01:00
+categories:
+- linux
+tags:
+- backup
+- interval
+- over night
+- rsync
+- time
+- timeout
+---
+<p>it is kinda nice to have a rsync job running while the bandwidth is not needed otherwise.</p>
+<ol>
+<li>start a <code>main</code> script each night (using <code>cron</code>)</li>
+<li>the <code>main</code> script uses <code>timeout</code> to overlook the actual <code>rsync</code> script</li>
+</ol>
+<p>[code language="bash" collapse="true" title="main script"]<br />
+#!/bin/bash</p>
+<p># duration when the command should be killed<br />
+TIME=15<br />
+TIMEUNIT=&quot;m&quot;</p>
+<p># which kill signal should be given<br />
+# 1: gracefully<br />
+# 9: hard?<br />
+KILLCMD=1</p>
+<p>timeout -s $KILLCMD \<br />
+    ${TIME}${TIMEUNIT} \<br />
+    /some/path/rsyncer.sh<br />
+[/code]</p>
+<p>rsync script as in this post <a href="https://itgrenade.wordpress.com/2017/03/13/rsync-backup-script/">rsync backup script</a></p>

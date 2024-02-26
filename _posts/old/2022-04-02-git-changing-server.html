@@ -1,0 +1,38 @@
+---
+title: 'git: changing server'
+date: 2022-04-02 16:41:21.000000000 +02:00
+categories:
+- linux
+---
+<p><!-- wp:paragraph --></p>
+<p>Problem: You want to switch the repo from a server where you don't have root access to another where you do.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Copying from local machine to the new server (<a href="https://stackoverflow.com/a/22664133/10774817">source</a>)</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code --></p>
+<pre class="wp-block-syntaxhighlighter-code"># on new server:
+$ mkdir ~/repoName &amp;&amp; cd ~/repoName &amp;&amp; git init --bare
+
+# on local machine:
+$ git remote set-url origin myServer.io:repoName
+$ git push --mirror</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:paragraph --></p>
+<p>You might get the following warning when cloning</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code --></p>
+<pre class="wp-block-syntaxhighlighter-code"># on local machine:
+$ cd /tmp
+$ git clone myServer.io:repoName
+&lt;truncated&gt;
+warning: remote HEAD refers to nonexistent ref, unable to checkout.</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:paragraph --></p>
+<p>Then you need to switch HEAD variable on new server (<a href="https://stackoverflow.com/a/15631690/10774817">source</a>)</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code --></p>
+<pre class="wp-block-syntaxhighlighter-code"># on new server:
+$ cd ~/repoName
+$ git symbolic-ref HEAD refs/heads/main</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>

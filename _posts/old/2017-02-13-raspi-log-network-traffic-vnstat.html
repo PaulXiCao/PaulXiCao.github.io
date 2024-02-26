@@ -1,0 +1,24 @@
+---
+title: 'raspi: log network traffic (vnstat)'
+date: 2017-02-13 11:36:23.000000000 +01:00
+categories:
+- linux
+tags:
+- cmdline
+- monitoring
+- network
+- raspi
+- vnstat
+---
+<p>to monitor the network traffic one can use the tool <span style="text-decoration:underline;">vnstat</span></p>
+<ol>
+<li>install vnstat</li>
+<li>setup database for interface: vnstat -u -i eth0</li>
+<li>start/enable service</li>
+<li>usage: update database: vnstat -u</li>
+<li>usage: query database: vnstat -q</li>
+</ol>
+<p>troubleshooting: when systemctl status shows that database couldnt be created, just do this:</p>
+<pre><code>sudo chown -R vnstat:vnstat /var/lib/vnstat</code></pre>
+<hr />
+<p>source: <a href="https://wiki.archlinux.org/index.php/VnStat">wiki.archlinux.org</a></p>

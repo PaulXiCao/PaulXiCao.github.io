@@ -1,0 +1,42 @@
+---
+title: Install Firefox Nightly binaries from Mozilla
+date: 2017-08-19 22:17:49.000000000 +02:00
+categories:
+- linux
+tags:
+- bin
+- firefox
+- mozilla
+- nightly
+---
+<p>Installation process is similar to the one for Thunderbird Daily (see <a href="https://itgrenade.wordpress.com/2017/08/19/install-thunderbird-nightly-binaries-from-mozilla/">this</a> blog post).</p>
+<p>differences:</p>
+<ul>
+<li>binary download link:<br />
+<code># wget "https://download.mozilla.org/?product=firefox-nightly-latest-ssl&amp;os=linux64&amp;lang=en-US" -O firefox-nightly.tar.bz2</code></li>
+<li>icon link:<br />
+<code># wget http://www.iconspedia.com/dload.php?up_id=146406 -O ~/.icons/Mozilla-Firefox-Nightly-256.png</code></li>
+<li>[code languag="bash" title="desktop entry" fold="true"]<br />
+# cat ~/.local/share/applications/firefox-nightly.desktop<br />
+[Desktop Entry]<br />
+Version=1.0<br />
+Name=Firefox Nightly<br />
+GenericName=Web Browser<br />
+Comment=Browse the Web<br />
+Exec=firefox-nightly %u<br />
+Icon=Mozilla-Firefox-Nightly-256.png<br />
+Terminal=false<br />
+Type=Application<br />
+MimeType=text/html;text/xml;application/xhtml+xml;application/vnd.mozilla.xul+xml;text/mml;x-scheme-handler/http;x-scheme-handler/https;<br />
+StartupNotify=true<br />
+Categories=Network;WebBrowser;<br />
+Keywords=web;browser;internet;<br />
+Actions=new-window;new-private-window;</p>
+<p>[Desktop Action new-window]<br />
+Name=New Window<br />
+Exec=firefox-nightly --new-window %u</p>
+<p>[Desktop Action new-private-window]<br />
+Name=New Private Window<br />
+Exec=firefox-nightly --private-window %u<br />
+[/code]</li>
+</ul>

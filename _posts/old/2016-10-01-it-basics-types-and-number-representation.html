@@ -1,0 +1,29 @@
+---
+title: 'it basics: types and number representation'
+date: 2016-10-01 09:09:22.000000000 +02:00
+categories:
+- it basics
+tags:
+- twos complement
+- types
+---
+<p>types (int,long,..) often vary in size and therfore one uses <span style="text-decoration:underline;">standard types: qtypes_t</span> where q is a qualifier, type is the base type, s is the width in bits and _t is an extension so you know you are using the C99 defined types (e.g., uint8_t)</p>
+<p><span style="text-decoration:underline;">negative binary number</span> representations:</p>
+<ol>
+<li>sign bit: one bit is specialized as a sign bit</li>
+<li>one's complement:
+<ul>
+<li>"not" operator applied to positive number yields neg. number</li>
+<li>advantage: subtraction is easy (just add and also add additional carry over bit)</li>
+</ul>
+</li>
+<li>two's complement:
+<ul>
+<li>same as one's comp. but you always add an additional one</li>
+<li>advantag: subtraction is even easier (just add) and all simple math op. are now easy to manage</li>
+</ul>
+</li>
+</ol>
+<hr />
+<p>source: <a href="https://www.bottomupcs.com/types.xhtml">bottomupcs.com</a></p>
+<p>&nbsp;</p>

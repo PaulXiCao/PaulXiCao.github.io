@@ -1,0 +1,23 @@
+---
+title: git ignore files (especially global)
+date: 2016-12-31 11:53:13.000000000 +01:00
+categories:
+- it basics
+tags:
+- cmdline
+- git
+- gitignore
+---
+<p>one can create gitignore files for specific repos and also globally.<br />
+github offers gitignore templates for lots of different things: frameworks, languages, editors, operating systems, etc. (link: <a href="https://github.com/github/gitignore">github-ignore-templates</a>).</p>
+<p>the templates should be copied to some file (~/.gitignore_global) and applied with this command:<br />
+<code>git config --global core.excludesfile ~/.gitignore_global<br />
+</code></p>
+<p>examples:</p>
+<ul>
+<li>macOS (link: <a href="https://github.com/github/gitignore/blob/master/Global/macOS.gitignore">github-ignore-macos</a>)</li>
+<li>vim (link: <a href="https://github.com/github/gitignore/blob/master/Global/Vim.gitignore">github-ignore-vim</a>)</li>
+<li>TeX (Link: <a href="https://github.com/github/gitignore/blob/master/TeX.gitignore">github-ignore-tex</a>)</li>
+<li>linux (link: <a href="https://github.com/github/gitignore/blob/master/Global/Linux.gitignore">github-ignore-linux</a>)</li>
+</ul>
+<p>&nbsp;</p>

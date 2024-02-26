@@ -1,0 +1,56 @@
+---
+title: 'synology: ssh'
+date: 2017-03-17 09:34:17.000000000 +01:00
+categories:
+- linux
+tags:
+- ssh
+- synology
+---
+<p>the synology's nas boxes have <strong>their own</strong> will concerning ssh.</p>
+<p><strong>enable ssh service:</strong></p>
+<ol>
+<li>at first one needs to enable the ssh service within the web-gui (link: <a href="https://www.synology.com/en-global/knowledgebase/DSM/help/DSM/AdminCenter/system_terminal">synology.com</a>)</li>
+<li>now login with the user: admin</li>
+</ol>
+<p>the admin user has root privileges within the web-gui but inside the console only user privileges, but with sudo one can gain root privileges.</p>
+<p>to <strong>enable ssh for other users. </strong>(note: this works only <em>temporarily</em> bc. after reboot the system resets the passwd file - crazy?!)</p>
+<ol>
+<li>open passwd file: sudo vim /etc/passwd</li>
+<li>change shell for specific user
+<ol>
+<li>last column of the specific user's row: /sbin/nologin -&gt; /bin/sh</li>
+</ol>
+</li>
+</ol>
+<p>to make it a lot more secure one should <strong>login via ssh keyfiles</strong>. this needs setup within the the sshd config file. (note: ssh needs restrictive rights for the personal ~/.ssh folder and the setup on my box was somehow screwed up (synologys acl?). that's why: StrictMode no... )</p>
+<ol>
+<li>open sshd config: sudo vim /etc/ssh/sshd_config</li>
+<li>change following properties:
+<ol>
+<li>enable authentication by keyfile: PubkeyAuthentication yes</li>
+<li>load allowed client list: AuthorizedKeysFile %h/.ssh/authorized_keys</li>
+<li>disable folder's rights checking: StrictModes no</li>
+<li>disable login via password: PasswordAuthentication no</li>
+</ol>
+</li>
+<li>copy one's public key (from the client machine) (link: <a href="https://www.digitalocean.com/community/tutorials/how-to-configure-ssh-key-based-authentication-on-a-linux-server">digitalocean.com</a>)
+<ul>
+<li>from linux: ssh-copy-id</li>
+<li>from mac: scp</li>
+<li>from windows: ?</li>
+</ul>
+</li>
+<li>restart sshd on the synology box
+<ul>
+<li>synology fucked up the underlying OS such that one cannot restart the service via commandline (no init.d scripts, and their own commands (synosystemctl or so) doesnt do the job. the ssh service didnt restart...)...</li>
+<li>two options:
+<ul>
+<li>restart the whole box</li>
+<li>disable and enable the ssh service inside the web-gui</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>&nbsp;</p>

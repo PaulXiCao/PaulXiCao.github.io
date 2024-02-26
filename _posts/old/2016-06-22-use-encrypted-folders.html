@@ -1,0 +1,14 @@
+---
+title: use encrypted folders
+date: 2016-06-22 22:11:21.000000000 +02:00
+categories:
+- linux
+tags:
+- bash
+- cmdline
+- mount
+---
+<p>mounting already encrypted folders:</p>
+<p><code><br />
+sudo mount -t ecryptfs &lt;folder&gt; &lt;folder&gt; -o key=passphrase,ecryptfs_cipher=aes,ecryptfs_key_bytes=32,ecryptfs_passthrough=yes,ecryptfs_enable_filename_crypto=yes<br />
+</code></p>

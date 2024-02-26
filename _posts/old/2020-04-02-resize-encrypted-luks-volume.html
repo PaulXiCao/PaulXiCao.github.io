@@ -1,0 +1,18 @@
+---
+title: Resize encrypted LUKS volume
+date: 2020-04-02 22:23:32.000000000 +02:00
+categories:
+- linux
+tags:
+- encrypted
+- luks
+- resizing
+---
+<p>A default encrypted installation of standard distributions (manjaro, fedora, etc.) create LVM-LUKS volumes.</p>
+<p>The process of resizing is easy.</p>
+<ol>
+<li>start live-cd system, e.g. gparted live-cd</li>
+<li>figure out LUKS partition (here we assume <code>/dev/sdb1</code>)</li>
+<li>decrypt volume: <code>$ sudo cryptsetup open /dev/sdb1 cryptdisk</code></li>
+<li>use standard tools to resize partitions, e.g. gparted</li>
+</ol>

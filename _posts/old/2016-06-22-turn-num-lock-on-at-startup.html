@@ -1,0 +1,16 @@
+---
+title: turn num lock on at startup
+date: 2016-06-22 11:45:12.000000000 +02:00
+categories:
+- linux
+tags:
+- gui
+- mint
+---
+<p>install numlockx and edit config:</p>
+<pre><code>vim /etc/mdm/Init/Default
+</code></pre>
+<pre><code>if [ -x /usr/bin/numlockx ]; then
+/usr/bin/numlockx on
+fi</code></pre>
+<p>source: <a href="http://unix.stackexchange.com/questions/275474/turn-on-numlock-on-startup-in-linux-mint">http://unix.stackexchange.com/questions/275474/turn-on-numlock-on-startup-in-linux-mint</a></p>

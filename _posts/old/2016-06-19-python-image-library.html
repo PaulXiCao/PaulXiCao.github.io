@@ -1,0 +1,19 @@
+---
+title: python image library
+date: 2016-06-19 22:25:22.000000000 +02:00
+categories:
+- python
+tags:
+- library
+- picture
+---
+<p>for editing pictures with python</p>
+<pre class="lang-py prettyprint prettyprinted"><code><span class="kwd">from</span><span class="pln"> PIL </span><span class="kwd">import</span> <span class="typ">Image</span><span class="pln">
+im </span><span class="pun">=</span> <span class="typ">Image</span><span class="pun">.</span><span class="pln">open</span><span class="pun">(</span><span class="str">"foo.png"</span><span class="pun">)</span><span class="pln">
+pix </span><span class="pun">=</span><span class="pln"> im</span><span class="pun">.</span><span class="pln">load</span><span class="pun">()
+pix[x,y] = value
+im.show()
+im.save("new.jpg")
+</span></code></pre>
+<p>source: <a href="http://effbot.org/imagingbook/image.htm">http://effbot.org/imagingbook/image.htm</a></p>
+<p>&nbsp;</p>

@@ -1,0 +1,16 @@
+---
+title: 'raspbian: enable ssh for headless install'
+date: 2020-02-07 22:27:28.000000000 +01:00
+categories:
+- linux
+tags:
+- raspbian
+- rpi
+- ssh
+---
+<p>raspbian OS can enable ssh by default. this is handy for a headless install.</p>
+<ol>
+<li>mount boot partition: <code>$ sudo mount /dev/mmcblk0p1 /mnt </code></li>
+<li>create ssh file: <code>$ sudo touch /mnt/ssh </code></li>
+<li>unmount: <code>$ sudo umount /mnt </code></li>
+</ol>

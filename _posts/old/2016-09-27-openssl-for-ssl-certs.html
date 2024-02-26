@@ -1,0 +1,30 @@
+---
+title: openssl for ssl certs
+date: 2016-09-27 08:13:27.000000000 +02:00
+categories:
+- linux
+tags:
+- bash
+- cmdline
+- openssl
+- ssl
+---
+<p>openssl can work well with ssl certs.</p>
+<p>the following links explains the following points in detail:</p>
+<ul>
+<li>create private keys (domain.key)</li>
+<li>create certificate requests (domain.csr)</li>
+<li>create certificates (domain.crt)</li>
+<li>view certificates</li>
+<li>converting certificate formats (PEM&lt;-&gt;DER&lt;-&gt;PKCS7&lt;-&gt;PKCS12)</li>
+</ul>
+<p>other useful cmds:</p>
+<ul>
+<li>checking the remote cert:<br />
+[code] $ openssl s_client -servername example.com -connect example.com:443 | openssl x509 -text<br />
+$<br />
+[/code]
+</li>
+</ul>
+<hr />
+<p>link: <a href="https://www.digitalocean.com/community/tutorials/openssl-essentials-working-with-ssl-certificates-private-keys-and-csrs">digitalocean.com</a></p>

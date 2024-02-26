@@ -1,0 +1,38 @@
+---
+title: 'Talk: Is C++23 std::mdspan a Zero-overhead Abstraction?'
+date: 2024-02-01 20:22:25.000000000 +01:00
+categories:
+- C++
+- C++ Talks
+- CppCon
+---
+<p><!-- wp:embed {"url":"https://youtu.be/9fRnSQkpNGg","type":"video","providerNameSlug":"youtube","responsive":true,"className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} --></p>
+<figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio">
+<div class="wp-block-embed__wrapper">
+https://youtu.be/9fRnSQkpNGg
+</div>
+</figure>
+<p><!-- /wp:embed --></p>
+<p><!-- wp:paragraph --></p>
+<p><strong>Summary: cppcon23 talk about performance impact of mdspan</strong></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><em>Refresher on mdspan</em><br /><code>std::mdspan</code> is a non-owning (!) view of multidimensional data, e.g. think of a block of a matrix. similar to <code>std::string_view</code> or <code>std::span</code>. value-type semantics s.t. object can be easily copied, e.g. pass-by-value is possible.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Talk discusses impact of using mdspan vs supplying raw pointer to function.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>mdspan supports strides (think: creating a view of a matrix for only every 2nd element). <code>std::layout_stride</code> has runtime overhead!</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>The number of parameters and their sizes determine if they are passed via registers or memory (slower!). This is compiler specific. Current implementations:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list --></p>
+<ul><!-- wp:list-item --></p>
+<li>msvc: number of arguments &lt;= 4. each of size &lt;= 8byte.</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>others: number of arguments &lt;= 6. each of size &lt;= 16byte.</li>
+<p><!-- /wp:list-item --></ul>
+<p><!-- /wp:list --></p>

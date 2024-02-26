@@ -1,0 +1,13 @@
+---
+title: 'raspi: install/configure owncloud'
+date: 2017-05-07 10:31:42.000000000 +02:00
+categories:
+- linux
+tags:
+- owncloud
+- password reset
+- rpi
+---
+<p>installation process as in this <a href="http://www.avoiderrors.net/owncloud-raspberry-pi/">link.</a> just change one step: download the newest owncloud client from their website.</p>
+<p>to reset the admin password: <code>sudo -u www-data php /var/www/owncloud/occ user:resetpassword admin</code></p>
+<p>background knowledge: nginx is the webserver which forwards incoming traffic to the php backend by fastcgi (php5-fpm) .</p>

@@ -1,0 +1,26 @@
+---
+title: 'Arch: find package for specific command'
+date: 2018-07-07 12:24:24.000000000 +02:00
+categories:
+- arch
+- it basics
+- linux
+tags:
+- command
+- find
+- package
+- pacman
+- pkgfile
+---
+<p>The problem is: How do you find the package for a given command? Two solutions are presented.</p>
+<ol>
+<li>Use the program <code>pkgfile</code>.</li>
+<li>Use <code>pacman</code>.
+<ol>
+<li>Update database: <code> $ sudo pacman -Fy</code></li>
+<li>Searching: <code> $ pacman -Fs $cmd</code></li>
+</ol>
+</li>
+</ol>
+<hr />
+<p>Source: <a href="https://unix.stackexchange.com/questions/14858/in-arch-linux-how-can-i-find-out-which-package-to-install-that-will-contain-file">stackexchange.com</a></p>

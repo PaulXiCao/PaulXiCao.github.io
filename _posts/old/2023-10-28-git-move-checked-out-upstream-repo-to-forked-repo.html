@@ -1,0 +1,19 @@
+---
+title: 'git: Move checked out upstream repo to forked repo'
+date: 2023-10-28 13:22:39.000000000 +02:00
+categories:
+- git
+---
+<p><!-- wp:paragraph --></p>
+<p><em>Use case</em>: you have checked out a repo. then forked it and now want to checkout the fork without downloading everything again.<br /><em>Solution</em>: </p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code {"language":"bash"} --></p>
+<pre class="wp-block-syntaxhighlighter-code">$ git remote rename origin upstream
+$ git remote add origin git@github...my-fork
+$ git fetch origin
+$ git push origin
+$ git branch --set-upstream-to=origin/master master</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:paragraph --></p>
+<p>Source: <a href="https://gist.github.com/jagregory/710671">https://gist.github.com/jagregory/710671</a></p>
+<p><!-- /wp:paragraph --></p>

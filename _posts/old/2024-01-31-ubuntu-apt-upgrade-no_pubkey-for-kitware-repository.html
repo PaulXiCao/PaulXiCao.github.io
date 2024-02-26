@@ -1,0 +1,40 @@
+---
+title: 'Ubuntu: apt upgrade NO_PUBKEY for kitware repository'
+date: 2024-01-31 08:10:12.000000000 +01:00
+categories:
+- CMake
+- linux
+tags:
+- key
+- ubuntu
+---
+<p><!-- wp:paragraph --></p>
+<p>Assume you have the following error:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code --></p>
+<pre class="wp-block-syntaxhighlighter-code">$ sudo apt upgrade
+...
+9 packages can be upgraded. Run 'apt list --upgradable' to see them.
+W: An error occurred during the signature verification. The repository is not updated and the previous index files will be used. GPG error: https://apt.kitware.com/ubuntu jammy InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 1A127079A92F09ED
+W: Failed to fetch https://apt.kitware.com/ubuntu/dists/jammy/InRelease  The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 1A127079A92F09ED
+W: Some index files failed to download. They have been ignored, or old ones used instead.</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:paragraph --></p>
+<p>The kitware repo is added via</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code --></p>
+<pre class="wp-block-syntaxhighlighter-code">$ cat /etc/apt/sources.list.d/kitware.list
+deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ jammy main</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:paragraph --></p>
+<p>Solution: Install the key via</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code --></p>
+<pre class="wp-block-syntaxhighlighter-code">$ sudo apt install kitware-archive-keyring</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:separator --></p>
+<hr class="wp-block-separator has-alpha-channel-opacity" />
+<!-- /wp:separator --></p>
+<p><!-- wp:paragraph --></p>
+<p>Source: <a href="https://apt.kitware.com/">https://apt.kitware.com/</a></p>
+<p><!-- /wp:paragraph --></p>

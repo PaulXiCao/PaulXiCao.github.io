@@ -1,0 +1,23 @@
+---
+title: 'i3: Map application to workspace'
+date: 2021-01-06 08:48:34.000000000 +01:00
+categories:
+- linux
+tags:
+- i3
+- map
+- workspace
+---
+<p><!-- wp:paragraph --></p>
+<p>When using i3: Applications can be moved automatically to specific workspaces at start of the app. Do the following:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list {"ordered":true} --></p>
+<ol>
+<li>Start the app</li>
+<li>Run in a terminal <code>xprop</code></li>
+<li>Click on the app</li>
+<li>Find <code>WM_CLASS(STRING)</code> in the terminal's output and copy the app's name (e.g. "Firefox")</li>
+<li>Append a line into <code>~/.i3/config</code> such as <code>assign [class="Firefox"] $ws1</code> where <code>$ws1</code> is the workspace's name</li>
+<li>Reload i3's config, e.g. MOD+SHIFT+r</li>
+</ol>
+<p><!-- /wp:list --></p>

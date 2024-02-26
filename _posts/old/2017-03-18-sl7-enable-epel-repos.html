@@ -1,0 +1,34 @@
+---
+title: 'SL7: enable EPEL repos'
+date: 2017-03-18 17:46:13.000000000 +01:00
+categories:
+- scientific linux
+tags:
+- EPEL
+- gpg
+- key
+- SL
+---
+<p>there is a vast repo for packages not (officially?) maintainted by redhat. to enable this repo (called EPEL) the following steps are needed:</p>
+<ol>
+<li>get and install the epel rpm file:
+<p>[code languag="bash"]<br />
+$ wget http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-9.noarch.rpm<br />
+$ rpm -ivh epel-release-7-9.noarch.rpm<br />
+[/code]</p>
+</li>
+<li>get the gpg key for epel:
+<ol>
+<li>download key: <code>$ wget https://getfedora.org/static/352C64E5.txt</code></li>
+<li>check fingerprint:
+<ol>
+<li>get official fingerprint from website: <a href="https://getfedora.org/keys/">https://getfedora.org/keys/</a></li>
+<li>compare to value from: <code>$ gpg --with-fingerprint 352C64E5.txt</code></li>
+</ol>
+</li>
+<li>import key: <code>$ rpm --import 352C64E5.txt</code></li>
+</ol>
+</li>
+</ol>
+<hr />
+<p>src: <a href="http://www.tecmint.com/how-to-enable-epel-repository-for-rhel-centos-6-5/">tecmint.com</a>, <a href="https://www.web-vision.de/support/Knowledgebase/Article/View/541/0/yum---gpg-key-laden-und-importieren">web-vision.de</a> (german)</p>

@@ -1,0 +1,25 @@
+---
+title: 'raspi: automatically spin external hdd down'
+date: 2017-01-22 18:10:47.000000000 +01:00
+categories:
+- linux
+tags:
+- cmdline
+- hdd
+- hdparm
+- raspi
+- spin down
+---
+<p>the raspberry pi cannot spin external hard drives down. the program hdparm worked perfectly for me.</p>
+<p>i followed this guide (<a href="http://www.htpcguides.com/spin-down-and-manage-hard-drive-power-on-raspberry-pi/">htpcguides.com</a>). just some slight little twitch i found on some other website: the device path in the /etc/hdparm.conf file should rather be the one from /dev/disk/by-uuid/... as the raspi might mount the external drive to different /dev/sdX paths. furthermore, the drive shouldnt be spun down more than need be. dont choose any spindown times lower than 15min.</p>
+<p>[code]<br />
+$ cat /etc/hdparm.conf<br />
+/dev/disk/by-uuid/ffd9b0a1-931f-4795-85ba-28c58719a938 {<br />
+	spindown_time = 180<br />
+	write_cache = on<br />
+}<br />
+[/code]</p>
+<blockquote><p>Note: The spindown_time value is multiplied by 5 and you have the total time in seconds. So a value of 120 yields 10 minutes (120*5=600).</p></blockquote>
+<p>the power managment (should the drive even be spun down) is set via the "advanced power managment" (-B) flag.</p>
+<blockquote><p>From ArchWiki: Set the Advanced Power Management feature. Possible values are between 1 and 255, low values mean more aggressive power management and higher values mean better performance. Values from 1 to 127 permit spin-down, whereas values from 128 to 254 do not. A value of 255 completely disables the feature.</p></blockquote>
+<p>for example: <code>$ sudo hdparm -B 127 /dev/sda</code></p>

@@ -1,0 +1,62 @@
+---
+title: 'sshd: secure config file'
+date: 2017-03-17 11:04:04.000000000 +01:00
+categories:
+- linux
+tags:
+- secure
+- ssh
+- sshd
+- sshd_config
+---
+<p>the ssh daemon is a entry point to many servers. it should be secured!!</p>
+<p>the following <code>/etc/ssh/sshd_config</code> is secure and very restrivtive:</p>
+<p>[code language="bash" title="/etc/ssh/sshd_config" collapse="true"]<br />
+# ============================================================<br />
+# COPIED FROM: https://wiki.mozilla.org/Security/Guidelines/OpenSSH#Modern_.28OpenSSH_6.7.2B.29<br />
+# Supported HostKey algorithms by order of preference.<br />
+HostKey /etc/ssh/ssh_host_ed25519_key<br />
+HostKey /etc/ssh/ssh_host_rsa_key<br />
+HostKey /etc/ssh/ssh_host_ecdsa_key</p>
+<p>KexAlgorithms curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256</p>
+<p>Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr</p>
+<p>MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com</p>
+<p># Password based logins are disabled - only public key based logins are allowed.<br />
+AuthenticationMethods publickey</p>
+<p># LogLevel VERBOSE logs user's key fingerprint on login. Needed to have a clear audit track of which key was using to log in.<br />
+LogLevel VERBOSE</p>
+<p># Log sftp level file access (read/write/etc.) that would not be easily logged otherwise.<br />
+Subsystem sftp  /usr/lib/ssh/sftp-server -f AUTHPRIV -l INFO</p>
+<p># Root login is not allowed for auditing reasons. This is because it's difficult to track which process belongs to which root user:<br />
+#<br />
+# On Linux, user sessions are tracking using a kernel-side session id, however, this session id is not recorded by OpenSSH.<br />
+# Additionally, only tools such as systemd and auditd record the process session id.<br />
+# On other OSes, the user session id is not necessarily recorded at all kernel-side.<br />
+# Using regular users in combination with /bin/su or /usr/bin/sudo ensure a clear audit track.<br />
+PermitRootLogin No</p>
+<p># Use kernel sandbox mechanisms where possible in unprivileged processes<br />
+# Systrace on OpenBSD, Seccomp on Linux, seatbelt on MacOSX/Darwin, rlimit elsewhere.<br />
+UsePrivilegeSeparation sandbox</p>
+<p># ============================================================</p>
+<p>Port &lt;PORT&gt;<br />
+Protocol 2</p>
+<p># only 60s at login prompt<br />
+LoginGraceTime 60</p>
+<p># restrive ssh folder settings<br />
+StrictModes yes</p>
+<p># no gui X11 features<br />
+X11Forwarding no</p>
+<p># only specific users<br />
+AllowUsers &lt;USER1&gt;  ...</p>
+<p># only ipv4<br />
+AddressFamily inet</p>
+<p># which authorized keys<br />
+AuthorizedKeysFile %h/.ssh/authorized_keys</p>
+<p>PrintMotd no</p>
+<p># no password login<br />
+PasswordAuthentication no</p>
+<p># no tcp forwarding<br />
+AllowTcpForwarding no</p>
+<p># login msg<br />
+Banner /etc/issue<br />
+[/code]</p>

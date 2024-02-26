@@ -1,0 +1,37 @@
+---
+title: 'arch+matlab: setup opengl rendering'
+date: 2017-12-25 21:21:00.000000000 +01:00
+categories:
+- linux
+tags:
+- matlab
+---
+<p>hardware accelerated rendering needs enabling.</p>
+<ol>
+<li>check out the <a href="https://wiki.archlinux.org/index.php/Matlab#OpenGL_acceleration">arch-wiki page</a>.</li>
+<li>i needed to install the intel graphics driver. explained <a href="https://turlucode.com/arch-linux-install-guide-step-2-desktop-environment-installation/#Intel">here</a>.</li>
+<li>to set the opengl paths (as explained in the wiki), i needed to modify the .desktop file
+<ol>
+<li>for me, the path was: <code>/usr/share/applications/matlab.desktop</code></li>
+<li>changed execution line
+<ol>
+<li>before: <code>Exec=matlab -desktop -nosplash</code></li>
+<li>after: <code>Exec=/my/personal/binary/path/matlab_startWithEnvVars</code></li>
+</ol>
+</li>
+<li>created seperate start script
+<ol>
+<li>path: (same as given to Exec command above)</li>
+<li>content:<br />
+[code language="bash" collapse="true" title="/my/personal/binary/path/matlab_startWithEnvVars"]<br />
+#!/bin/sh</p>
+<p>export LD_PRELOAD=/usr/lib/libstdc++.so<br />
+export LD_LIBRARY_PATH=/usr/lib/xorg/modules/dri/</p>
+<p>exec /usr/local/bin/matlab -desktop -nosplash &quot;$@&quot;<br />
+[/code]</li>
+<li>make file executable</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>

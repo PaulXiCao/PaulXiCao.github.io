@@ -1,0 +1,35 @@
+---
+title: 'raspi: install torrent server'
+date: 2017-01-22 17:47:29.000000000 +01:00
+categories:
+- linux
+tags:
+- bootup
+- cmdline
+- deluge
+- raspi
+- start
+- torrent
+---
+<p>the raspberry pi is a perfect device for a 24/7 torrent server. one can install the torrent server: deluge.</p>
+<p>i followed this guide (<a href="http://www.howtogeek.com/142044/how-to-turn-a-raspberry-pi-into-an-always-on-bittorrent-box/">howtogeek.com</a>) to install the deluge server, accessible via deluge-console and deluge thin-client (remote).</p>
+<p>in short:</p>
+<p>[code]<br />
+sudo apt install deluged deluge-console<br />
+deluged<br />
+sudo pkill deluged<br />
+nano ~/.config/deluge/auth<br />
+deluged<br />
+deluge-console: {<br />
+config -s allow_remote True<br />
+config allow_remote<br />
+exit }<br />
+sudo pkill deluged<br />
+deluged<br />
+[/code]</p>
+<p>Start deluge daemon at bootup (follow this guide: <a href="http://dev.deluge-torrent.org/wiki/UserGuide/Service/systemd">link</a>):</p>
+<ol>
+<li>remove script from /etc/init.d/deluge...</li>
+<li>create systemctl unit</li>
+<li>enable unit file</li>
+</ol>

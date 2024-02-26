@@ -1,0 +1,50 @@
+---
+title: 'tmux: session initialization'
+date: 2020-07-15 15:32:07.000000000 +02:00
+categories:
+- linux
+tags:
+- tmux
+---
+<p>use case: you need to connect to multiple hosts at once and leave the connections active even as you log out from the entry node.</p>
+<hr />
+<p>network layout:</p>
+<ul>
+<li>remote machine (e.g., laptop at home)</li>
+<li>entry node (ssh gateway at work)
+<ul>
+<li>has <code>tmux</code> installed</li>
+</ul>
+</li>
+<li>multiple compute nodes</li>
+</ul>
+<hr />
+<p>workflow for <code>tmux</code> session creation (only done once)</p>
+<ol>
+<li><code>ssh</code> into entry node</li>
+<li>start <code>tmux</code> session (see config script below): <code>$ tmux source ~/.tmux/nodes \; attach</code></li>
+<li>detach</li>
+</ol>
+<p>workflow if <code>tmux</code> session is already started</p>
+<ol>
+<li><code>ssh</code> into entry node</li>
+<li>attach <code>tmux</code> session</li>
+<li>select <code>tmux</code> pane/compute node</li>
+<li>run your stuff</li>
+<li>detach</li>
+<li>reattach session, ...</li>
+</ol>
+<hr />
+<p><code>tmux</code> config script to create a session with a 2x4 splitted terminal setup. upper row is logged into node{1..4} and changed into working directory. the lower row is logged into node{1..4} and shows stats using <code>top</code>.</p>
+<p>[code language=text]<br />
+$ cat ~/.tmux/nodes</p>
+<p>new-session -s nodes         "ssh -t node1 'cd $SRC; zsh'" </p>
+<p>split-window -h              "ssh -t node3 'cd $SRC; zsh'"<br />
+split-window -h -t 0.0 -p 50 "ssh -t node2 'cd $SRC; zsh'"<br />
+split-window -h -t 0.2 -p 50 "ssh -t node4 'cd $SRC; zsh'" </p>
+<p>split-window -v -t 0.0 "ssh -t node1 top"<br />
+split-window -v -t 0.2 "ssh -t node2 top"<br />
+split-window -v -t 0.4 "ssh -t node3 top"<br />
+split-window -v -t 0.6 "ssh -t node4 top"<br />
+[/code]</p>
+<p>&nbsp;</p>

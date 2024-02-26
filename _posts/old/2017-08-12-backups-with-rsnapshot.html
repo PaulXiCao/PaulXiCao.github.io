@@ -1,0 +1,57 @@
+---
+title: backups with rsnapshot
+date: 2017-08-12 21:40:31.000000000 +02:00
+categories:
+- linux
+tags:
+- backup
+- bkup
+- rpi
+- rsnapshot
+- rsync
+---
+<p>a centralized backup server can easily be set up with <code>rsnapshot</code>. This program can pull specified remote folders with rsync.</p>
+<ol>
+<li>install <code>rsnapshot</code></li>
+<li>edit the config file <code>/etc/rsnapshot.conf</code> . The default config is well documented and one has only to modify the given lines. The man page is also of great help (<a href="https://www.mankier.com/1/rsnapshot#Usage">link</a>). I found the following to fit my needs (the path need should be adjusted to each one's needs)<br />
+[code language="bash" collapse="true" padlinenumbers="true" title="/etc/rsnapshot.conf"]<br />
+config_version 1.2<br />
+snapshot_root /mnt/USBBkupDisk/rsnapshot<br />
+cmd_cp /bin/cp<br />
+cmd_rm /bin/rm<br />
+cmd_rsync /usr/bin/rsync<br />
+cmd_ssh /usr/bin/ssh<br />
+cmd_logger /usr/bin/logger<br />
+cmd_du /usr/bin/du<br />
+retain hourly 4<br />
+retain daily 7<br />
+retain weekly 4<br />
+verbose 5<br />
+loglevel 3<br />
+lockfile /tmp/rsnapshot.pid<br />
+include_file /home/bkuper/DarkTower.include<br />
+exclude_file /home/bkuper/DarkTower.exclude<br />
+backup DarkTower:/home/paul/ paulTower/<br />
+backup DarkTower:/data/paul/ paulTower/<br />
+[/code]</li>
+<li>the in-/exclude files are the usual one from <code>rsync</code> , e.g. something like this:<br />
+[code language="bash" collapse="true" padlinenumbers="true" title="/home/bkuper/DarkTower.include"]<br />
+/home/paul/.*<br />
+/home/paul/.*/<br />
+/home/paul/bin<br />
+/home/paul/Downloads<br />
+/home/paul/VirtualBox VMs<br />
+[/code]<br />
+one needs to note here, that the order of include/exclude files is important! the first pattern which matches a file takes effect.</li>
+<li>the user (here bkuper) needs to be able to sign into the client machine such that it can pull the backup. (<code>ssh-copy-id</code>...)</li>
+<li>the interval which were defined above (<code>retain hourly 4 retain daily 7 retain weekly 4</code>) will be applied with a cronjob:<br />
+[code language="bash" collapse="true" padlinenumbers="true" title="crontab"]<br />
+$ crontab -l<br />
+# do hourly backups at 9,13,19,23h<br />
+0 9,13,19,23 * * *         /usr/local/bin/rsnapshot hourly</p>
+<p># do daily backups at 22:50<br />
+50 22 * * *         /usr/local/bin/rsnapshot daily</p>
+<p># do weekly backups at mondays 22:40<br />
+40 22 * * 1         /usr/local/bin/rsnapshot weekly<br />
+[/code]</li>
+</ol>

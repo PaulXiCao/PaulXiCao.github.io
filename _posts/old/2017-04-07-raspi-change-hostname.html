@@ -1,0 +1,28 @@
+---
+title: 'raspi: change hostname'
+date: 2017-04-07 11:24:02.000000000 +02:00
+categories:
+- linux
+tags:
+- hostname
+- raspi
+- rpi
+---
+<p>do the following:</p>
+<ol>
+<li>sudo vim /etc/hosts
+<ol>
+<li>change last line: 127.0.1.1 XYZ</li>
+<li>where XYZ should be the new name you want</li>
+</ol>
+</li>
+<li>sudo vim /etc/hostname
+<ol>
+<li>replace the name in this file with the new name</li>
+</ol>
+</li>
+<li>sudo /etc/init.d/hostname.sh</li>
+<li>sudo reboot</li>
+</ol>
+<hr />
+<p>src: <a href="https://www.howtogeek.com/167195/how-to-change-your-raspberry-pi-or-other-linux-devices-hostname/">howtogeek.com</a></p>

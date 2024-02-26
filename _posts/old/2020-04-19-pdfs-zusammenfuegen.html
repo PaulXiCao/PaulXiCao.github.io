@@ -1,0 +1,32 @@
+---
+title: pdfs zusammenfuegen
+date: 2020-04-19 09:37:51.000000000 +02:00
+categories:
+- linux
+tags:
+- edit
+- pdf
+- unite
+---
+<ol>
+<li>zuerst schaue ob das programm <code>pdfunite</code> installiert ist
+<ol>
+<li>oeffne terminal</li>
+<li>fuehre folgenden befehl aus <code>$ pdfunite -v</code>
+<ul>
+<li>wenn das programm nicht installiert ist kommt eine fehlermeldung. <code>blabla programm nicht bekannt</code></li>
+<li>wenn es das programm gibt, dann steht da sowas wie <code>pdfunit version 0.87</code></li>
+</ul>
+</li>
+</ol>
+</li>
+<li>oeffne den ordner in dem die pdfs liegen</li>
+<li>dann rechtsklick und klicke sowas wie <code>im terminal oeffnen</code></li>
+<li>pdfs zusammenfuegen ist nun der folgende befehl <code>$ pdfunite datei1.pdf datei2.pdf ... dateiN.pdf ausgabe.pdf</code>
+<ol>
+<li>beispiel <code>$ pdfunite baum.pdf haus.pdf mandala.pdf alles.pdf</code></li>
+<li>beachte dass die namen keine speziellen zeichen haben duerfen: keine leerzeichen, keine umlaute, ... am besten alle irgendwie umbenennen zu <code>dateiX.pdf</code></li>
+<li>beachte falls es schon die datei <code>ausgabe.pdf</code> gibt dann wird die ueberschrieben</li>
+</ol>
+</li>
+</ol>

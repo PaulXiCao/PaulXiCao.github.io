@@ -1,0 +1,17 @@
+---
+title: 'time syncronization: ntp via systemd'
+date: 2020-04-04 16:49:02.000000000 +02:00
+categories:
+- linux
+tags:
+- ntp
+- systemd
+- time
+---
+<p>enabling time synchronization via systemd the following is needed</p>
+<ol>
+<li>check time before <code>$ timedatectl status</code></li>
+<li>enabling ntp <code>$ timedatectl set-ntp true</code></li>
+<li>check systemd <code>$ sudo systemctl status systemd-timesyncd.service</code></li>
+<li>check time after <code>$ timedatectl status</code></li>
+</ol>

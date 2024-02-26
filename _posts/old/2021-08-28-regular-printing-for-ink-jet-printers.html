@@ -1,0 +1,59 @@
+---
+title: Regular printing for ink-jet printers
+date: 2021-08-28 15:14:09.000000000 +02:00
+categories:
+- linux
+tags:
+- cron
+- cups
+- printer
+---
+<p><!-- wp:paragraph --></p>
+<p>Ink-jet printers might dry out if they don't print in regular intervals. The intervals depend on multiple factors, e.g. room temperature, ink quality. Some printers do regular cleaning of the nozzles themselves but quite often you cannot be sure if that's enough.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>About the intervals: there is quite some discussion in the internet how often you actually need to print. Every other day/week/months? My 2 year old epson printer dried out after not printing for 1 month in the summer. I will print 1 test page every 3 days. The costs and environmental impact is neglectable in comparison to a broken printer.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>My setup<br />- epson printer connected to the LAN (assume static ipv4: <code>192.168.1.103</code>)<br />- raspberry pi running arch linux (same LAN)</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:heading --></p>
+<h2>Printer setup</h2>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>I installed the printer via cups running the following commands</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code {"language":"bash"} --></p>
+<pre class="wp-block-syntaxhighlighter-code">pacman -S cups ghostscript
+systemctl start cups
+systemctl enable cups
+
+lpadmin -p epson -D "epson printer" -E -L "office" -m everywhere -v "ipp://192.168.1.103/ipp/print"
+lpoptions -p epson -o media=A4
+lpoptions -p epson -o duplex=DuplexNoTumble</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:paragraph --></p>
+<p>Note: You need to adjust the ip to the ip your printer, as well as the description -D and location -L tags. The ipp protocol is available for most modern (since 2014?) printers. Check if they support AirPrint or just run a testprint.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>If you need to adjust more options see the official CUPS documentation <a href="http://localhost:631/help/admin.html?TOPIC=Getting+Started&amp;QUERY=">here</a>.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:heading --></p>
+<h2>Regular printing via cron</h2>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>It is simple to print in predefined regular intervals via a cronjob. Just make sure that the printer is turned on at that time. Installation of cron </p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code {"language":"bash"} --></p>
+<pre class="wp-block-syntaxhighlighter-code">pacman -S cronie
+systemctl start cronie
+systemctl enable cronie</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:paragraph --></p>
+<p>Add a cronjob to print every 3rd day at 10am</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code {"language":"bash"} --></p>
+<pre class="wp-block-syntaxhighlighter-code">crontab -e
+...
+0 10 */3 * * lp -o duplex=none /usr/share/cups/data/testprint</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>

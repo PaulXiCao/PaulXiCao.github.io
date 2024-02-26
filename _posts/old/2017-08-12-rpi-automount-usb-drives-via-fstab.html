@@ -1,0 +1,23 @@
+---
+title: 'RPi: automount USB drives via fstab'
+date: 2017-08-12 15:19:45.000000000 +02:00
+categories:
+- linux
+tags:
+- fstab
+- mount
+- rpi
+- usb
+---
+<p>for mounting external usb drives one can use fstab. each column has its specific meaning (see <a href="https://help.ubuntu.com/community/Fstab">here</a> for definitions).</p>
+<p>for external usb drives it is important to set some specific options:</p>
+<ul>
+<li>auto: do automatic mounting</li>
+<li>users: users can mount themselfs</li>
+<li>nofail: dont expect that drive is attached at boot up</li>
+<li>x-systemd.device-timeout=1: dont wait no longer than 1s for drive at boot up</li>
+</ul>
+<p>full line looks like the following<br />
+<code>$ cat /etc/fstab<br />
+...<br />
+UUID=ffd9b0a1-931f-4795-85ba-28c58719a938	/mnt/USBBkupDisk	ext4	auto,rw,users,nofail,x-systemd.device-timeout=1	0	2</code></p>

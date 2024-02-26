@@ -1,0 +1,19 @@
+---
+title: 'exiftool: renaming pictures'
+date: 2017-02-27 22:53:09.000000000 +01:00
+categories:
+- linux
+tags:
+- bash
+- cmdline
+- exiftool
+- picture
+- renaming
+---
+<p>rename pictures according to their exifdata time stemp:</p>
+<p>[code]<br />
+exiftool &quot;-FileName&lt;CreateDate&quot; -d &quot;%Y%m%d_%H%M%S_%%c.%%e&quot; .<br />
+[/code]</p>
+<hr />
+<p><a href="http://www.sno.phy.queensu.ca/~phil/exiftool/#filename">http://www.sno.phy.queensu.ca/~phil/exiftool/#filename</a></p>
+<p>&nbsp;</p>

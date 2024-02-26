@@ -1,0 +1,80 @@
+---
+title: 'CppCon: Linkers, Loaders and Shared Libraries'
+date: 2024-01-27 22:14:30.000000000 +01:00
+categories:
+- C++
+- C++ Talks
+- CppCon
+- linux
+tags:
+- linking
+- talk
+- windows
+---
+<p><!-- wp:paragraph --></p>
+<p>Tldr; See recommendations at end.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Talk: <a href="https://youtu.be/_enXuIxuNV4?si=Vu1SuX_oTSclTOQa">https://youtu.be/_enXuIxuNV4</a></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Covered topics:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list --></p>
+<ul><!-- wp:list-item --></p>
+<li>101 of linkers+loaders</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>Detailed comparison of linking on Linux/Windows (not MacOS)</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>Interposition (overriding a symbol in one binary from another)</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>Library search order</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>Position independent code (GOT)</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>Lazy/Delayed Loading</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>Symbol visibility</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>Recommendations for shared libraries on linux</li>
+<p><!-- /wp:list-item --></ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p><em>Interposition</em><br />Two binaries (e.g. object files, libraries) define the same symbol, then by default the first one will be taken. Linux specific / Not possible in Windows!</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><em>Library search order</em><br />Scenario: Executable (exe) loads shared libs lib1, lib2, which load lib3,..,5. The exe tries to load function <code>foo</code>.<br />Search order is breadth-first, i.e. first looked in exe, then lib1, lib2, lib3, .., 5. <br /><code>LD_PRELOAD</code> Can be used to specify libraries to look into after exe, but before lib1.<br /><code>-Bsymbolic</code> Look at first in current lib (e.g. lib5 calls function <code>foo</code>, then look at first in lib5).</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><em>Position Independent Code</em><br />Simple function calls in shared libraries will not be inlined (for default visibility). ...<br />Implemented via global offset table GOT.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><em>Lazy Loading</em><br />Useful for huge number of symbols. On linux enabled by default, windows needs specific flags.<br />Workings: The function call to a shared library's function has an indirection which gets filled in by the loaded on first call. After that the shared library's function address is plugged in.<br />Implemented via procedural lookup table PLT.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><em>Symbol Visibility</em><br />Question: Which symbols should get exported?<br />On Windows: Only those which are marked <code>__declspec(dllexport)</code>.<br />On Linux: By default all.<br />Linux visibilities <code>-fvisibility=&lt;default/protected/hidden&gt;</code>:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list --></p>
+<ul><!-- wp:list-item --></p>
+<li><code>default</code>: all symbols exported</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li><code>protected</code>: symbols visible, but not subjected to interposition</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li><code>hidden</code>: not exported</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>per symbol: <code>__attribute__ ((visibility ("hidden")))</code></li>
+<p><!-- /wp:list-item --></ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p><strong><em>Recommendation for linux shared libraries:</em></strong><br />Opt out of interposition via building with: <code>-fvisibility=hidden, -Bsymbolic</code>s <br />Mark symbols to be exported via: <code>__attribute__ ((visibility ("protected")))</code></p>
+<p><!-- /wp:paragraph --></p>

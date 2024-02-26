@@ -1,0 +1,56 @@
+---
+title: Turbo Introduction of C++20 modules
+date: 2024-01-10 18:19:25.000000000 +01:00
+categories:
+- C++
+- CMake
+tags:
+- c++20
+- modules
+---
+<p><!-- wp:paragraph --></p>
+<p>Old school libraries use splitting into hpp/cpp files. Mayor drawbacks: leaking of macros (hpp can be different at library's consumer side than at library producer side), parsing in each translation unit, ...</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Two new alternatives: </p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list {"ordered":true} --></p>
+<ol><!-- wp:list-item --></p>
+<li><em>Header units</em>: Instead of <code>#include &lt;foo&gt;</code> one writes <code>import &lt;foo&gt;;</code>) which are not yet well supported. </li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li><em>Named modules</em>: A file containing <code>export module myModule;</code>. Well supported by uptodate compilers and in CMake starting at 3.28. </li>
+<p><!-- /wp:list-item --></ol>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p>We will look only into <strong>Named modules</strong>. Simple Example:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code {"language":"cpp"} --></p>
+<pre class="wp-block-syntaxhighlighter-code">// file: myModule.cpp
+export module myModule;
+export int foo() { return 42; }
+
+// file: main.cpp
+import myModule;
+int main() { return foo; }</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:paragraph --></p>
+<p>Use from CMake via:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code --></p>
+<pre class="wp-block-syntaxhighlighter-code">cmake_minimum_required(VERSION 3.28)
+add_executable(main)
+target_sources(main
+  PRIVATE
+    main.cpp
+  PRIVATE
+    FILE_SET CXX_MODULES
+    myModule.cpp
+  )</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:paragraph --></p>
+<p>Background information: Compiling the myModule.cpp file yields two artifacts: a usual object file (i.e. myModule.o) needed for linking as well a new file: built module interface (BMI). That BMI represents the AST of that module which can readily used when other cpp files (translation units) import myModule. This is the reason why build systems had mayor problems as there might be dependencies between cpp files which was not the case beforehand (hpp/cpp files can be compiled trivially in parallel).</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>(wip: I will add the following at some point: further resources, examples for more involved module examples, e.g. splitting of module implementation, importing std, etc.)</p>
+<p><!-- /wp:paragraph --></p>

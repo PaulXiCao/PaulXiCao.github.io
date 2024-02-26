@@ -1,0 +1,72 @@
+---
+title: Boost Test + QuantLib
+date: 2023-11-04 22:49:18.000000000 +01:00
+categories:
+- Boost
+- C++
+- CMake
+- QuantLib
+---
+<p><!-- wp:paragraph --></p>
+<p><a href="https://github.com/lballabio/QuantLib">QuantLib</a> has unit tests built in which are based on <a href="https://www.boost.org/doc/libs/1_83_0/libs/test/doc/html/index.html">Boost Test</a>.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><em>How to build: </em><br /><code>$ cmake --build build --preset=MyPreset<br />$ cmake --build build/MyPreset --target ql-test-suite</code></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><em>How to run:</em><br /><code>$ ./build/MyPreset/test-suite/quantlib-test-suite<br />$ ./build/MyPreset/test-suite/quantlib-test-suite --list_content<br />$ ./build/MyPreset/test-suite/quantlib-test-suite --run_test="QuantLib test suite/Calendar tests/*"</code></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><em>How to add new tests:</em></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list --></p>
+<ul><!-- wp:list-item --></p>
+<li>Option a: Append to already existing file<!-- wp:list -->
+<ul><!-- wp:list-item --></p>
+<li>Just add new static function in some test class<!-- wp:list -->
+<ul><!-- wp:list-item --></p>
+<li>E.g. in americanoption.hpp:AmericanOptionTest::newTest()</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>Register in americanoption.cpp:AmericanOptionTest::suite()</li>
+<p><!-- /wp:list-item --></ul>
+<p><!-- /wp:list --></li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>Creating a test function in anonymuous namespace in cpp and calling it in main test function is better for link time</li>
+<p><!-- /wp:list-item --></ul>
+<p><!-- /wp:list --></li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>Option b: Create new Test file<!-- wp:list -->
+<ul><!-- wp:list-item --></p>
+<li>E.g. test-suite/newTests.{h,c}pp</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>Implement test class (copy-paste from other files)</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>Add files to <!-- wp:list -->
+<ul><!-- wp:list-item --></p>
+<li>test-suite/CMakeLists.txt: See QL_TEST_SOURCES, QL_TEST_HEADERS</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>test-suite/testsuite.vcxproj{,.filters}</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>test-suite/Makefile.am: See QL_TEST_SRCS, QL_TEST_HDRS</li>
+<p><!-- /wp:list-item --></ul>
+<p><!-- /wp:list --></li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>Register test class in test-suite/quantlibtestsuite.cpp</li>
+<p><!-- /wp:list-item --></ul>
+<p><!-- /wp:list --></li>
+<p><!-- /wp:list-item --></ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:separator --></p>
+<hr class="wp-block-separator has-alpha-channel-opacity" />
+<!-- /wp:separator --></p>
+<p><!-- wp:paragraph --></p>
+<p>For CMake preset see this post: <a href="https://itgrenade.wordpress.com/2023/10/28/cmake-presets/">CMake presets</a></p>
+<p><!-- /wp:paragraph --></p>

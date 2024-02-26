@@ -1,0 +1,52 @@
+---
+title: vimrc
+date: 2016-09-13 13:33:27.000000000 +02:00
+categories:
+- linux
+tags:
+- vim config
+---
+<p>this is a little vimrc that is just about right for small purposes..</p>
+<p>(edit the file ~/.vimrc for user specific changes and /etc/vimrc?? for systemwide configuration)</p>
+<p>[code language="bash" padlinenumbers="true"]<br />
+syntax on<br />
+filetype indent plugin on</p>
+<p>set autoindent<br />
+set smartindent</p>
+<p>set tabstop=4<br />
+set expandtab<br />
+set shiftwidth=4<br />
+set softtabstop=4</p>
+<p>set number<br />
+set background=light<br />
+set smartcase<br />
+set cursorline<br />
+[/code]</p>
+<hr />
+<p>explanation:</p>
+<ul>
+<li>smartcase searches smart:
+<pre><code>/copyright      " Case insensitive
+/Copyright      " Case sensitive
+/copyright\C    " Case sensitive
+/Copyright\c    " Case insensitive</code></pre>
+</li>
+<li>indentation:
+<ul>
+<li>autoindent: same as line before</li>
+<li>smartindent: does some thinking (one level deeper for "if else", etc.)</li>
+</ul>
+</li>
+<li>cursorline:
+<ul>
+<li>highlights current line of cursor position</li>
+</ul>
+</li>
+<li>The command <code>zc</code> will close a fold (if the cursor is in an open fold), and <code>zo</code> will open a fold (if the cursor is in a closed fold). It's easier to just use <code>za</code> which will toggle the current fold (close it if it was open, or open it if it was closed).The commands <code>zc</code> (close), <code>zo</code> (open), and <code>za</code> (toggle) operate on one level of folding, at the cursor. The commands <code>zC</code>, <code>zO</code> and <code>zA</code> are similar, but operate on all folding levels (for example, the cursor line may be in an open fold, which is inside another open fold; typing <code>zC</code> would close all folds at the cursor).The command <code>zr</code> reduces folding by opening one more level of folds throughout the whole buffer (the cursor position is not relevant). Use <code>zR</code> to open all folds.The command <code>zm</code> gives more folding by closing one more level of folds throughout the whole buffer. Use <code>zM</code> to close all folds.</li>
+</ul>
+<hr />
+<p>sources:</p>
+<ul>
+<li><a href="https://wiki.python.org/moin/Vim">python.org</a></li>
+<li>vim.wikia.com/wiki/Folding</li>
+</ul>

@@ -1,0 +1,66 @@
+---
+title: edit zsh prompt
+date: 2016-07-23 21:17:09.000000000 +02:00
+categories:
+- linux
+tags:
+- cmdline
+- prompt
+- zsh
+---
+<ol>
+<li>append to .zshrc in home folder to import file:
+<pre>$ vim ~/.zshrc
+...
+source .zshrc-prompt</pre>
+</li>
+<li>create .zshrc-prompt in home dir:<br />
+[code language="bash" collapse="true" title="~/.zshrc-prompt"]<br />
+$ cat .zshrc-prompt<br />
+# Prompt format: [USER@MACHINE:DIRECTORY] [TIME] \n →;</p>
+<p># create bold fonting+color<br />
+PROMPT=&quot;%{$terminfo[bold]$fg[green]%}[%{$fg[yellow]%}&quot;</p>
+<p># username@MACHINE:<br />
+# %n username<br />
+# %M machine<br />
+PROMPT=&quot;$PROMPT%n@%M:&quot;</p>
+<p># directory<br />
+# %~ directory and $HOME is repalced by ~<br />
+PROMPT=&quot;$PROMPT$fg[blue]%}%~&quot;</p>
+<p># color stuff<br />
+PROMPT=&quot;$PROMPT%{$fg[green]%}]%{$reset_color%}&quot;</p>
+<p># add time<br />
+PROMPT=&quot;$PROMPT%{$terminfo[bold]$fg[black]%} [%*]&quot;</p>
+<p># add 2nd line<br />
+PROMPT=&quot;$PROMPT<br />
+%{$terminfo[bold]$fg[white]%}→ %{$reset_color%}&quot;<br />
+[/code]
+</li>
+<li>do same for root (same as (1)):
+<pre>$ vim /root/.zshrc
+...
+source .zshrc-prompt</pre>
+</li>
+<li>similar to (2):<br />
+[code language="bash" collapse="true" title="/root/.zshrc-prompt" highlight="2,5,24"]<br />
+$ cat /root/.zshrc-prompt<br />
+# Prompt format: [USER@MACHINE:DIRECTORY] [TIME] \n #;</p>
+<p># create bold fonting+color<br />
+PROMPT=&quot;%{$terminfo[bold]$fg[green]%}[%{$fg[red]%}&quot;</p>
+<p># username@MACHINE:<br />
+# %n username<br />
+# %M machine<br />
+PROMPT=&quot;$PROMPT%n@%M:&quot;</p>
+<p># directory<br />
+# %~ directory and $HOME is repalced by ~<br />
+PROMPT=&quot;$PROMPT$fg[blue]%}%~&quot;</p>
+<p># color stuff<br />
+PROMPT=&quot;$PROMPT%{$fg[green]%}]%{$reset_color%}&quot;</p>
+<p># add time<br />
+PROMPT=&quot;$PROMPT%{$terminfo[bold]$fg[black]%} [%*]&quot;</p>
+<p># add 2nd line<br />
+PROMPT=&quot;$PROMPT<br />
+%{$terminfo[bold]$fg[red]%}# %{$reset_color%}&quot;<br />
+[/code]
+</li>
+</ol>

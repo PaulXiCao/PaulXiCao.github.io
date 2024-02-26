@@ -1,0 +1,25 @@
+---
+title: 'Ubuntu/Mint/Debian: Install current TeXstudio'
+date: 2017-07-17 08:42:08.000000000 +02:00
+categories:
+- linux
+tags:
+- ppa
+- texstudio
+---
+<p>one can include the ppa from opensuse for the most current texstudio version:</p>
+<ol>
+<li>add the ppa's key to your keychain:<br />
+<code>$ wget -nv http://download.opensuse.org/repositories/home:/jsundermeyer/xUbuntu_16.04/Release.key -O Release.key<br />
+$ sudo apt-key add - &lt; Release.key </code></li>
+<li>add the ppa to your sources list folder:<br />
+<code>$ sudo sh -c "echo 'deb http://download.opensuse.org/repositories/home:/jsundermeyer/xUbuntu_16.04/ /' &gt; /etc/apt/sources.list.d/opensuse-texstudio.list"<br />
+$ sudo apt-get update<br />
+$ sudo apt-get install texstudio</code></li>
+</ol>
+<hr />
+<p>sources:</p>
+<ul>
+<li><a href="https://software.opensuse.org/download/package?project=isv:ownCloud:desktop&amp;package=owncloud-client">https://software.opensuse.org</a> : how to add opensuse ppa to ubuntu</li>
+<li><a href="http://download.opensuse.org/repositories/home:/jsundermeyer/xUbuntu_16.04/">http://download.opensuse.org</a> : the texstudio ppa at opensuse</li>
+</ul>

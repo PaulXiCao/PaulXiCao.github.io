@@ -1,0 +1,17 @@
+---
+title: 'Update local git clone: new TAGS'
+date: 2019-11-30 19:34:14.000000000 +01:00
+categories:
+- it basics
+tags:
+- git
+- tags
+---
+<p>When you have a local clone of a remote repository and want to update it: pulling will not get all the new tags...</p>
+<p>run the following</p>
+<p>[code language="bash" collapse="false" padlinenumbers=false]<br />
+$ git pull<br />
+$ git fetch --tags --verbose<br />
+[/code]</p>
+<hr />
+<p>source: <a href="https://stackoverflow.com/questions/15794378/git-missing-tags-after-pull">link</a></p>

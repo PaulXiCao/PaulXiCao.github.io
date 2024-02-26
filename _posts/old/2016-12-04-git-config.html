@@ -1,0 +1,29 @@
+---
+title: git config
+date: 2016-12-04 14:50:45.000000000 +01:00
+categories:
+- it basics
+- linux
+tags:
+- cmdline
+- config
+- git
+---
+<p>edit the file: <code>$HOME/.gitconfig</code></p>
+<p>[code language="bash"]<br />
+[alias]<br />
+co = checkout<br />
+ci = commit<br />
+st = status<br />
+br = branch<br />
+hist = log --pretty=format:\&quot;%h %ad | %s%d [%an]\&quot; --graph --date=short<br />
+type = cat-file -t<br />
+dump = cat-file -p<br />
+[user]<br />
+name = XXX<br />
+email = XXX<br />
+[push]<br />
+default = simple<br />
+[core]<br />
+excludesfile = /home/JohnDoe/.gitignore_global<br />
+[/code]</p>

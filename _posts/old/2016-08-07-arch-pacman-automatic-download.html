@@ -1,0 +1,46 @@
+---
+title: 'arch: pacman automatic download'
+date: 2016-08-07 21:19:13.000000000 +02:00
+categories:
+- linux
+tags:
+- arch
+- bash
+- cmd
+- cmdline
+- update
+---
+<p>This little post explains how to enable download for packages of pacman. It uses a systemd service.</p>
+<p>Create the download service (note the option -w for just downloading the packages):</p>
+<p>[code language="bash"]<br />
+$ sudo vim /etc/systemd/system/pacman-downloader.service<br />
+[Unit]<br />
+ Description=Automatic Update<br />
+ After=network-online.target </p>
+<p>[Service]<br />
+ Type=simple<br />
+ ExecStart=/usr/bin/pacman -Syuwq --noconfirm<br />
+ TimeoutStopSec=180<br />
+ KillMode=process<br />
+ KillSignal=SIGINT</p>
+<p>[Install]<br />
+ WantedBy=multi-user.target<br />
+[/code]</p>
+<p>Create a timer service to launch the downloader:</p>
+<p>[code language="bash"]<br />
+$ sudo vim /etc/systemd/system/pacman-downloader.timer<br />
+[Unit]<br />
+ Description=Automatic Update when booted up after 5 minutes then check the system for updates every 60 minutes</p>
+<p>[Timer]<br />
+ OnBootSec=5min<br />
+ OnUnitActiveSec=60min<br />
+ Unit=pacman-downloader.service</p>
+<p>[Install]<br />
+ WantedBy=multi-user.target<br />
+[/code]</p>
+<p>Enable and start the service using systemctl.</p>
+<hr />
+<pre>
+Source-link: <a href="http://www.techrapid.co.uk/linux/arch-linux/automatic-update-arch-linux-with-systemd/">www.techrapid.co.uk</a>
+
+</pre>

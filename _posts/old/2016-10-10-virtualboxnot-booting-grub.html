@@ -1,0 +1,14 @@
+---
+title: virtualbox:not booting (grub)
+date: 2016-10-10 15:58:23.000000000 +02:00
+categories:
+- linux
+tags:
+- grub
+- lvmetad
+- virtualbox
+---
+<p>I recently installed a unix system with virtualbox and after reboot it woudnt start at all - no output..</p>
+<p>I started a live cd and reinstalled grub. worked like a charm.</p>
+<p>link for reinstallation of grub: <a href="https://forums.kali.org/showthread.php?20559-How-To-Repair-Kali-Linux-Grub-With-Kali-Linux-Live-Cd-Dual-Boot-With-Windows-7">link</a></p>
+<p>in case some crazy error pops up (<code>Warning:Failed to connect to lvmetad. Falling back to device scanning.</code>), I also made some host-run directory available in the chroot. just follow this link: <a href="https://www.pckr.co.uk/arch-grub-mkconfig-lvmetad-failures-inside-chroot-install/">link</a></p>

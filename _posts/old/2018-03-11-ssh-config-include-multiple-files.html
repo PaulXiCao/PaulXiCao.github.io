@@ -1,0 +1,30 @@
+---
+title: 'ssh config: include multiple files'
+date: 2018-03-11 20:07:47.000000000 +01:00
+categories:
+- linux
+tags:
+- multiple files
+- ssh
+- ssh_config
+---
+<p>it is useful to split up the ssh config file.</p>
+<p>do as follows</p>
+<ol>
+<li>create config folder <code>$ mkdir ~/.ssh/config.d</code></li>
+<li>create multiple config files in that folder (I group different hosts, and use a global options file)
+<ol>
+<li><code>$ touch ~/.ssh/config.d/group1</code></li>
+<li><code>$ touch ~/.ssh/config.d/group2</code></li>
+<li><code>$ touch ~/.ssh/config.d/group3</code></li>
+<li><code>$ touch ~/.ssh/config.d/options</code></li>
+</ol>
+</li>
+<li>include the whole directory by using the standard config file
+<p>[code language="bash" collapse="false" title="~/.ssh/config"]<br />
+$ cat ~/.ssh/config<br />
+Include config.d/*<br />
+[/code]</p>
+</li>
+</ol>
+<p>&nbsp;</p>

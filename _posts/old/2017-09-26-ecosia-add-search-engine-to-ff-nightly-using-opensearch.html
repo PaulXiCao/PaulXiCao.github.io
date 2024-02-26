@@ -1,0 +1,16 @@
+---
+title: 'ecosia: add search engine to ff nightly (using opensearch)'
+date: 2017-09-26 07:21:20.000000000 +02:00
+tags:
+- ecosia
+- ff
+- firefox
+- nightly
+- opensearch
+---
+<p>ff nightly will not work with the current ecosia extension. the opensearch form is also not loaded(?) automatically, and searching through the use of keyword is not conventient.</p>
+<p>i found the opensearch url of ecosia: <a href="https://www.ecosia.org/opensearch.xml">https://www.ecosia.org/opensearch.xml</a></p>
+<p>and adding it through the webconsole (ctrl+shift+k): <code> window.external.AddSearchProvider(engineURL); </code></p>
+<p>fixed my problem (using "https...." as the engineURL).</p>
+<hr />
+<p>source: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/sidebar/Adding_search_engines_from_Web_pages">mozilla.org</a></p>

@@ -1,0 +1,50 @@
+---
+title: 'CMake: Linking against system libraries'
+date: 2024-01-21 17:44:58.000000000 +01:00
+categories:
+- C++
+- CMake
+tags:
+- gtest
+---
+<p><!-- wp:paragraph --></p>
+<p>Usecase: You want to make use of some system-wide installed library.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Install the library using your linux package manager. Most installed libraries can be found by CMake via the <code>find_package(&lt;NAME&gt; REQUIRED)</code> command.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:separator --></p>
+<hr class="wp-block-separator has-alpha-channel-opacity" />
+<!-- /wp:separator --></p>
+<p><!-- wp:paragraph --></p>
+<p>Example to get GTest up and running:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code --></p>
+<pre class="wp-block-syntaxhighlighter-code"># file: CMakeLists.txt
+cmake_minimum_required(VERSION 3.14)
+project(my_project)
+
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package(GTest REQUIRED)    # &lt;----------- !!!
+add_executable(my_test myTest.cpp)
+enable_testing()
+target_link_libraries(my_test PRIVATE GTest::gtest_main)
+gtest_discover_tests(my_test)</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:syntaxhighlighter/code {"language":"cpp"} --></p>
+<pre class="wp-block-syntaxhighlighter-code">// file: myTest.cpp
+#include &lt;gtest/gtest.h&gt;
+
+TEST(HelloTest, BasicAssertions) {
+  EXPECT_STRNE("hello", "world"); // Expect two strings not to be equal.
+  EXPECT_EQ(7 * 6, 42); // Expect equality.
+}</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:separator --></p>
+<hr class="wp-block-separator has-alpha-channel-opacity" />
+<!-- /wp:separator --></p>
+<p><!-- wp:paragraph --></p>
+<p>Source: <a href="https://google.github.io/googletest/quickstart-cmake.html">https://google.github.io/googletest/quickstart-cmake.html</a></p>
+<p><!-- /wp:paragraph --></p>

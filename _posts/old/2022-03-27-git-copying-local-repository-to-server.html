@@ -1,0 +1,39 @@
+---
+title: 'git: copying local repository to server'
+date: 2022-03-27 17:53:25.000000000 +02:00
+categories:
+- linux
+---
+<p><!-- wp:paragraph --></p>
+<p>Setup: You have a local machine which can access a server via ssh (user: git). git is installed on the server.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Problem: You setup a git repo locally, started developing and now want to copy the repo to the server.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:heading --></p>
+<h2>Method 1: Copying via git </h2>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>Copied from <a href="https://stackoverflow.com/a/22664133/10774817">https://stackoverflow.com/a/22664133/10774817</a></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code --></p>
+<pre class="wp-block-syntaxhighlighter-code"># on server:
+$ mkdir repo &amp;&amp; cd repo &amp;&amp; git init --bare
+
+# on local machine:
+$ cd repo
+$ git remote add origin git@myServer.io:repo
+$ git push --mirror</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:heading --></p>
+<h2><strong>Method 2: Manual copying using rsync</strong></h2>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>Copy the whole folder to the server, e.g. using rsync:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code {"language":"bash"} --></p>
+<pre class="wp-block-syntaxhighlighter-code">rsync -a /path/to/localRepo git@&lt;SERVER&gt;:&lt;repoName&gt;/</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:heading --></p>
+<h2></h2>
+<p><!-- /wp:heading --></p>

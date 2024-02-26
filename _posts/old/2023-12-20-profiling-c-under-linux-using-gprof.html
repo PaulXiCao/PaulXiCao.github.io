@@ -1,0 +1,29 @@
+---
+title: profiling c++ under linux using gprof
+date: 2023-12-20 20:19:25.000000000 +01:00
+categories:
+- C++
+- it basics
+- linux
+---
+<p><!-- wp:paragraph --></p>
+<p>In-depth tutorial: <a href="https://www.thegeekstuff.com/2012/08/gprof-tutorial/">https://www.thegeekstuff.com/2012/08/gprof-tutorial/</a></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Summary: Compile with <code>-pg</code> compiler flag (gcc/clang). Executing binary gives gmon.out output file. Opening that file with gprof yields function times. Different output possible for different flags. Output mainly contains two sections: </p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list --></p>
+<ul><!-- wp:list-item --></p>
+<li>flat profile: sorts all function calls by time</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>call graph: lists many table entries. each entry is one function call and shows its callees, callers, and times.</li>
+<p><!-- /wp:list-item --></ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p>Example usage:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code --></p>
+<pre class="wp-block-syntaxhighlighter-code">clang -pg main.cpp -o main
+gprof -b main gmon.out &gt; analysis.txt</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>

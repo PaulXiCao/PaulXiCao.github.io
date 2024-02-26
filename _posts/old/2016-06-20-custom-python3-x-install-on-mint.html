@@ -1,0 +1,18 @@
+---
+title: custom python3.x install (on mint)
+date: 2016-06-20 08:12:40.000000000 +02:00
+categories:
+- linux
+- python
+---
+<p>follow instructions from: <a href="http://grahamwideman.wikispaces.com/Python-+Installation+on+Linux">http://grahamwideman.wikispaces.com/Python-+Installation+on+Linux</a></p>
+<p>note the following:</p>
+<ul>
+<li>use (latest) python version that you want</li>
+<li>use configure prefix path valid for your version</li>
+<li>make install for adding binaries to /bin (adding to $PATH variable) and make altinstall for side-by-side install</li>
+<li>create link:
+<pre><code>ln -s /opt/python3.5/bin/python3.5 /usr/local/bin/python3.5</code></pre>
+</li>
+<li>need to compile libraries as well... to be continued</li>
+</ul>

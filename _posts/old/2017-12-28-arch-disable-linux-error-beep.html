@@ -1,0 +1,27 @@
+---
+title: 'arch: disable linux error beep'
+date: 2017-12-28 13:13:47.000000000 +01:00
+categories:
+- linux
+tags:
+- arch
+- beep
+- kernel
+- module
+---
+<p>this beep comes up in terminals and for each error in matlab. just annoying.... fix this by disabling the right kernel module.</p>
+<ol>
+<li style="list-style-type:none;">
+<ol>
+<li>append to /etc/modprobe.d/blacklist.conf:<br />
+<code> blacklist pcspkr </code></li>
+<li>include in /etc/mkinitcpio.conf:<br />
+<code> ...<br />
+FILES="/etc/modprobe.d/blacklist.conf"<br />
+... </code></li>
+<li>Then rebuild the initramfs and reboot:<br />
+<code>$ mkinitcpio -p linux<br />
+$ reboot</code></li>
+</ol>
+</li>
+</ol>

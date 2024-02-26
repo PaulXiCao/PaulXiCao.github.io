@@ -1,0 +1,32 @@
+---
+title: 'vuln: auditing source code'
+date: 2016-10-01 09:49:00.000000000 +02:00
+categories:
+- vuln
+---
+<p>most common vulnerabilities:</p>
+<ul>
+<li>memory corruption: same data copied into memmory parts not assigned for it. often comes with these functions:
+<ul>
+<li>strcat, strcpy, sprintf, gets,...</li>
+</ul>
+</li>
+<li>data type bugs: types interchanged
+<ul>
+<li>e.g., library function expects short and one overhands int</li>
+</ul>
+</li>
+<li>metachar injection: when getting input and executed
+<ul>
+<li>use metachar of the specified language and even underlying lib</li>
+<li>sql injection: try to trick the input field to give back data that wasnt planned</li>
+</ul>
+</li>
+<li>tips:
+<ul>
+<li>check size calculations</li>
+<li>dynamic memory alloc (malloc,..)</li>
+<li>pointer arithmetic</li>
+</ul>
+</li>
+</ul>

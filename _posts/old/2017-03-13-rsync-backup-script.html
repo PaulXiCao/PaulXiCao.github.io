@@ -1,0 +1,29 @@
+---
+title: rsync backup script
+date: 2017-03-13 22:38:43.000000000 +01:00
+categories:
+- linux
+tags:
+- backup
+- rsync
+- ssh
+---
+<p>everyone needs a rsync backup script at some point in their life ;)   this is the one i wrote in the last couple minutes/hours/days/years ...</p>
+<p>it syncs a local folder with a folder remotely hosted over ssh.</p>
+<p>note: its important that variables dont have whitespaces around equality sign. furthermore, no whitespaces after linebreaks (\)</p>
+<p>[code language="bash" padlinenumbers="true"]<br />
+#!/bin/bash</p>
+<p>SOURCE=&quot;a/&quot;</p>
+<p>DEST_HOST=&quot;my-page.com&quot;<br />
+DEST_PATH=&quot;~/tmp&quot;</p>
+<p># rsync options<br />
+# a: archive mode<br />
+# partial: dont delete partially copied files<br />
+# append-verify: append to partial files and then verify by checksums</p>
+<p>rsync -a \<br />
+--partial \<br />
+--append-verify \<br />
+-e &quot;ssh&quot; \<br />
+$SOURCE \<br />
+${DEST_HOST}:${DEST_PATH}<br />
+[/code]</p>

@@ -1,0 +1,30 @@
+---
+title: 'SL7: fastest mirrors'
+date: 2017-03-18 17:24:53.000000000 +01:00
+categories:
+- scientific linux
+tags:
+- fast
+- mirror
+- SL
+- yum
+---
+<p>to enable the automatic checking for fastest mirrors within yum install the following plugin: <code>$ sudo yum install yum-plugin-fastestmirror</code></p>
+<p>check that plugins are enabled:</p>
+<p>[code languag="bash"]<br />
+$ cat /etc/yum.conf<br />
+&lt;truncated&gt;<br />
+plugins=1<br />
+[/code]</p>
+<p>check that the config file contains the following:</p>
+<p>[code languag="bash"]<br />
+$ cat /etc/yum/pluginconf.d/fastestmirror.conf<br />
+[main]<br />
+verbose = 0<br />
+socket_timeout = 3<br />
+enabled = 1<br />
+hostfilepath = /var/cache/yum/timedhosts.txt<br />
+maxhostfileage = 1<br />
+[/code]</p>
+<hr />
+<p>src: <a href="https://wiki.centos.org/PackageManagement/Yum/FastestMirror">wiki.centos.org</a>, <a href="https://www.techiecorner.com/113/centos-install-yum-fastest-mirror-plugin-for-faster-connection-update/">techiecorner.com/</a></p>

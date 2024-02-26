@@ -1,0 +1,27 @@
+---
+title: 'Latex+beamer: dual screen presentation'
+date: 2017-10-08 10:03:30.000000000 +02:00
+categories:
+- latex
+tags:
+- beamer
+- dual screen
+- note
+- pdfpc
+---
+<p>you can include notes into your slides. just use <code>\note{txt}</code> inside of your <code>frame</code> environment. you can also make use of overlays and align all notes in <code>itemize</code> environment</p>
+<p>[code language="latex"]<br />
+\note&lt;overlay&gt;[item]{txt}<br />
+[/code]</p>
+<p>you can chose the style of your output pdf by the following options in your preamble</p>
+<p>[code language="latex"]<br />
+\setbeameroption{hide notes} 		% default<br />
+\setbeameroption{show notes}<br />
+\setbeameroption{show notes on second screen=left} %<br />
+\setbeameroption{show only notes}<br />
+[/code]</p>
+<p>when choosing "second screen" you get a pdf containing your standard slides and one showing your notes. get a pdf viewer which can actually distinguish between both (e.g. pdfpc).</p>
+<p>use pdfpc as such</p>
+<p>[code language="bash"]<br />
+pdfpc --notes=left --duration=30  ~/presentation.pdf<br />
+[/code]</p>

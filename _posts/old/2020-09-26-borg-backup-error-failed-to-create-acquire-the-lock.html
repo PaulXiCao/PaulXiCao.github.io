@@ -1,0 +1,32 @@
+---
+title: 'borg backup error: "Failed to create/acquire the lock"'
+date: 2020-09-26 20:59:38.000000000 +02:00
+categories:
+- linux
+tags:
+- backup
+- borg
+- error
+- lock
+---
+<p>Using borg to backup is convenient and nice.</p>
+<p>I installed it on my debian 10, ran it manually via a script multiple times without errors. Once I ran it via cron I got one of the following errors</p>
+<pre class="moz-quote-pre">Failed to create/acquire the lock &lt;BackupDir&gt;/lock (timeout).</pre>
+<p>and</p>
+<pre class="moz-quote-pre">Exception ignored in: &lt;function Repository.__del__ at 0x7fb0a5c83d90&gt; Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/borg/repository.py", line 179, in __del__
+    assert False, "cleanup happened in Repository.__del__"
+AssertionError: cleanup happened in Repository.__del__ Local Exception Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/borg/archiver.py", line 4455, in main
+    exit_code = archiver.run(args)
+  File "/usr/lib/python3/dist-packages/borg/archiver.py", line 4387, in run
+    return set_ec(func(args))
+  File "/usr/lib/python3/dist-packages/borg/archiver.py", line 139, in wrapper
+    with repository:
+  File "/usr/lib/python3/dist-packages/borg/repository.py", line 189, in __enter__
+    self.open(self.path, bool(self.exclusive), lock_wait=self.lock_wait, lock=self.do_lock)
+  File "/usr/lib/python3/dist-packages/borg/repository.py", line 396, in open
+    with open(os.path.join(self.path, 'config')) as fd:
+PermissionError: [Errno 13] Permission denied: '&lt;BackupDir&gt;/config'</pre>
+<p>I couldnt even run the script manually afterwards. I found the file <code>&lt;BackupDir&gt;/lock.roster</code><br />
+,removed it and from here on no more problems: neither manually nor via cron.</p>

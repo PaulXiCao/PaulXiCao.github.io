@@ -1,0 +1,36 @@
+---
+title: 'Code OSS - VSCode unbranded: use Microsoft store'
+date: 2023-10-28 18:55:16.000000000 +02:00
+categories:
+- linux
+---
+<p><!-- wp:paragraph --></p>
+<p>How to use MS extension store in unbranded VSCode edition (e.g. Manjaro code OSS)</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>$ sudo vim /usr/lib/code/product.json</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>"extensionsGallery": {<br />"serviceUrl": "<a href="https://marketplace.visualstudio.com/_apis/public/gallery">https://marketplace.visualstudio.com/_apis/public/gallery</a>",<br />"cacheUrl": "<a href="https://vscode.blob.core.windows.net/gallery/index">https://vscode.blob.core.windows.net/gallery/index</a>",<br />"itemUrl": "<a href="https://marketplace.visualstudio.com/items">https://marketplace.visualstudio.com/items</a>"<br />},</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Source: <a href="https://github.com/VSCodium/vscodium/issues/418#issue-637460349">github comment</a></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>The following script should replace that automatically (maybe even create a hook within arch linux' software upgrade process?):</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code {"language":"bash"} --></p>
+<pre class="wp-block-syntaxhighlighter-code">#!/bin/bash
+
+productJsonFile="/usr/lib/code/product.json"
+tmpFile=$(mktemp)
+jq '.extensionsGallery =
+    {
+        "serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery",
+        "cacheUrl": "https://vscode.blob.core.windows.net/gallery/index",
+        "itemUrl": "https://marketplace.visualstudio.com/items"
+    }' \
+    $productJsonFile &gt; $tmpFile &amp;&amp; mv $tmpFile $productJsonFile
+chmod 644 $productJsonFile
+</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>

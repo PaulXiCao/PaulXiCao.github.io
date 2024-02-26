@@ -1,0 +1,71 @@
+---
+title: 'Mint: install and configure MATLAB'
+date: 2017-05-06 11:27:24.000000000 +02:00
+categories:
+- linux
+tags:
+- desktop
+- install
+- matlab
+- startup
+- update
+---
+<p>installation:</p>
+<ol>
+<li>installation
+<ol>
+<li>download matlab iso files</li>
+<li>mount first cd</li>
+<li>run the installer (install.sh or similar) from within $HOME: <code>$ cd $HOME; /path/to/cd1/install.sh</code></li>
+<li>choose the install path: <code>/opt/MATLAB</code></li>
+<li>when asked for second cd one has to unmount cd1 and mount cd2 to the same path</li>
+</ol>
+</li>
+<li>put matlab in your $PATH:
+<ol>
+<li>usually this is done in the installation process, but just in case</li>
+<li><code>$ sudo ln -s /opt/MATLAB/R2017a/bin/matlab /usr/local/bin/matlab</code></li>
+</ol>
+</li>
+<li>get the desktop file for matlab (somewhere in the opt/matlab folder?)
+<ol>
+<li>[code language="bash" collapse="true" padlinenumbers="true" title="cat matlab.desktop"]<br />
+$ cat /usr/share/app-install/desktop/matlab-support:matlab.desktop<br />
+[Desktop Entry]<br />
+X-AppInstall-Package=matlab-support<br />
+X-AppInstall-Popcon=4<br />
+X-AppInstall-Section=multiverse</p>
+<p>Version=1.0<br />
+Type=Application<br />
+Terminal=false<br />
+Exec=matlab -desktop<br />
+Name=MATLAB<br />
+Icon=/usr/share/icons/matlab.png<br />
+Categories=Development;Math;Science<br />
+Comment=Scientific computing environment<br />
+StartupNotify=true<br />
+StartupWMClass=com-mathworks-util-PostVMInit</p>
+<p>X-Ubuntu-Gettext-Domain=app-install-data</p>
+<p>[/code]</li>
+</ol>
+</li>
+<li>for updating matlab
+<ol>
+<li>install as in step 1</li>
+<li>change the link path from step 2</li>
+<li>done</li>
+</ol>
+</li>
+<li>change the default start of matlab by creating a custom <code>startup.m</code>:
+<ol>
+<li>print the path inside of the matlab gui: &gt;&gt; path</li>
+<li>choose a good path for your file (usually: <code>/opt/MATLAB/R2017a/toolbox/local/startup.m</code> or <code>~Documents/MATLAB/startup.m</code>)</li>
+<li>insert some matlab code. example:[code language="matlab" collapse="true" padlinenumbers="true" title="cat startup.m"]<br />
+fname='/some/path';<br />
+addpath(genpath(fname));<br />
+cd(fname);<br />
+clear fname;<br />
+[/code]</li>
+</ol>
+</li>
+</ol>

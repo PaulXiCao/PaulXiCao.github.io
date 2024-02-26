@@ -1,0 +1,39 @@
+---
+title: compiler
+date: 2016-09-28 12:48:00.000000000 +02:00
+categories:
+- linux
+---
+<p>a compiler translates source code into machine level code</p>
+<ol>
+<li>preprocessor: inlcudes and macros are expanded</li>
+<li>compiler: generates assembly code</li>
+<li>compiler: generates binary object code</li>
+<li>linker: links object code with std. libr functions (e.g. printf) and creates executable</li>
+</ol>
+<p>example:</p>
+<ul>
+<ul>
+<li>just show assembly from c source file:[code]gcc -O2 -S code.c[/code]</li>
+<li>compile and assemble to create object file:<br />
+[code]gcc -O2 -c code.c[/code]</li>
+<li>to disassemble an object file again:[code]objdump -d code.o[/code]</li>
+<li>actually creating an executable (linking object files and one needs to have a main file):<br />
+[code]gcc -O2 -o prog code.o main.c[/code]</li>
+</ul>
+</ul>
+<hr />
+<p>I used these example files:</p>
+<p>[code language="cpp" collapse="true" title="code.c"]<br />
+int accum = 0;</p>
+<p>int sum(int x, int y) 4{<br />
+  int t = x + y;<br />
+  accum += t;<br />
+  return t;<br />
+}<br />
+[/code]</p>
+<p>[code language="cpp" collapse="true" title="main.c"]<br />
+int main(){<br />
+  return sum(1,3);<br />
+}<br />
+[/code]</p>

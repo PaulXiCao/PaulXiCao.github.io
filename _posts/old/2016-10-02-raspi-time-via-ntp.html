@@ -1,0 +1,30 @@
+---
+title: 'raspi: time via ntp'
+date: 2016-10-02 17:21:17.000000000 +02:00
+categories:
+- linux
+tags:
+- ntp
+- raspi
+- time
+---
+<p>the ntpserver is just a waist of memory for a raspi and its enough to synchro the time every couple hours.</p>
+<p>follow this:</p>
+<ol>
+<li>right time zone:<br />
+[code]$ sudo dpkg-reconfigure tzdata<br />
+  [/code]</li>
+<li>deinstall ntp server:<br />
+[code]$ sudo apt-get purge ntp<br />
+  [/code]</li>
+<li>install ntpdate:<br />
+[code]$ sudo apt install ntpdate<br />
+  [/code]</li>
+<li>add cron entry:<br />
+[code]$ sudo crontab -e<br />
+@reboot ntpdate -s 0.de.pool.ntp.org<br />
+0 */6 * * * ntpdate -s 0.de.pool.ntp.org<br />
+  [/code]</li>
+</ol>
+<hr />
+<p>source: from german page <a href="http://aufschnur.de/raspberry-pi-uhrzeit-automatik/">aufschnur.de</a></p>

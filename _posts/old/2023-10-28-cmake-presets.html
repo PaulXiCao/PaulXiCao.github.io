@@ -1,0 +1,48 @@
+---
+title: CMake presets
+date: 2023-10-28 19:04:35.000000000 +02:00
+categories:
+- CMake
+---
+<p><!-- wp:paragraph --></p>
+<p>CMake can group settings together via presets.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Usage: $ cmake --presets=&lt;PRESET&gt;<br />autocomplete with &lt;tab&gt; key</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>See $&lt;ROOT&gt;/CMakePresets.json for implementation details</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Define user specific settings in $&lt;ROOT&gt;/CMakeUserPresets.json</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Example:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:code --></p>
+<pre class="wp-block-code"><code>// CMakeUserPresets.json
+{
+    "version": 3,
+    "configurePresets": &#091;
+        {
+            "name": "myPreset",
+            "description": "My own Preset",
+            "hidden": false,
+            "inherits": &#091;
+                "linux-clang-base",
+                "ninja",
+                "_debug"
+            ],
+            "cacheVariables": {
+                "CMAKE_CXX_STANDARD": "20",
+                "QL_USE_STD_SHARED_PTR": "ON",
+                "QL_USE_STD_ANY": "ON",
+                "QL_USE_STD_OPTIONAL": "ON",
+                "QL_USE_STD_FUNCTION": "ON",
+                "QL_USE_STD_TUPLE": "ON",
+                "QL_COMPILE_WARNING_AS_ERROR": "ON"
+            }
+        }
+    ]
+}</code></pre>
+<p><!-- /wp:code --></p>

@@ -1,0 +1,63 @@
+---
+title: use mmcli for sending SMS
+date: 2016-09-14 14:29:22.000000000 +02:00
+categories:
+- linux
+tags:
+- mmcli
+- raspi
+---
+<p>I use an UMTS modem with my raspberry pi 1.</p>
+<p>the package mmcli is quite useful for handling the modem (e.g., sending SMS,..)</p>
+<ul>
+<ul>
+<li>list modems:[code language="bash"]<br />
+$ mmcli -L<br />
+Found 1 modems:<br />
+	/org/freedesktop/ModemManager1/Modem/0 [huawei] E176<br />
+[/code]</p>
+<ul>
+<li>retrieve modem id from the output (here it is: 0)</li>
+</ul>
+</li>
+<li>enable modem:[code language="bash"]<br />
+$ sudo mmcli -m 0 -e<br />
+successfully enabled the modem<br />
+[/code]</li>
+<li>create sms:[code language="bash"]<br />
+$ sudo mmcli -m 0 --messaging-create-sms=&quot;text='Hello world',number='+1234567890'&quot;<br />
+Successfully created new SMS:<br />
+	/org/freedesktop/ModemManager1/SMS/12 (unknown)<br />
+[/code]</p>
+<ul>
+<li>retrieve sms id from output (here: 12)</li>
+</ul>
+</li>
+<li>send sms:
+<pre>$ sudo mmcli -s 12 --send
+successfully sent the SMS
+</pre>
+</li>
+<li>list modem settings:
+<ul>
+<li>full:
+<pre>$ mmcli -m 0</pre>
+</li>
+<li>simplified output:
+<pre>$ mmcli -m 0 --simple-status</pre>
+</li>
+</ul>
+</li>
+<li>list sms in memory:
+<pre>$ mmcli -m 0 --messaging-list-sms</pre>
+</li>
+<li>read received sms:
+<pre>$ mmcli -s XY</pre>
+<p>where XY is a number from the list sms statement</li>
+</ul>
+</ul>
+<hr />
+<p>sources:</p>
+<ul>
+<li><a href="https://www.freedesktop.org/software/ModemManager/man/1.0.0/mmcli.8.html">freedesktop.org</a></li>
+</ul>

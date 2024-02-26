@@ -1,0 +1,74 @@
+---
+title: Install Thunderbird Daily binaries from mozilla
+date: 2017-08-19 22:08:54.000000000 +02:00
+categories:
+- linux
+tags:
+- bin
+- daily
+- nightly
+- thunderbird
+---
+<p>Thunderbird Daily can be installed in most distros directly from their repos but more often than not it is outdated (they usually disable automatic updates). this can be circumvented by installing the binary directly from mozilla. the automatic update will then be enabled.</p>
+<p>download the latest binary from <a href="http://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-central/">http://ftp.mozilla.org</a> and verify the download (checksum and gpg - for gpg you need mozilla's key)</p>
+<p>as of the time of writing the following script downloaded the binary and verified it:</p>
+<p>[code language="bash"]<br />
+$ mkdir ~/{bin,software}<br />
+$ cd ~/software<br />
+$ wget http://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-central/thunderbird-57.0a1.en-US.linux-x86_64.{tar.bz2,checksums,checksums.asc}<br />
+$ tar xvf thunderbird-57.0a1.en-US.linux-x86_64.tar.bz2<br />
+$ mv thunderbird thunderbird-daily<br />
+[/code]</p>
+<p>the verification process is not as smooth as it could be. this will do a sha512 checksum test</p>
+<p>[code language="bash"]<br />
+$ grep thunderbird-57.0a1.en-US.linux-x86_64.tar.bz2 thunderbird-57.0a1.en-US.linux-x86_64.checksums | grep sha512 - | awk '{print $1, $4}' - | sha512sum -c -<br />
+[/code]</p>
+<p>import pgp key from mozilla. then do signature check</p>
+<p>[code language="bash"]<br />
+$ gpg2 --verify thunderbird-57.0a1.en-US.linux-x86_64.checksums{.asc,}<br />
+[/code]</p>
+<p><strong>Update script in total</strong></p>
+<p>[code language="bash" collapse="true" title="thunderbird-updater.sh"]<br />
+#!/bin/zsh</p>
+<p>RELEASE=&quot;57.0a1&quot;</p>
+<p># download files<br />
+wget -q http://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-central/thunderbird-${RELEASE}.en-US.linux-x86_64.{tar.bz2,checksums,checksums.asc}</p>
+<p># check sha512 hash<br />
+grep thunderbird-${RELEASE}.en-US.linux-x86_64.{tar.bz2,checksums} | grep sha512 - | awk '{print $1, $4}' - | sha512sum -c -</p>
+<p># check gpg signature<br />
+gpg2 --verify thunderbird-${RELEASE}.en-US.linux-x86_64.checksums{.asc,} </p>
+<p># extract, move, cleanup<br />
+tar jxf thunderbird-${RELEASE}.en-US.linux-x86_64.tar.bz2<br />
+mv thunderbird-daily{,OLD}<br />
+mv thunderbird{,-daily}<br />
+rm thunderbird-${RELEASE}.en-US.linux-x86_64.{tar.bz2,checksums.asc,checksums}<br />
+[/code]</p>
+<p>Now, create a file link:</p>
+<p>[code language="bash"]<br />
+$ ln -s $HOME/bin/thunderbird-daily $HOME/software/thunderbird-daily/thunderbird-bin<br />
+[/code]</p>
+<p>download the daily icon (no direct download link available): <a href="https://assets.mozilla.org/portal/assets/#asset/267">assets.mozilla.org</a></p>
+<p>create a desktop entry (include your home folder path!):</p>
+<p>[code language="bash" collapse="true" title="desktop entry"]<br />
+$ cat $HOME/.local/share/applications/thunderbird-daily.desktop<br />
+[Desktop Entry]<br />
+Version=1.0<br />
+Name=Thunderbird Daily<br />
+Comment=Send and receive mails<br />
+GenericName=Mail Client<br />
+Exec=/home/paul/bin/thunderbird-daily %u<br />
+Icon=thunderbird-daily.png<br />
+Terminal=false<br />
+Type=Application<br />
+MimeType=message/rfc822;x-scheme-handler/mailto;application/x-xpinstall;<br />
+StartupNotify=true<br />
+Categories=Network;Email;<br />
+Keywords=web;browser;internet;<br />
+Actions=ComposeMessage;OpenAddressBook;</p>
+<p>[Desktop Action ComposeMessage]<br />
+Name=Write new message<br />
+Exec=/home/paul/bin/thunderbird-daily -compose</p>
+<p>[Desktop Action OpenAddressBook]<br />
+Name=Open address book<br />
+Exec=/home/paul/bin/thunderbird-daily -addressbook<br />
+[/code]</p>

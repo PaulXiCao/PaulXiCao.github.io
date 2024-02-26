@@ -1,0 +1,61 @@
+---
+title: bash extract function
+date: 2016-06-20 07:42:09.000000000 +02:00
+categories:
+- linux
+tags:
+- bash
+- cmdline
+---
+<p>it's convenient to define this function in your bashrc, s.t. you dont have to think of all the different file formats while extracting.</p>
+<p>source: <a href="https://coderwall.com/p/agmblq/bash-function-for-extract-every-archive-with-one-word">https://coderwall.com/p/agmblq/bash-function-for-extract-every-archive-with-one-word</a></p>
+<hr />
+<pre><code class="prettyprint prettyprinted"><span class="kwd">function</span><span class="pln"> extract</span><span class="pun">()</span>
+<span class="pun">{</span>
+     <span class="kwd">if</span> <span class="pun">[</span> <span class="pun">-</span><span class="pln">f $1 </span><span class="pun">]</span> <span class="pun">;</span> <span class="kwd">then</span>
+         <span class="kwd">case</span><span class="pln"> $1 </span><span class="kwd">in</span>
+            <span class="pun">*.</span><span class="pln">tar</span><span class="pun">.</span><span class="pln">bz2</span><span class="pun">)</span><span class="pln">
+                tar xvjf $1
+                </span><span class="pun">;;
+            *.tar.xz)
+                tar xvJf $1
+                ;;</span>
+            <span class="pun">*.</span><span class="pln">tar</span><span class="pun">.</span><span class="pln">gz</span><span class="pun">)</span><span class="pln">
+                tar xvzf $1
+                </span><span class="pun">;;</span>
+            <span class="pun">*.</span><span class="pln">bz2</span><span class="pun">)</span><span class="pln">
+                bunzip2 $1
+                </span><span class="pun">;;</span>
+            <span class="pun">*.</span><span class="pln">rar</span><span class="pun">)</span><span class="pln">
+                unrar x $1
+                </span><span class="pun">;;</span>
+            <span class="pun">*.</span><span class="pln">gz</span><span class="pun">)</span><span class="pln">
+                gunzip $1
+                </span><span class="pun">;;</span>
+            <span class="pun">*.</span><span class="pln">tar</span><span class="pun">)</span><span class="pln">
+                tar xvf $1
+                </span><span class="pun">;;</span>
+            <span class="pun">*.</span><span class="pln">tbz2</span><span class="pun">)</span><span class="pln">
+                tar xvjf $1
+                </span><span class="pun">;;</span>
+            <span class="pun">*.</span><span class="pln">tgz</span><span class="pun">)</span><span class="pln">
+                tar xvzf $1
+                </span><span class="pun">;;</span>
+            <span class="pun">*.</span><span class="pln">zip</span><span class="pun">)</span><span class="pln">
+                unzip $1
+                </span><span class="pun">;;</span>
+            <span class="pun">*.</span><span class="pln">Z</span><span class="pun">)</span><span class="pln">
+                uncompress $1
+                </span><span class="pun">;;</span>
+            <span class="pun">*.</span><span class="lit">7z</span><span class="pun">)</span>
+                <span class="lit">7z</span><span class="pln"> x $1
+                </span><span class="pun">;;</span>
+            <span class="pun">*)</span><span class="pln">
+                echo </span><span class="str">"'$1' cannot be extracted via extract"</span>
+                <span class="pun">;;</span>
+        <span class="kwd">esac</span>
+    <span class="kwd">else</span><span class="pln">
+        echo </span><span class="str">"'$1' is not a valid file"</span>
+    <span class="kwd">fi</span>
+<span class="pun">}</span></code></pre>
+<p>UPDATE: See my post about <code>dtrx</code>.</p>

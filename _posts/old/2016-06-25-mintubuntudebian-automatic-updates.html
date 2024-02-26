@@ -1,0 +1,58 @@
+---
+title: ''
+date: 2016-06-25 19:52:59.000000000 +02:00
+categories:
+- linux
+tags:
+- auto
+- mint
+- unattended
+- update
+- upgrade
+---
+<p>to enable automatic updates install:</p>
+<p>[code language="bash"]<br />
+$ apt install unattended-upgrades<br />
+[/code]</p>
+<p>check and uncomment in the config file as needed, well documented inside the same config file <code>/etc/apt/apt.conf.d/50unattended-upgrades</code>:</p>
+<p>[code language="bash" padlinenumbers="true" collapse="true" title="on raspbian"]<br />
+$ cat /etc/apt/apt.conf.d/50unattended-upgrades<br />
+Unattended-Upgrade::Origins-Pattern {<br />
+&quot;o=Raspbian,n=jessie,l=Raspbian-Security&quot;;<br />
+};<br />
+Unattended-Upgrade::MinimalSteps &quot;true&quot;;<br />
+Unattended-Upgrade::InstallOnShutdown &quot;true&quot;;<br />
+Acquire::http::Dl-Limit &quot;300&quot;;<br />
+[/code]</p>
+<p>[code language="bash" padlinenumbers="true" collapse="true" title="on mint 18.1"]<br />
+$ cat /etc/apt/apt.conf.d/50unattended-upgrades<br />
+Unattended-Upgrade::Origins-Pattern {<br />
+	&quot;o=Ubuntu,a=xenial-security&quot;;<br />
+	&quot;o=Ubuntu,a=xenial-updates&quot;;<br />
+	&quot;o=Ubuntu,a=xenial&quot;;<br />
+	&quot;o=Canonical,a=xenial&quot;;<br />
+	&quot;o=linuxmint,n=serena&quot;;<br />
+};<br />
+Unattended-Upgrade::MinimalSteps &quot;true&quot;;<br />
+Unattended-Upgrade::InstallOnShutdown &quot;true&quot;;<br />
+Acquire::http::Dl-Limit &quot;300&quot;;<br />
+[/code]</p>
+<p>edit the config file:</p>
+<p>[code language="bash" padlinenumbers="true" collapse="true" title="/etc/apt/apt.conf.d/10periodic"]<br />
+$ vim /etc/apt/apt.conf.d/10periodic<br />
+# update the package list<br />
+APT::Periodic::Update-Package-Lists &quot;1&quot;;<br />
+APT::Periodic::Download-Upgradeable-Packages &quot;1&quot;;<br />
+APT::Periodic::AutocleanInterval &quot;7&quot;;</p>
+<p># once a day<br />
+APT::Periodic::Unattended-Upgrade &quot;1&quot;;<br />
+[/code]</p>
+<p>check if its working:</p>
+<p>[code language="bash"]<br />
+$ sudo unattended-upgrades --dry-run<br />
+$ tail /var/log/unattended-upgrades/unattended-upgrades.log<br />
+[/code]</p>
+<hr />
+<p>sources:</p>
+<p><a href="https://community.linuxmint.com/tutorial/view/1217">https://community.linuxmint.com/tutorial/view/1217</a></p>
+<p><a href="http://www.faqforge.com/linux/how-to-enable-auto-updates-in-ubuntu/">http://www.faqforge.com/linux/how-to-enable-auto-updates-in-ubuntu/</a></p>

@@ -1,0 +1,24 @@
+---
+title: 'Synology: SEC_ERROR_REVOKED_CERTIFICATE'
+date: 2019-10-01 17:06:18.000000000 +02:00
+categories:
+- linux
+tags:
+- certificate
+- synology
+---
+<p>updating your synology to DSM6.2.2 will lead to a certificate error. it cannot renew the letsencrypt certificate anymore.</p>
+<p>current workaround:</p>
+<ol>
+<li>pre: ports 80, 443 need to be open and link to your synology</li>
+<li>login by ssh with admin account</li>
+<li>become root
+<pre><code>sudo -i</code></pre>
+</li>
+<li>renew certificate
+<pre><code>/usr/syno/sbin/syno-letsencrypt renew-all</code></pre>
+</li>
+<li>check log messages
+<pre><code>grep letsencrypt /var/log/messages</code></pre>
+</li>
+</ol>

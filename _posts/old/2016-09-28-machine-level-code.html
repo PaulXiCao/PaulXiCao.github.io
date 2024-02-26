@@ -1,0 +1,83 @@
+---
+title: machine level code
+date: 2016-09-28 13:52:23.000000000 +02:00
+categories:
+- linux
+---
+<ul>
+<li>eip: address in memory of next instruction</li>
+<li>registers: some hold important addresses other used for temporary data
+<ul>
+<li>on 32-bit architecture 8 registers are used</li>
+<li>2 have special meaning:
+<ul>
+<li>Stack pointer: esp</li>
+<li>frame pointer: ebp</li>
+</ul>
+</li>
+<li>others are general purpose for most part: eax,ebx,ecx,edx,edi,esi</li>
+<li>either 32bit pointers (e??) or 16bit version (??)</li>
+<li>e?x can also be accessed as 8bit pointer: ?h, ?l</li>
+<li>example: eax, ax, ah, al</li>
+</ul>
+</li>
+<li>different notations: GAS (gnu assembly) is used here</li>
+<li>instructions can have arguments(operands)
+<ul>
+<li>immediate/const
+<ul>
+<li>using $ notation: $0x1F</li>
+</ul>
+</li>
+<li>register
+<ul>
+<li>using value stored within an register</li>
+<li>notation: %eax: use eax as value</li>
+</ul>
+</li>
+<li>memory
+<ul>
+<li>get value within some memory block</li>
+<li>different notations:
+<ul>
+<li>(%eax): get value stored in memory refernced from eax</li>
+<li>0x123: get value from address 0x123</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>data movement:
+<ul>
+<li>move:
+<ul>
+<li>movl src, dst</li>
+<li>movl $eax,$ebx:</li>
+</ul>
+</li>
+<li>push/pop from stack:
+<ul>
+<li>push src</li>
+<li>pop dst</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>stack
+<ul>
+<li>grows downward: top element has lowest addr</li>
+<li>convention: draw stack upside-down</li>
+<li>esp: holds addr of top elem in stack</li>
+<li>pushing dword:
+<ul>
+<li>decrementing esp by 4</li>
+<li>push val into addr of esp</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>program  memory used for: object code, OS info, run-time stack for managing procedure calls and returns, and blocks of memory allocated by the user. addressed using virtual addresses.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

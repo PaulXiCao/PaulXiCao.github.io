@@ -1,0 +1,49 @@
+---
+title: 'Manjaro: Newest Kernel not booted automatically'
+date: 2024-01-20 15:58:10.000000000 +01:00
+categories:
+- linux
+tags:
+- arch
+- grub
+- kernel
+- manjaro
+---
+<p><!-- wp:paragraph --></p>
+<p>Problem: You installed a new kernel in Manjaro either via GUI tool or via the commandline tool mhwd-kernel. After a restart it usually is selected by default but sometimes it is not. We will explore how to rectify that.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Your first attempt should be to select the newest kernel in the grub boot menu manually. The choice at grub boot menu is usually remembered for the next boot. If this is not the case then you need to set the following value:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code --></p>
+<pre class="wp-block-syntaxhighlighter-code">$ sudo vim /etc/default/grub
+GRUB_SAVEDEFAULT=true
+...</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:paragraph --></p>
+<p>In case the grub boot menu is not shown at bootup you can press ESC, F4 or hold down SHIFT. If this is not working then check the /etc/default/grub for the following flags:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list --></p>
+<ul><!-- wp:list-item --></p>
+<li><code>GRUB_TIMEOUT=&lt;n&gt;</code> where <code>n</code> is the time in seconds how long the grub boot menu is shown before the default value is selected (should be at least 3s)</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li><code>GRUB_TIMEOUT_STYLE=&lt;style&gt;</code> where <code>style</code> can be one of <!-- wp:list -->
+<ul><!-- wp:list-item --></p>
+<li><code>menu</code>: always show the menu</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li><code>countdown</code>: Wait for user input before showing the menu or boot the default if none given. One-liner indicates the remaining time.</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li><code>hidden</code>: Same as <code>countdown</code> without the one-liner indication.</li>
+<p><!-- /wp:list-item --></ul>
+<p><!-- /wp:list --></li>
+<p><!-- /wp:list-item --></ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p>Whenever you changed /etc/default/grub you will need to regenerate grub's cfg file, i.e.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:code --></p>
+<pre class="wp-block-code"><code>sudo grub-mkconfig -o /boot/grub/grub.cfg</code></pre>
+<p><!-- /wp:code --></p>

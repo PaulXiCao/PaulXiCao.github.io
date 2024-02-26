@@ -1,0 +1,69 @@
+---
+title: 'CMake: Installing library and linking against prebuild library'
+date: 2024-01-10 18:41:58.000000000 +01:00
+categories:
+- CMake
+- QuantLib
+---
+<p><!-- wp:paragraph --></p>
+<p>Use-case: You have a library as source code, want to install it on your system (user-/system-wide), and then make use of it from another place/folder/repo.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:heading {"level":6} --></p>
+<h6 class="wp-block-heading">Step 1: Install the library</h6>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>Assume the library to install is located at <code>/home/bob/myLibrary</code> and should be available under the <code>/home/bob/lib</code> folder.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code {"language":"bash"} --></p>
+<pre class="wp-block-syntaxhighlighter-code">cd ~/myLibrary
+cmake -B build -DCMAKE_INSTALL_PREFIX=/home/bob/lib/myLibrary
+cd build
+cmake --build . --target install </pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:paragraph --></p>
+<p>What will be created under <code>/home/bob/lib/myLibrary</code> is dependent on the library itself (in its own CMakeLists.txt it can define what kind of folder structure will be created). </p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>As an example: The QuantLib library creates by default this kind of structure:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code --></p>
+<pre class="wp-block-syntaxhighlighter-code">/home/bob/lib/QuantLib/
+  bin/...
+  include/ql/...
+  lib/
+    libQuantLib.so
+    ....</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:heading {"level":6} --></p>
+<h6 class="wp-block-heading">Step 2: Make use of the installed library within your other project</h6>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>You can make use of the installed library by using the installed headers (e.g. some hpp files under <code>include/ql</code>) as well as linking against the library (e.g. against <code>lib/libQuantLib.so)`. </code></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><code>This is best accomplished by creating a separate target within CMake for the precompiled library. We will make use of the IMPORTED</code> tag as well STATIC/SHARED depending on the library type (e.g. SHARED for .so). By setting properties we can let it know of the artifact (e.g. .so file), and the include directory.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>An example CMakeLists.txt making use of the above given installed QuantLib example library:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code --></p>
+<pre class="wp-block-syntaxhighlighter-code"># file: /home/bob/testRepo/CMakeLists.txt
+cmake_minimum_required(VERSION 3.20)
+project(Test)
+
+add_library(QuantLib SHARED IMPORTED)
+set_target_properties(QuantLib PROPERTIES
+  IMPORTED_LOCATION             "/home/bob/lib/QuantLib/lib/libQuantLib.so"
+  INTERFACE_INCLUDE_DIRECTORIES "/home/bob/lib/QuantLib/include"
+)
+
+add_executable(main)
+target_sources(main PRIVATE main.cpp)
+target_link_libraries(main PRIVATE QuantLib)</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:separator --></p>
+<hr class="wp-block-separator has-alpha-channel-opacity" />
+<!-- /wp:separator --></p>
+<p><!-- wp:paragraph --></p>
+<p>Source: <a href="https://stackoverflow.com/a/67889100/10774817">https://stackoverflow.com/a/67889100/10774817</a></p>
+<p><!-- /wp:paragraph --></p>

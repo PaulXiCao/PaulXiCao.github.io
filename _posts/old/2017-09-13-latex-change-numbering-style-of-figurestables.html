@@ -1,0 +1,15 @@
+---
+title: 'Latex: change numbering style of figures/tables'
+date: 2017-09-13 06:31:16.000000000 +02:00
+categories:
+- latex
+tags:
+- numbering
+---
+<p>put this in your preamble</p>
+<p>[code language="latex"]<br />
+% figures/tables should be labeled: 1,2,3,4,...<br />
+\renewcommand{\thefigure}{\arabic{figure}}<br />
+\renewcommand{\thetable}{\arabic{table}}<br />
+[/code]</p>
+<p>src: <a href="http://timmurphy.org/2011/07/18/latex-table-and-figure-numbering-style/">http://timmurphy.org/2011/07/18/latex-table-and-figure-numbering-style/</a></p>
