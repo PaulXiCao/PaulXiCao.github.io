@@ -17,10 +17,10 @@ This is useful in multiple scenarios:
     ```
 - When unpacking objects via structured binding some parts might not be of interest.
     This can now be represented directly in code.
-    ```c++
-    [[maybe_unused]] auto [x, y, zUnused] = f(); // old
-    auto [x, y, _] = f(); // new
-    ```
+```c++
+[[maybe_unused]] auto [x, y, zUnused] = f(); // old
+auto [x, y, _] = f(); // new
+```
 - Supposedly useful for pattern matching.
 
 Implementation by gcc14 and clang18 (both unreleased WIP versions).
