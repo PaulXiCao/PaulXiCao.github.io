@@ -11,10 +11,10 @@ C++ is on its way to get a placeholder variable `_` similar to other languages, 
 
 This is useful in multiple scenarios:
 - Variables used just for their side effects do not require a unique name anymore, e.g. locks, and other RAII objects.
-    ```c++
-    std::lock_guard someUniqueName(mutex); // old: needed to find unique name
-    std::lock_guard _(mutex); // new: no name needed anymore
-    ```
+```c++
+std::lock_guard someUniqueName(mutex); // old: needed to find unique name
+std::lock_guard _(mutex); // new: no name needed anymore
+```
 - When unpacking objects via structured binding some parts might not be of interest.
     This can now be represented directly in code.
 ```c++
