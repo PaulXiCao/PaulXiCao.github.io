@@ -23,7 +23,7 @@ auto [x, y, _] = f(); // new
 ```
 - Supposedly useful for pattern matching.
 
-Implementation by gcc14 and clang18 (both unreleased WIP versions).
+Implementation available in gcc14 and clang18 (both unreleased trunk versions).
 
 Resources:
 - Short and precise explanation by [Jason Turner's cppweekly on youtube](https://www.youtube.com/watch?v=OZ1gNuF60BU).
