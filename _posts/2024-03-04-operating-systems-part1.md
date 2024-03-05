@@ -13,7 +13,7 @@ If you are more interested in a book on the subject you might like this classic 
 
 Post series on _Operating Systems_:
 1. This post
-2. {% post_url 2024-03-05-operating-systems-part2 %}
+2. [Signals, and Race Conditions]({% post_url 2024-03-05-operating-systems-part2 %})
 
 # File Systems
 
