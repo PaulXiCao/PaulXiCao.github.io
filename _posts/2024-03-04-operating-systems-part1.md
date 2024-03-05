@@ -11,6 +11,10 @@ A broad overview will be given in the upcoming blog post series on _Operating Sy
 They are based on the [Standford CS110](https://youtube.com/playlist?list=PLai-xIlqf4JmTNR9aPCwIAOySs1GOm8sQ&si=5yMCDFm-_ED82Yae) lecture available on YouTube.
 If you are more interested in a book on the subject you might like this classic one: [_Operating System Concepts_ on amazon.com](https://www.amazon.com/Operating-System-Concepts-Abraham-Silberschatz/dp/1118112733).
 
+Post series on _Operating Systems_:
+1. This post
+2. {% post_url 2024-03-05-operating-systems-part2 %}
+
 # File Systems
 
 The lowest available API to interact with the file system is given by a C API, e.g.
