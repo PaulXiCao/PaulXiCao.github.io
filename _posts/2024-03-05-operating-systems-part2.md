@@ -9,6 +9,7 @@ tags:
 This post is part of a series on _Operating Systems_:
 1. [File Systems, System Calls, Multiprocessing]({% post_url 2024-03-04-operating-systems-part1 %})
 2. This post
+3. [Multithreading]({% post_url 2024-03-06-operating-systems-part3 %})
 
 # Inter-process communication
 
