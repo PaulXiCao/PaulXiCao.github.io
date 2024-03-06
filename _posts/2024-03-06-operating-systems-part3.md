@@ -15,11 +15,11 @@ This post is part of a series on _Operating Systems_:
 
 Previously we have covered running multiple processes.
 _Threads_ are similar to a lightweight version of such a process.
-The distinct difference is that threads spawned from a unique process will share the same memory space.
+The distinct difference is that threads spawned from one process will share the same memory space.
 Important implications are that one can share variables across threads as well as the kernel does not need to create separate copies of the memory as there is for processes (even though COW optimizations are available).
 
-A low-level C library is [pthreads](https://www.man7.org/linux/man-pages/man7/pthreads.7.html).
-A basic use case contains to create a thread via `pthread_create()`, and to wait for a thread to finish via `pthread_join()`.
+[pthreads](https://www.man7.org/linux/man-pages/man7/pthreads.7.html) is a low-level C library making multithreading possible.
+A basic use case revolves around creating a thread via `pthread_create()`, and to wait for a thread to finish via `pthread_join()`.
 A simple hello world example:
 ```c
 {% include operating-systems-part3_pthreads.c %}
@@ -73,3 +73,15 @@ It represents a light-weight version of condition variables where one checks an 
 Standard use-case is that no more than `n` threads should do a task in parallel (e.g. open web connections).
 
 See [cppreference.com](https://en.cppreference.com/w/cpp/thread/counting_semaphore) for an example.
+
+# Standard Problem: _Dining Philosophers_
+
+The [_Dining Philosophers_](https://en.wikipedia.org/wiki/Dining_philosophers_problem) is a usual problem in text books highlighting deadlocks in concurrent programs.
+
+![Philosophers think and eat](/assets/images/dining_philosophers.png)
+
+A round table has five philosophers, five plates, and five forks.
+The philosophers do 3 rounds of thinking-then-eating each for different durations.
+For eating they take the left fork first, and then the right one.
+In a naive approach there a deadlocks possible, e.g. every philosopher takes the fork to his left first and then waits indefinitely.
+Solutions would need to make use of some synchronization primitives, e.g. mutexes and condition variables or semaphores.
