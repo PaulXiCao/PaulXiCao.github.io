@@ -35,8 +35,8 @@ That name will be translated to an IP address via the domain name service (_DNS_
 
 Connections are handled via _sockets_.
 For a client program one would mostly specify the server's ip address and port to connect to.
-A server program on the other hand would make `bind()` to a specific port, `listen()` for incoming connections, and `accept()` them.
-Data transmission is possible via `read(), write()` functions.
+A server program on the other hand would `bind()` to a specific port, `listen()` for incoming connections, and `accept()` them.
+Data transmission is possible via `read()`, `write()` functions.
 
 Note, this API is not trivial to use as one needs to check how much of the requested data has been sent/read.
 Furthermore, there are many options to specify, and one has to check for many different error codes.
@@ -46,14 +46,14 @@ Documentation: man pages are available for specific commands (e.g. [`socket()`](
 ## C++
 
 There are good abstractions available on-top of the low-level C socket library.
-Quite often one builds streams around the sockets that handle the connection via the RAII idiom together with well-specified `operator<<(), operator>>()`.
+Quite often one builds streams around the sockets that handle the connection via the RAII idiom together with well-specified `operator<<()`, `operator>>()`.
 
 For example libraries see this [list in an SO answer](https://stackoverflow.com/questions/118945/best-c-c-network-library).
 Also note that networking is a current prospect for standardization.
 
-## Hello world C example
+## C example: "Hello world"
 
-The following shows a basic case where a server waits on localhost, port 12345 for an incoming connection.
+The following shows the basic case where a server waits on localhost, port 12345 for an incoming connection.
 The client connects and receives a message from the server.
 
 Note this is by no means production ready, e.g. error codes are not fully accounted for.
