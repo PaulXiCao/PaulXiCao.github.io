@@ -10,6 +10,7 @@ This post is part of a series on _Operating Systems_:
 1. [File Systems, System Calls, Multiprocessing]({% post_url 2024-03-04-operating-systems-part1 %})
 2. [Signals, and Race Conditions]({% post_url 2024-03-05-operating-systems-part2 %})
 3. This post
+4. [Networking]({% post_url 2024-03-09-operating-systems-part4 %})
 
 # Threads
 
