@@ -1,6 +1,7 @@
 ---
 permalink: /about/
 title: "About"
+read_time: false
 ---
 
 I am interested in alot of things.
