@@ -10,9 +10,9 @@ tags:
 ---
 
 This post is part of a series on _Operating Systems_:
-1. [File Systems, System Calls, Multiprocessing](2024-03-04-operating-systems-part1)
-2. [Signals, and Race Conditions](2024-03-05-operating-systems-part2)
-3. [Multithreading](2024-03-06-operating-systems-part3)
+1. [File Systems, System Calls, Multiprocessing]({% link _operating_system/1_file_system_system_calls_multiprocessing.md %})
+2. [Signals, and Race Conditions]({% link _operating_system/2_signals_race_conditions.md %})
+3. [Multithreading]({% link _operating_system/3_multithreading.md %})
 4. This post
 
 Machines connecting over the internet is ever-present in our daily lives.

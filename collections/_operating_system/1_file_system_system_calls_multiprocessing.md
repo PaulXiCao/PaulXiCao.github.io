@@ -16,9 +16,9 @@ If you are more interested in a book on the subject you might like this classic 
 
 Post series on _Operating Systems_:
 1. This post
-2. [Signals, and Race Conditions](2024-03-05-operating-systems-part2)
-3. [Multithreading](2024-03-06-operating-systems-part3)
-4. [Networking](2024-03-09-operating-systems-part4)
+2. [Signals, and Race Conditions]({% link _operating_system/2_signals_race_conditions.md %})
+3. [Multithreading]({% link _operating_system/3_multithreading.md %})
+4. [Networking]({% link _operating_system/4_networking.md %})
 
 # File Systems
 

@@ -10,10 +10,10 @@ tags:
 ---
 
 This post is part of a series on _Operating Systems_:
-1. [File Systems, System Calls, Multiprocessing](2024-03-04-operating-systems-part1)
+1. [File Systems, System Calls, Multiprocessing]({% link _operating_system/1_file_system_system_calls_multiprocessing.md %})
 2. This post
-3. [Multithreading](2024-03-06-operating-systems-part3)
-4. [Networking](2024-03-09-operating-systems-part4)
+3. [Multithreading]({% link _operating_system/3_multithreading.md %})
+4. [Networking]({% link _operating_system/4_networking.md %})
 
 # Inter-process communication
 

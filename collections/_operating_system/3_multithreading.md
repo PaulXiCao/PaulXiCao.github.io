@@ -10,10 +10,10 @@ tags:
 ---
 
 This post is part of a series on _Operating Systems_:
-1. [File Systems, System Calls, Multiprocessing](2024-03-04-operating-systems-part1)
-2. [Signals, and Race Conditions](2024-03-05-operating-systems-part2)
+1. [File Systems, System Calls, Multiprocessing]({% link _operating_system/1_file_system_system_calls_multiprocessing.md %})
+2. [Signals, and Race Conditions]({% link _operating_system/2_signals_race_conditions.md %})
 3. This post
-4. [Networking](2024-03-09-operating-systems-part4)
+4. [Networking]({% link _operating_system/4_networking.md %})
 
 # Threads
 
