@@ -37,6 +37,14 @@ exclude:
   - vendor
   - README.md
 
+collections_dir: collections
+
+collections:
+  operating_system:
+    name: "Operating System"
+    output: true
+    sort-by: lesson
+
 # Plugins (previously gems:)
 plugins:
   - jekyll-paginate

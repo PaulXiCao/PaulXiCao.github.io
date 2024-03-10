@@ -1,5 +1,8 @@
 ---
-title: "Operating Systems (Part 1): File Systems, System Calls, Multiprocessing"
+title: "OS: File Systems, System Calls, Multiprocessing (I)"
+date: 2024-03-04
+lesson: 1
+layout: posts
 categories:
   - it basics
 tags:
@@ -13,9 +16,9 @@ If you are more interested in a book on the subject you might like this classic 
 
 Post series on _Operating Systems_:
 1. This post
-2. [Signals, and Race Conditions]({% post_url 2024-03-05-operating-systems-part2 %})
-3. [Multithreading]({% post_url 2024-03-06-operating-systems-part3 %})
-4. [Networking]({% post_url 2024-03-09-operating-systems-part4 %})
+2. [Signals, and Race Conditions](2024-03-05-operating-systems-part2)
+3. [Multithreading](2024-03-06-operating-systems-part3)
+4. [Networking](2024-03-09-operating-systems-part4)
 
 # File Systems
 

@@ -1,5 +1,8 @@
 ---
-title: "Operating Systems (Part 4): Networking"
+title: "OS: Networking (IV)"
+date: 2024-03-09
+lesson: 4
+layout: posts
 categories:
   - it basics
 tags:
@@ -7,9 +10,9 @@ tags:
 ---
 
 This post is part of a series on _Operating Systems_:
-1. [File Systems, System Calls, Multiprocessing]({% post_url 2024-03-04-operating-systems-part1 %})
-2. [Signals, and Race Conditions]({% post_url 2024-03-05-operating-systems-part2 %})
-3. [Multithreading]({% post_url 2024-03-06-operating-systems-part3 %})
+1. [File Systems, System Calls, Multiprocessing](2024-03-04-operating-systems-part1)
+2. [Signals, and Race Conditions](2024-03-05-operating-systems-part2)
+3. [Multithreading](2024-03-06-operating-systems-part3)
 4. This post
 
 Machines connecting over the internet is ever-present in our daily lives.
