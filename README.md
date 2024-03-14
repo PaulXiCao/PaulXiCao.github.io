@@ -14,10 +14,7 @@ Click [**Use this template**](https://github.com/mmistakes/mm-github-pages-start
 ```bash
 sudo pacman -S docker
 sudo systemctl start docker
-sudo docker pull jekyll/jekyll
-mkdir -p vendor/bundle
-sudo docker run --rm --volume="$PWD:/srv/jekyll:Z" --volume="$PWD/vendor/bundle:/usr/local/bundle:Z" --publish [::1]:4000:4000 jekyll/jekyll jekyll serve
-// open localhost::4000 in browser
+sudo docker compose up -d
+sudo docker compose logs -f dev
+# open localhost::4000 in browser
 ```
-
-Source: [github jekyll-docker](https://github.com/envygeeks/jekyll-docker/blob/master/README.md)
