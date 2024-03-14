@@ -44,6 +44,10 @@ collections:
     name: "Operating System"
     output: true
     sort-by: lesson
+  DSA:
+    name: "Data Structure and Algorithms"
+    output: true
+    sort-by: lesson
 
 # Plugins (previously gems:)
 plugins:
