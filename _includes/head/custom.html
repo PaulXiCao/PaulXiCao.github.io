@@ -1,0 +1,23 @@
+<script>
+    window.addEventListener('DOMContentLoaded', async () => {
+        const elements = document.querySelectorAll(".language-cpp");
+        for (const element of elements) {
+            const code = element.innerText;
+            const response = await fetch(
+                'https://coliru.stacked-crooked.com/share',
+                {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        cmd: "g++ -std=c++23 -O2 -Wall -pedantic -pthread main.cpp && ./a.out",
+                        src: code,
+                    })
+                }).then(resp => resp.text());
+            const hash = response.trim();
+            const button = document.createElement('a');
+            button.href = `https://coliru.stacked-crooked.com/a/${hash}`;
+            button.target = '_blank';
+            button.innerText = "Open in Coliru";
+            element.parentNode.insertBefore(button, element.nextSibling);
+        }
+    });
+</script>
