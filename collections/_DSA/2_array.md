@@ -1,6 +1,6 @@
 ---
 title: "DSA: Data Structures"
-date: 2024-03-14
+date: 2024-03-15
 lesson: 2
 layout: posts
 categories:
@@ -11,12 +11,6 @@ tags:
   - linked list
   - amortized cost
 ---
-
-We will cover two problems:
-1. _Sequence_: A group of ordered items `x0,..,xN`.
-    Operations to perform: access/insertion/deletion by index `i`, etc.
-2. _Set_: A group of unordered items `x0,..,xN` with keys `k0,..,kN`.
-    Operations to perform: access/insertion/deletion by key `k`, etc.
 
 ## Array
 
