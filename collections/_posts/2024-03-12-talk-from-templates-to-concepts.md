@@ -31,7 +31,16 @@ The talk is rather detailed which is why this post is quite long.
 
 Generic Programming is about writing algorithms for which the actual data types will only be specified later on.
 Quick example:
-<iframe width="800px" height="400px" src="https://godbolt.org/e#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:6,positionColumn:1,positionLineNumber:6,selectionStartColumn:1,selectionStartLineNumber:6,startColumn:1,startLineNumber:6),source:'template+%3Ctypename+Number%3E%0ANumber+add(Number+a,+Number+b)+%7B+%0A++++return+a+%2B+b%3B+%0A%7D%0A%0Aint+main()+%7B+%0A++++return+add(2,+-1)%3B+%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',m:61.491301312840996,n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:gsnapshot,compilerName:'',compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'--std%3Dc%2B%2B20',overrides:!(),runtimeTools:!(),source:1,stdinPanelShown:'1',wrap:'1'),l:'5',n:'0',o:'Executor+x86-64+gcc+(trunk)+(C%2B%2B,+Editor+%231)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4"></iframe>
+```cpp
+template <typename Number>
+Number add(Number a, Number b) {
+    return a + b;
+}
+
+int main() {
+    return add(2, -1);
+}
+```
 Here the generic algorithm `add()` is defined without knowing the type it is used for later, e.g. it is instantiated for `int`s in `main()`.
 
 This should not be confused with [_Template Metaprogramming (TMP)_](https://en.wikipedia.org/wiki/Template_metaprogramming) which uses templates to do compile-time computations.
@@ -49,7 +58,40 @@ The main example is about an entity (e.g. a `concept` later) that can specify if
 
 We implement the functionality to test at compile-time if two types are the same.
 
-<iframe width="800px" height="400px" src="https://godbolt.org/e?hideEditorToolbars=true#g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'//+types+needed+to+create+a+function+which+can+extract+the+return+type+of+a+member+function%0Atemplate+%3Ctypename%3E%0Astruct+Result+%7B%7D%3B%0A%0Atemplate+%3Ctypename+R,+typename...+Args%3E%0Astruct+Result%3CR(Args...)%3E%7B%0A++++using+r_type+%3D+R%3B%0A%7D%3B%0A%0Atemplate+%3Ctypename+M,+typename+T%3E%0Aauto+extractResultType(M+T::*+pm)+-%3E+Result%3CM%3E::r_type%3B+%0A%0A//+custom+is_same%0Atemplate+%3Ctypename+T,+typename+U%3E%0Astruct+is_same+%7B+static+inline+constexpr+bool+value+%3D+false%3B+%7D%3B%0A%0Atemplate+%3Ctypename+U%3E%0Astruct+is_same%3CU,+U%3E+%7B+static+inline+constexpr+bool+value+%3D+true%3B+%7D%3B%0A%0A//+example+structs+used+to+query+return+types%0Astruct+X%7B%0A++++int+add(int+a,+int+b)+%7Breturn+a%2Bb%3B%7D%3B%0A%7D%3B%0Astruct+Y%7B%0A++++double+add(double+a)+%7Breturn+1.%2Ba%3B%7D%3B%0A%7D%3B%0A%0Aint+main()+%7B%0A++++static_assert(is_same%3Cdecltype(extractResultType(%26X::add)),+int+++%3E::value)%3B%0A++++static_assert(is_same%3Cdecltype(extractResultType(%26Y::add)),+double%3E::value)%3B%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:99.70254126058308,l:'4',m:61.491301312840996,n:'0',o:'',s:0,t:'0')),version:4"></iframe>
+```cpp
+// types needed to create a function which can extract the return type of a
+// member function
+template <typename> struct Result {};
+
+template <typename R, typename... Args> struct Result<R(Args...)> {
+  using r_type = R;
+};
+
+template <typename M, typename T>
+auto extractResultType(M T::*pm) -> Result<M>::r_type;
+
+// custom is_same
+template <typename T, typename U> struct is_same {
+  static inline constexpr bool value = false;
+};
+
+template <typename U> struct is_same<U, U> {
+  static inline constexpr bool value = true;
+};
+
+// example structs used to query return types
+struct X {
+  int add(int a, int b) { return a + b; };
+};
+struct Y {
+  double add(double a) { return 1. + a; };
+};
+
+int main() {
+  static_assert(is_same<decltype(extractResultType(&X::add)), int>::value);
+  static_assert(is_same<decltype(extractResultType(&Y::add)), double>::value);
+}
+```
 
 The point here is that this looks complicated and there is functionality from the C++ standard library which makes this simpler.
 Especially that it will get easier with each newer release (e.g. C++11 < C++17 < C++20).
@@ -74,7 +116,17 @@ struct is_container { static const bool value = ???; };
 
 A function containing the ellipses `...` can match any number of arguments (variadic template) and is inferior in overload resolution.
 Example:
-<iframe width="800px" height="400px" src="https://www.compiler-explorer.com/e?hideEditorToolbars=true#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:4,positionColumn:1,positionLineNumber:4,selectionStartColumn:1,selectionStartLineNumber:4,startColumn:1,startLineNumber:4),source:'%23include+%3Ciostream%3E%0A%0Avoid+print(...)+%7B+std::cout+%3C%3C+%22ellipses.%5Cn%22%3B+%7D%0A%0Avoid+print(int)+%7B+std::cout+%3C%3C+%22integer.%5Cn%22%3B+%7D%0A%0Aint+main()+%7B%0A++++print(1)%3B%0A++++print(%22Hello%22)%3B%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g132,compilerName:'',compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'',source:1,stdinPanelShown:'1',wrap:'1'),l:'5',n:'0',o:'Executor+x86-64+gcc+13.2+(C%2B%2B,+Editor+%231)',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4"></iframe>
+```cpp
+#include <string_view>
+
+constexpr std::string_view print(...) { return "print(...) called"; }
+constexpr std::string_view print(int) { return "print(int) called"; }
+
+int main() {
+  static_assert("print(int) called" == print(1));
+  static_assert("print(...) called" == print("some example string"));
+}
+```
 
 ### Background Knowledge: SFINAE
 
@@ -82,17 +134,77 @@ _Substition Failure Is Not An Error_.
 A function template is allowed to cause a compilation error during type substitution.
 This will only lead to the funtion being neglected in overload resolution (and the compilation error is silenced).
 
-<iframe width="800px" height="400px" src="https://www.compiler-explorer.com/e?hideEditorToolbars=true#z:OYLghAFBqd5QCxAYwPYBMCmBRdBLAF1QCcAaPECAMzwBtMA7AQwFtMQByARg9KtQYEAysib0QXACx8BBAKoBnTAAUAHpwAMvAFYTStJg1DIApACYAQuYukl9ZATwDKjdAGFUtAK4sGE6a4AMngMmAByPgBGmMQgZtIADqgKhE4MHt6%2B/qRJKY4CwaERLNGx8baY9vkMQgRMxAQZPn5SFVVptfUEheFRMXHSCnUNTVmtQ109xaUDAJS2qF7EyOwc5gDMIcjeWADUJutuTkPEmKwH2CYaAIIbWzuY%2B4cEAJ4JmAD6BMRMhAoXuwA9IDdowmJF6B88FQvldbjdgbs3AhMMgANYKXb8Yi7V7vTEEBBMAi7IkAN0eTF2oSGmHQ%2BwAbBoJgQvP8mbs2CUYnCCJgWAkDHyDm48WC2LsACoXOEnLwOUlMBQfFlsj5c0r7ADsVhuCWIeDJxPYcN2Ztx/MFxpFYuYErkpFxb3FjwOABFdlhtmKIHIQCBVQpZjKbubdiy8MhdmgGLTVPrdpFUJ4LUNfQAqWbaiy7U6s4gMXHELyYA45kxat1w03mvkCoWl57Ou2Ny6h80RqMxuMJpMpvlpgB0w6zFZzeaWhaoYiUZe1VZucISXghkZANbNnejAh7OL7tF2Ru8rvWHoHBBF0vW2AgDC8tFoCW%2BwfWutulbL1Zudatwqb7xbKUQ2uEJaBCR5uz5eM92TA8iWVQN1X5UoPjJJ4PXglU6lZZUNR5Q4r2wf0jxLT9FwREFsFUVhBUeKgvAYBw0l2NkQmAXYhAAMQASTCa5sFxVBQWYCFHhIT08AUcF6ETJU6V2ARcRRXZ9UwJRGLEqhw2wtlOWQnlv0tBsbWbVhHkI3lTIlIZ0H9MFRKhGEL0OTDELw4hUMvC5HTJVA8HQYD9RCAgsOJNkIElUcdQ3bTbJQRYSRFEV9jMMxJWdT1UDUxUKV2KlAz07liEHbSwoUEAUrMJ43GSyV/QKpLDl2MA1gAVjcBgWrI98F3ha4f2M/8XSA69LIAszYrskTIWhWFDjAMBXJ03D9I8skvOvHy/IC0a9QNQRQpwiKorfMMbP9NAvESw5kvMNKMvQLLMQYVASXJSlSpwwrSkHEx2oYO7uorXq4URKiaJktkmGAUsbjlBV0veAB1QgEAAWVW7NPsjbdYyghNgs%2B3T3V2SQzDnYHuvhklEcwFHCQSjGiuzSnXy/EDBE5X4GAgE6YqCg7Awi516fR1ax2Bl9y3bM0BZCoXadFxnxeiyspf2GXc0wfNCw0IGPxuDh5loThWt4PwOC0UhUE4GrLGscNFmWV0zHWHhSAITQjfmNEQFajR9E4SRza963OF4cqA89y2jdIOBYCQTBVFRK6SHISh6mABRlEMSohAQVAAHcLfdtABToYk0hz0JaHzouLatsuEjofpgC4dYzFIJuW%2BIMIzPDrvUHL%2BhiAAeSuuvi9DpPUWuYgs4HmfkFqfALd4fhBBEMR2FaDf5CUNRQ90Lh9EMYxrGsfQ8EicrIHmVAnzScqOAjp2Vj0GyQmrvOC6n7heELj8BInAeDG1NiHGOYcOBURTkQHEqgAAcDIAC0DJJC7GAMgKM7dBxVQgHbKwlhHS4EIOJDYXBZi8GjloWYPs/YBxNhwYOpAG68Bti/WwIAo5e1oYHDgZgIFW3YVQnh8wKTEBSM4SQQA%3D"></iframe>
+```cpp
+#include <type_traits> // enable_if_t
+
+#include <string_view>
+
+// Checks for types that have a nested `status` member
+template <typename T> struct has_status_member {
+private:
+  template <typename U, typename = decltype(U::status)>
+  static constexpr bool test(U *) { return true; }
+
+  template <typename> static constexpr bool test(...) { return false; }
+
+public:
+  static constexpr bool value = test<T>(nullptr);
+};
+
+template <typename T>
+inline constexpr bool has_status_member_v = has_status_member<T>::value;
+
+// Example function using SFINAE to enable or disable based on the presence of
+// status member
+template <typename T>
+constexpr typename std::enable_if_t<has_status_member_v<T>, std::string_view>
+print_status() { return "status"; }
+
+template <typename T>
+constexpr typename std::enable_if_t<!has_status_member_v<T>, std::string_view>
+print_status() { return "no status"; }
+
+// Example usage
+struct TypeWithMember { int status; };
+struct TypeWithoutMember {};
+
+int main() {
+  static_assert("status"    == print_status<TypeWithMember   >());
+  static_assert("no status" == print_status<TypeWithoutMember>());
+  return 0;
+}
+```
 
 SFINAE is used in multiple places in that example:
 1. The member function `has_status_member::test(U*)` fails to compile if `U::status` does not exist.
-2. The functions `print_value` contain an `std::enable_if_t` in their return type.
+2. The functions `print_status` contain an `std::enable_if_t` in their return type.
 
 `std::enable_if_t` is a functionality to conditionally compile a construct leveraging SFINAE for pre-C++20.
 
 ### Implementation
 
-<iframe width="800px" height="400px" src="https://godbolt.org/e?hideEditorToolbars=true#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:14,endLineNumber:21,positionColumn:14,positionLineNumber:21,selectionStartColumn:14,selectionStartLineNumber:21,startColumn:14,startLineNumber:21),source:'%23include+%3Carray%3E%0A%23include+%3Ccstddef%3E%0A%23include+%3Cutility%3E%0A%0Atemplate+%3Ctypename+T%3E%0Astruct+is_container+%7B%0Aprivate:%0A++++template+%3Ctypename%3E%0A++++static+constexpr+std::byte+test(...)%3B%0A%0A++++template+%3Ctypename+U%3E%0A++++static+constexpr+std::size_t+test(typename+U::iterator*)%3B%0A%0Apublic:%0A++++static+constexpr+bool+value+%3D+(sizeof(size_t)+%3D%3D+sizeof(test%3CT%3E(nullptr)))%3B%0A%7D%3B%0A%0Aint+main()+%7B%0A++++static_assert(false+%3D%3D+is_container%3Cint+++++++++++++++%3E::value)%3B%0A++++static_assert(true++%3D%3D+is_container%3Cstd::array%3Cint,+1%3E%3E::value)%3B%0A++++return+0%3B%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',m:61.491301312840996,n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:g132,compilerName:'',compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'',source:1,stdinPanelShown:'1',wrap:'1'),l:'5',n:'0',o:'Executor+x86-64+gcc+13.2+(C%2B%2B,+Editor+%231)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4"></iframe>
+```cpp
+#include <cstddef> // byte, size_t
+
+#include <array>
+
+template <typename T> struct is_container {
+private:
+  template <typename> static constexpr std::byte test(...);
+
+  template <typename U>
+  static constexpr std::size_t test(typename U::iterator *);
+
+public:
+  static constexpr bool value = (sizeof(size_t) == sizeof(test<T>(nullptr)));
+};
+
+int main() {
+  static_assert(!is_container<int               >::value);
+  static_assert( is_container<std::array<int, 1>>::value);
+  return 0;
+}
+```
 
 This implements the `is_container` functionality by only checking if the given type has a member `iterator` type.
 It is quite feature dense and needs some more explanation:
@@ -106,8 +218,23 @@ It is quite feature dense and needs some more explanation:
 
 We can use this as follows
 
-<iframe width="800px" height="400px" src="https://godbolt.org/e?hideEditorToolbars=true#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:16,positionColumn:1,positionLineNumber:16,selectionStartColumn:1,selectionStartLineNumber:16,startColumn:1,startLineNumber:16),source:'%23include+%3Carray%3E%0A%0Atemplate+%3Ctypename+T%3E%0Astruct+is_container+%7B%0Aprivate:%0A++++template+%3Ctypename%3E%0A++++static+constexpr+std::byte+test(...)%3B%0A%0A++++template+%3Ctypename+U%3E%0A++++static+constexpr+std::size_t+test(typename+U::iterator*)%3B%0A%0Apublic:%0A++++static+constexpr+bool+value+%3D+(sizeof(std::size_t)+%3D%3D+sizeof(test%3CT%3E(nullptr)))%3B%0A%7D%3B%0A%0Atemplate+%3Ctypename+T%3E%0Aconsteval+int+sum(T+t)+%7B%0A++++if+constexpr+(is_container%3CT%3E::value)+%7B%0A++++++++int+ret+%3D+0%3B%0A++++++++for+(auto%26%26+e+:+t)%0A++++++++++++ret+%2B%3D+e%3B%0A++++++++return+ret%3B%0A++++%7D%0A++++else+%0A++++++++return+t%3B%0A%7D%0A%0Aint+main()+%7B%0A++++static_assert(42+%3D%3D+sum(42))%3B%0A++++static_assert(10+%3D%3D+sum(std::array%7B1,+2,+3,+4%7D))%3B%0A++++return+0%3B%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',m:61.491301312840996,n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:clang_trunk,compilerName:'',compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'--std%3Dc%2B%2B20',overrides:!(),runtimeTools:!(),source:1,stdinPanelShown:'1',wrap:'1'),l:'5',n:'0',o:'Executor+x86-64+clang+(trunk)+(C%2B%2B,+Editor+%231)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4"></iframe>
+```cpp
+template <typename T> consteval int sum(T t) {
+  if constexpr (is_container<T>::value) {
+    int ret = 0;
+    for (auto &&e : t)
+      ret += e;
+    return ret;
+  } else
+    return t;
+}
 
+int main() {
+  static_assert(42 == sum(42));
+  static_assert(10 == sum(std::array{1, 2, 3, 4}));
+  return 0;
+}
+```
 
 ## Main Example: `are_all_integral` Concept
 
@@ -122,7 +249,31 @@ See the examples in the previous link.
 
 The following `are_all_integral` concept checks for each template argument if `std::is_integral` holds and combines those results via the `std::conjunction` which performs a fold expression (see comments in code).
 
-<iframe width="800px" height="400px" src="https://godbolt.org/e?hideEditorToolbars=true#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:1,endLineNumber:1,positionColumn:1,positionLineNumber:1,selectionStartColumn:1,selectionStartLineNumber:1,startColumn:1,startLineNumber:1),source:'%23include+%3Ctype_traits%3E+//+conjunction,+is_integral%0A%09%09%0Atemplate+%3Ctypename...+T%3E%0Astruct+are_all_integral+%0A++++:+public+%0A++++++++std::conjunction%3C+++++++++++++++//+performs+ANDs+of+all+given+arguments.+Result+saved+in+value+member%0A++++++++++++std::is_integral%3CT%3E...++++++//+unpacks+to:+std::is_integral%3CT0%3E,+std::is_integral%3CT1%3E,+...%0A++++++++%3E+%0A++++%7B%7D%3B%0A%0A//+short-hand+notation%0Atemplate+%3Ctypename...+T%3E%0Aconstexpr+bool+are_all_integral_v+%3D+are_all_integral%3CT...%3E::value%3B%0A%0Aint+main()+%7B%0A++++static_assert(+are_all_integral_v%3Cint+++++%3E)%3B%0A++++static_assert(+are_all_integral_v%3Cint,+int%3E)%3B%0A%0A++++static_assert(!!are_all_integral_v%3Cfloat+++++%3E)%3B%0A++++static_assert(!!are_all_integral_v%3Cint,+float%3E)%3B%0A%0A++++return+0%3B%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',m:61.491301312840996,n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:clang_trunk,compilerName:'',compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'--std%3Dc%2B%2B20',overrides:!(),runtimeTools:!(),source:1,stdinPanelShown:'1',wrap:'1'),l:'5',n:'0',o:'Executor+x86-64+clang+(trunk)+(C%2B%2B,+Editor+%231)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4"></iframe>
+```cpp
+#include <type_traits> // conjunction, is_integral
+
+template <typename... T>
+struct are_all_integral
+    : public std::conjunction<   // performs ANDs of all given arguments. Result
+                                 // saved in value member.
+          std::is_integral<T>... // unpacks to: std::is_integral<T0>,
+                                 // std::is_integral<T1>, ...
+          > {};
+
+// short-hand notation
+template <typename... T>
+constexpr bool are_all_integral_v = are_all_integral<T...>::value;
+
+int main() {
+  static_assert(are_all_integral_v<int>);
+  static_assert(are_all_integral_v<int, int>);
+
+  static_assert(!are_all_integral_v<float>);
+  static_assert(!are_all_integral_v<int, float>);
+
+  return 0;
+}
+```
 
 ## Container Definition
 
@@ -152,7 +303,71 @@ It accepts a parameter pack and if any argument is ill-formed then it is itself 
 An implementation which should mostly proof that templates can be quite scarry for the average programmer.
 This is *hard to maintain, hard to debug, and error messages are just plain crazy*.
 
-<iframe width="800px" height="400px" src="https://godbolt.org/e?hideEditorToolbars=true#z:OYLghAFBqd5QCxAYwPYBMCmBRdBLAF1QCcAaPECAMzwBtMA7AQwFtMQByARg9KtQYEAysib0QXACx8BBAKoBnTAAUAHpwAMvAFYTStJg1DIApACYAQuYukl9ZATwDKjdAGFUtAK4sGIMwDMpK4AMngMmAByPgBGmMQgAKzSAA6oCoRODB7evv5BaRmOAmER0SxxCcm2mPbFDEIETMQEOT5%2BgTV1WY3NBKVRsfFJ0gpNLW15nWN9A%2BWVIwCUtqhexMjsHOYB4cjeWADUJgFuhPFMRMTH2Ae3twD09wdxwOGkB67vEaoEJhoAgttdvtMEcTgQAJ4pTAAfQIxCYhAU1weTyoYiUcKhmHeADdUHh0HD3uECJhgAjaDC0AwZoISQpqQJcfFHDF6DDcQzOQSiVyDgA6IV/QEAoEMPZeQ7HNzNBEQ64i8WS6UnMbEcLARViwLAqWgmVeRy0QgKgI3O6og4pRFXHU7CUgsFuFkOEja0X/R4HZAITDIADWChABzG6BAIBe4QgbkWBzwCgOAHdarQALT8YhsdAisksFIGMnOyHQ5hsA5uD1eDJGA4AFQs5PCYIAIgcsHsS5gIGGI1GGD2COGQB3aLixDLK%2BaIItZ8cLEcxQDvb7/UGQ72QK4Y3GE8nUxmSNnc5h84WDeDsWXQVPsCLq5r69gGOhW%2B3/bQu4Ph9vN6Px7Qk7XDOc4BFYS5ek8q6BsGzxNgwByGK%2BTR0PGZIIpciaiAhcQ%2Bqg%2BbNJgr64ngTAHGAYDHC2J5nhcF5uF214HBYACS7yMawoLYCxVY1sA9aRKgBDYAAjl4YhvqOX5/h%2BAEyqxwFxhRVGhkOEb/hOJzcYpizzkqy5QX6MEbmpIDfAQED9ix6G7omKa0OmmbHgCeYFnRxZXpxzE8ea958fWLESpJH7SaZ5nfupsmaW4CnTrOulgfpkE%2BkZ66IQhZwYSQPqGHB77EJgVDxIwGw5i5p5uUWMoceW1nxLxj51i2xVUMFnbYhAABUMl7HJJx1VccUJeBnrelg6JeJ%2B8ZnqejBNPUNGVfRNU3uxnnlip%2BKEh66peA48aMjSKERMQBwmcO6K0JiXZHAA7FYt3UYlEGueeHmll5t4irt%2B0JkygiIidMoipalpuO8IOg7cm5bUSvwnJDUOWg28FAeaEMAkjoN1s%2BOYnLeGP/FjyOBaYJwo68DBo3e6OI8TdaCcJYnRRT4TU%2B8OMvtT1wc81BVUDKrNU/jiq%2BZjSMepakt3OdEakuSlL/XS8OVuLUMxKgniE1jm5/TSLItHg7KwriguM6J4mAeTjaU%2BzT5cyLvno88mtWzcSF01jDBCapw5/bDnKC3zhWCzbbOOzTkfpWVRPE9Dpl/VgP1shypvW6jEcoh7avE7rh2oCkEJK/Ce0pybocZ24X3mtHntI3nMJJyXDhG6ngu49zNfZ7HccN2ghfF8Qpet%2BX5Md5nOdS2LPdgjcJj3fPT0jSK3oKAgJAEGmCBIQc3vzVki1vdV603jt%2B/IHhtJkqoKSnRrngHf9x3xJyb567IgP1RHEYAV4mB6RBUkBwWCAxnHdEaloZiOGQDCJgCglAtAgI/I6n9iCBxOL7CMcomBmlOPSLgKJbjXGGnTKBeAYFwIQRZZBH9wgvzTm4TBIB1SPixsQgBM8yEUPgayJB78AZ0LQQwphrpLgylJIQoh5oSEQUgefWBPDEEUX4c/IRMp4yCDjhLaRHC5EXHIQoqhEBlH5wESddBjDNw2jwINPBBASSCBROw56npLQFQIGsBCGgOGLw4MsWgnBEi8D8BwLQpBUCcErJYawoZVjrANIEHgpACCaD8csAMSQND6E4JIXgLAQAADYuACkkAATi4AEDQFSuBmAABySA0KU0pBTSAhLCREjgvBgxZJSaEvxpA4CwCQJgVQ/ojQkHIJQZowAFDKEMLUIQ68kwhKSWgfMdB9ECDmREWgizUDLNSaQNZKQ6DDD2IYYAcIh4MADEc/CJz6DEEiJxTgvBjmnOIAAeSNHsg5fTgijOQP8YgMzXkAv9I0fAITeD8EECIMQ7ApAyEEIoFQ6h/m6C4PoC5KBrDWH0EbYMkBlgF3qMGDgaY0xhioqYaJlgzDtINhqJO8BljXMcGwOsrsiUzhWGsDYegwzhG2QspZKzeBJgRCkTgPB/GBOCYcjp2BAXjNOqoWpBS0wFMkD6AwtYIAlxuXGGMeLLDvFwIQbK2wuCLF4L0rQs5SB%2BiYFgBIvKMmJCyQEjguTWmKrBd05JqTHXerMAq/5HS7XBuWAbDIzhJBAA%3D"></iframe>
+```cpp
+#include <iterator> // begin, end, next
+#include <type_traits> // false_type, void_t, integral_constant, is_convertible_v, is_void_v, ...
+
+#include <array>
+#include <string>
+#include <utility> // pair
+#include <vector>
+
+// checks: std::begin(C) is well-formed
+template <typename C> using TBegin = decltype(std::begin(std::declval<C>()));
+
+// checks: std::end(C) is well-formed
+template <typename C> using TEnd = decltype(std::end(std::declval<C>()));
+
+// checks: begin and tail iterators can be compared via !=
+template <typename BI, typename EI>
+using TNotEqual = decltype(std::declval<BI>() != std::declval<EI>());
+
+// checks: std::next(beginIter) is well-formed
+template <typename BI> using TInc = decltype(std::next(std::declval<BI>()));
+
+// checks: an iterator can be dereferenced
+template <typename Iter> using TDeref = decltype(*std::declval<Iter>());
+
+// default implementation
+template <typename C, typename = void> struct is_container : std::false_type {};
+
+template <typename C>
+struct is_container<
+        C,
+        std::void_t<
+            TBegin<C>,
+            TEnd<C>,
+            TInc<TBegin<C>>,
+            TNotEqual<TBegin<C>, TEnd<C>>,
+            TDeref<TBegin<C>>
+        >
+    >
+    : std::integral_constant<
+        bool,
+        std::is_convertible_v<TNotEqual<TBegin<C>, TEnd<C>>, bool> and
+            (not std::is_void_v<TDeref<TBegin<C>>>)                and
+            std::is_destructible_v<TBegin<C>>                      and
+            std::is_copy_constructible_v<TBegin<C>>                and
+            std::is_destructible_v<TEnd<C>>                        and
+            std::is_copy_constructible_v<TEnd<C>
+        >
+    > {};
+
+// short-hand notation
+template <typename C>
+static constexpr bool is_container_v = is_container<C>::value;
+
+int main() {
+  static_assert(is_container_v<std::array<int,1>>);
+  static_assert(is_container_v<std::string      >);
+  static_assert(is_container_v<std::vector<int> >);
+
+  static_assert(!is_container_v<int                >);
+  static_assert(!is_container_v<std::pair<int, int>>);
+
+  return 0;
+}
+```
 
 Note, that every test refers to one requirement listed in the Container Definition section.
 
@@ -164,26 +379,159 @@ _Concepts_ are a functionality to restrict possible arguments to a template.
 The [`<concepts>` library](https://en.cppreference.com/w/cpp/concepts) introduces already general concepts, e.g. `std::same_as, std::integral`.
 
 A simple example usage:
-<iframe width="800px" height="400px" src="https://godbolt.org/e?hideEditorToolbars=true#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:5,endLineNumber:8,positionColumn:5,positionLineNumber:8,selectionStartColumn:5,selectionStartLineNumber:8,startColumn:5,startLineNumber:8),source:'%23include+%3Cconcepts%3E%0A%0Aconstexpr+bool+myComparison(std::integral+auto+a,+std::integral+auto+b)+%7B+return+a+%3D%3D+b%3B+%7D%0A%0Aint+main+()+%7B%0A++++static_assert(myComparison(2,+2))%3B%0A++++//+static_assert(myComparison(1.0,+1.0))%3B+//+fails+to+compile%0A++++%0A++++return+0%3B%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',m:61.491301312840996,n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:clang_trunk,compilerName:'',compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'--std%3Dc%2B%2B20',overrides:!(),runtimeTools:!(),source:1,stdinPanelShown:'1',wrap:'1'),l:'5',n:'0',o:'Executor+x86-64+clang+(trunk)+(C%2B%2B,+Editor+%231)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4"></iframe>
+```cpp
+#include <concepts>
+
+constexpr bool myComparison(std::integral auto a, std::integral auto b) {
+  return a == b;
+}
+
+int main() {
+  static_assert(myComparison(2, 2));
+  // static_assert(myComparison(1.0, 1.0)); // fails to compile
+
+  return 0;
+}
+```
 
 There are multiple ways to define a concept yourself.
 If possible one should make use of concepts already available in the C++ standard (e.g. `std::convertible_to`).
 Requirements can also be combined via boolean expressions (e.g. `and`, `not`).
 See this example:
-<iframe width="800px" height="400px" src="https://godbolt.org/e?hideEditorToolbars=true#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:24,endLineNumber:5,positionColumn:24,positionLineNumber:5,selectionStartColumn:5,selectionStartLineNumber:5,startColumn:5,startLineNumber:5),source:'%23include+%3Cconcepts%3E%0A%0Atemplate+%3Ctypename+T%3E%0Aconcept+convertible_to_int_not_double+%3D+%0A++++std::convertible_to%3CT,+int%3E+and+%0A++++(not+std::same_as%3CT,+double%3E)%3B%0A%0Aint+main+()+%7B%0A++++convertible_to_int_not_double+auto+a+%3D+1%3B%0A++++//+convertible_to_int_not_double+auto+b+%3D+1.0%3B++//+fails+to+compile:+double%0A++++//+convertible_to_int+auto+c+%3D+%22hello%22%3B+++++++++//+fails+to+compile:+char*%0A%0A++++return+0%3B%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',m:61.491301312840996,n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:clang_trunk,compilerName:'',compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'--std%3Dc%2B%2B20',overrides:!(),runtimeTools:!(),source:1,stdinPanelShown:'1',wrap:'1'),l:'5',n:'0',o:'Executor+x86-64+clang+(trunk)+(C%2B%2B,+Editor+%231)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4"></iframe>
+```cpp
+#include <concepts>
+
+template <typename T>
+concept convertible_to_int_not_double =
+    std::convertible_to<T, int> and (not std::same_as<T, double>);
+
+int main() {
+  convertible_to_int_not_double auto a = 1;
+  // convertible_to_int_not_double auto b = 1.0;  // fails to compile: double
+  // convertible_to_int auto c = "hello";         // fails to compile: char*
+
+  return 0;
+}
+```
 
 Furthermore, one can employ `require` statements to specify concepts.
 The keyword is quite overloaded to work in multiple ways.
 Some examples:
-<iframe width="800px" height="400px" src="https://godbolt.org/e?hideEditorToolbars=true#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:56,endLineNumber:16,positionColumn:56,positionLineNumber:16,selectionStartColumn:56,selectionStartLineNumber:16,startColumn:56,startLineNumber:16),source:'%23include+%3Cconcepts%3E%0A%0Atemplate+%3Ctypename+T%3E+requires+(sizeof(T)+%3E+sizeof(int))%0Astruct+larger_than_int+:+public+std::true_type+%7B%7D%3B%0A%0Atemplate+%3Ctypename+BI,+typename+EI%3E%0Aconcept+neq_on+%3D+requires(BI+bi,+EI+ei)%7B%0A++++%7Bbi+!!%3D+ei%7D+-%3E+std::convertible_to%3Cbool%3E%3B%0A%7D%3B%0A%0Aint+main+()+%7B%0A++++static_assert(larger_than_int%3Clong%3E%7B%7D)%3B%0A++++//+static_assert(larger_than_int%3Cshort%3E%7B%7D)%3B+//+fails+to+compile%0A%0A++++neq_on%3Cbool%3E+auto+a+%3D+true%3B%0A++++//+neq_on%3Cchar*%3E+auto+b+%3D+true%3B+//+fails+to+compile++++%0A%0A++++return+0%3B%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',m:61.491301312840996,n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:clang_trunk,compilerName:'',compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'--std%3Dc%2B%2B20',overrides:!(),runtimeTools:!(),source:1,stdinPanelShown:'1',wrap:'1'),l:'5',n:'0',o:'Executor+x86-64+clang+(trunk)+(C%2B%2B,+Editor+%231)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4"></iframe>
+```cpp
+#include <concepts>
+
+template <typename T>
+  requires(sizeof(T) > sizeof(int))
+struct larger_than_int : public std::true_type {};
+
+template <typename BI, typename EI>
+concept neq_on = requires(BI bi, EI ei) {
+  { bi != ei } -> std::convertible_to<bool>;
+};
+
+int main() {
+  static_assert(larger_than_int<long>{});
+  // static_assert(larger_than_int<short>{}); // fails to compile
+
+  neq_on<bool> auto a = true;
+  // neq_on<char*> auto b = true; // fails to compile
+
+  return 0;
+}
+```
 
 To restrict function templates we can use concepts in multiple ways as well:
-<iframe width="800px" height="400px" src="https://godbolt.org/e?hideEditorToolbars=true#g:!((g:!((g:!((h:codeEditor,i:(filename:'1',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,selection:(endColumn:2,endLineNumber:34,positionColumn:2,positionLineNumber:34,selectionStartColumn:2,selectionStartLineNumber:34,startColumn:2,startLineNumber:34),source:'%23include+%3Cconcepts%3E%0A%0Atemplate+%3Ctypename+BI,+typename+EI%3E%0Aconcept+neq_on+%3D+requires(BI+bi,+EI+ei)+%7B%0A++%7B+bi+!!%3D+ei+%7D+-%3E+std::convertible_to%3Cbool%3E%3B%0A%7D%3B%0A%0Atemplate+%3Ctypename+EI,+neq_on%3CEI%3E+BI%3E+constexpr+bool+fun(BI+bi,+EI+ei)+%7B%0A++return+true%3B%0A%7D%0A%0Atemplate+%3Ctypename+BI,+typename+EI%3E%0A++requires+neq_on%3CBI,+EI%3E%0Aconstexpr+bool+fun_2(BI+bi,+EI+ei)+%7B%0A++return+true%3B%0A%7D%0A%0Atemplate+%3Ctypename+BI,+typename+EI%3E%0Aconstexpr+bool+fun_3(BI+bi,+EI+ei)%0A++requires+neq_on%3CBI,+EI%3E%0A%7B%0A++return+true%3B%0A%7D%0A%0Aconstexpr+bool+fun_4(auto+bi,+neq_on%3Cdecltype(bi)%3E+auto+ei)+%7B+return+true%3B+%7D%0A%0Aint+main()+%7B%0A++static_assert(fun(0,+0))%3B%0A++static_assert(fun_2(0,+0))%3B%0A++static_assert(fun_3(0,+0))%3B%0A++static_assert(fun_4(0,+0))%3B%0A%0A++return+0%3B%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',m:61.491301312840996,n:'0',o:'',s:0,t:'0'),(g:!((h:executor,i:(argsPanelShown:'1',compilationPanelShown:'0',compiler:clang_trunk,compilerName:'',compilerOutShown:'0',execArgs:'',execStdin:'',fontScale:14,fontUsePx:'0',j:1,lang:c%2B%2B,libs:!(),options:'--std%3Dc%2B%2B20',overrides:!(),runtimeTools:!(),source:1,stdinPanelShown:'1',wrap:'1'),l:'5',n:'0',o:'Executor+x86-64+clang+(trunk)+(C%2B%2B,+Editor+%231)',t:'0')),header:(),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4"></iframe>
+```cpp
+#include <concepts>
+
+template <typename BI, typename EI>
+concept neq_on = requires(BI bi, EI ei) {
+  { bi != ei } -> std::convertible_to<bool>;
+};
+
+template <typename EI, neq_on<EI> BI> constexpr bool fun_1(BI bi, EI ei) {
+  return true;
+}
+
+template <typename BI, typename EI>
+  requires neq_on<BI, EI>
+constexpr bool fun_2(BI bi, EI ei) {
+  return true;
+}
+
+template <typename BI, typename EI>
+constexpr bool fun_3(BI bi, EI ei)
+  requires neq_on<BI, EI>
+{
+  return true;
+}
+
+constexpr bool fun_4(auto bi, neq_on<decltype(bi)> auto ei) { return true; }
+
+int main() {
+  static_assert(fun_1(0, 0));
+  static_assert(fun_2(0, 0));
+  static_assert(fun_3(0, 0));
+  static_assert(fun_4(0, 0));
+
+  return 0;
+}
+```
 
 ### Third Attempt: Concepts For Each Requirement
 
 The following implementation uses seperate concepts for each requirement.
 This results in more maintainable/readable code as well as more descriptive error messages.
 
-<iframe width="800px" height="400px" src="https://godbolt.org/e#z:OYLghAFBqd5QCxAYwPYBMCmBRdBLAF1QCcAaPECAMzwBtMA7AQwFtMQByARg9KtQYEAysib0QXACx8BBAKoBnTAAUAHpwAMvAFYTStJg1DIApACYAQuYukl9ZATwDKjdAGFUtAK4sGEgKykrgAyeAyYAHI%2BAEaYxCAAzADspAAOqAqETgwe3r4BaRlZAqHhUSyx8cm2mPaOAkIETMQEuT5%2BXIF2mA7Zjc0EpZExcYkpCk0tbfmdtpODYcMVo8kAlLaoXsTI7BzmCWHI3lgA1CYJbmgMO6kECufYJhoAgvuHx5hnF4RxTETEDyerxeb2uHy%2BbmaxCYAE9ASCzAcwV5Tuc3AA3Hr/eHA54ETAsVIGfEQggw1KMVifNw4q43AgnBioAgAfUwAEcvGIWbFgGE2Qx0F8ACInYgcrx4cUKCBuE7IVZnJJWF4nJUWE4TdAgEC8sIQBUnMBgc6irU61wGxUmJKigC0D01BG1IAUVJZTHuF2iqE8gISKtetvOgaB%2BMJxM%2BaLJFOYbBONISjxedMwtxOCE9PMwfIYHsFAqFprFEqlmBlcsNNsDavNupz%2BoVIaBtedFsFVubIODAaBYYJRL%2BUYuMcp8cTyeeqfTh3FbEETGi9GzuZFJc5ZYr8utyrOqqdLvCqgIEDreoYVtWIb3QeFXdx4cHJOj5LH1NpAnpJyw4qocUYyB4Iuy7niyTKsuiqB4EWCSiuKG7SrK27qi266StKjLMgeOpumwHpem4WBHKOEAAFRng2F4KusJyQdB/qhj2oYvI%2Bkakq%2BcbvkmQLTgyoGGOghYsmgqQwsJAgTMQXi9EumD5oJWCSdJjiyWu8HoeWSFVsqqHqZu2EoKgoniQwSkyfQaJEbQJEUbml4MbppYYXWIliVcZkqRZFxWTZbYgJaarUQ5%2B56c5fmKQQUnmZgaJqnF349NZr6nn5572dxvYhU55YGRFUWeTFFzxWqPnJXWAXbleGWMXemUPgObEvrGVIJh%2B1xpgyHgLosxBrpmCgrvyAmFmiE7FeNE2TRNAk3lNc0nLOBKME0smDQwo2OvNW3TYKqHbcVP6YH%2B4rXEBq2geBLJ0egG1Jvt40CXt91qvxBauOJxnuZFyl4Ktw15T9sm3Y8dVAmEDIsEw%2Bo7jWCayFD4S9UwXhECcTBrnWUKwtWXCkCcZg2rVsNdU0PVoyjqAnNEGN%2BZiDgkDjeME0xfb7gA9GzcPdYj5Oo8ga5cNeHMnFQUO0AoJx86ghJ0DF7OcyTCNxLzlMwaK5hmIuphmATAYnMLot0BLUsyxZIJZQQWwMCcGj3oTHDrLQnD%2BLwfgcFopCoJwNKWNYmqbNsUaIjwpAEJoDvrAA1iA/gaPonCSLwLAgAAbFwAB0kgAJxcAkGi51wZgABySBoWdZynpBux7XscLwCggHHYfuw7pBwLASCYKoPQU2QFAQM0wAKMohi1EICCoAA7m7IdoKbfzZCP4S0OPU/V7wc%2BpLL8RHIYwAst9DCR6Qm/bxEVKcBv0tb/QxAAPIo6v0/h0E3fIM8xBD5fr89I0%2BBu7wfgggRBiHYFIGQghFAqHUC3UguhcYGCMCgaw1h9C/QbpAdYRl6imU4HaO0WpTTaysJYMwNdMTEGINBcs8B1hSUEHgNgAAVX04taEbC2DsPQWowhLzHhPZ%2B3BeCT2hKkTgPBHbO1di/Wu2A369xOKoIuKc7Qp0kPKRBwATgQEPpHRUsoUGWDxrgQgJAzjB1WLwZuWhVjrAQJgJgP5KBRxjnHJ2HBE5Vxkd/BuTdw62PjhwMw0jYG1ysf49YFDMjOEkEAA%3D%3D%3D"></iframe>
+```cpp
+#include <concepts>
+#include <iterator>
 
+#include <array>
+#include <vector>
+
+template <typename C>
+concept not_equal_begin_end = requires(C c) {
+  { std::begin(c) != std::end(c) } -> std::same_as<bool>;
+};
+
+template <typename C>
+concept has_begin_and_end = requires(C c) {
+  std::begin(c);
+  std::end(c);
+};
+
+template <typename C>
+concept incrementable_begin = requires(C c) {
+  std::next(std::begin(c));
+};
+
+template <typename C>
+concept dereferenciable_begin_not_void = requires(C c) {
+  requires not std::same_as<decltype(*std::begin(c)), void>;
+};
+
+template <typename C>
+concept begin_and_end_copy_constructible_and_destructible = requires(C c) {
+  requires std::copy_constructible<decltype(std::begin(c))>;
+  requires std::copy_constructible<decltype(std::end(  c))>;
+  requires std::destructible<      decltype(std::begin(c))>;
+  requires std::destructible<      decltype(std::end(  c))>;
+};
+
+template <typename C>
+concept Container = has_begin_and_end<C>                                 and
+                    incrementable_begin<C>                               and
+                    dereferenciable_begin_not_void<C>                    and
+                    begin_and_end_copy_constructible_and_destructible<C>;
+
+int main() {
+  Container auto a = std::array{1, 2};
+  Container auto b = std::vector{1, 2};
+
+  // Container auto c = 1; // fails to compile
+  // Container auto d = "abc"; // fails to compile
+
+  return 0;
+}
+```
