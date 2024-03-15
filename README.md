@@ -3,13 +3,13 @@
 This blog is mostly about IT-related content, e.g. C++.
 It is available under: https://paulxicao.github.io/.
 
-# How to start your own page/blog hosted on GitHub
+## How to start your own page/blog hosted on GitHub
 
 Click [**Use this template**](https://github.com/mmistakes/mm-github-pages-starter/generate) button above for the quickest method of getting started with the [Minimal Mistakes Jekyll theme](https://github.com/mmistakes/minimal-mistakes).
 
 (I might create a separate blog post about it.)
 
-# Build locally
+## Build locally
 
 ```bash
 sudo pacman -S docker
@@ -18,3 +18,7 @@ sudo docker compose up -d
 sudo docker compose logs -f dev
 # open localhost::4000 in browser
 ```
+
+## Latex
+
+Latex is supported via MathJax. See [this](https://www.iangoodfellow.com/blog/jekyll/markdown/tex/2016/11/07/latex-in-markdown.html).
