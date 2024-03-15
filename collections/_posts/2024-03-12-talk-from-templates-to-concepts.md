@@ -21,13 +21,13 @@ Talk: [CppNow23: From Templates to Concepts](https://youtu.be/x6_o-jz_Q-8), [sli
 
 A good talk about how [_Generic Programming_](https://en.wikipedia.org/wiki/Generic_programming) evolved from using templates to concepts.
 
-# This Post
+## This Post
 
 This post will be similar to a transcript of the talk.
 I will show the most important examples, and give further background information.
 The talk is rather detailed which is why this post is quite long.
 
-# Generic Programming Example (vs template metaprogramming)
+## Generic Programming Example (vs template metaprogramming)
 
 Generic Programming is about writing algorithms for which the actual data types will only be specified later on.
 Quick example:
@@ -45,7 +45,7 @@ Here the generic algorithm `add()` is defined without knowing the type it is use
 
 This should not be confused with [_Template Metaprogramming (TMP)_](https://en.wikipedia.org/wiki/Template_metaprogramming) which uses templates to do compile-time computations.
 
-# Talk Overview
+## Talk Overview
 
 The overarching theme is to show a short history of generic programming.
 Starting from pre-C++11 where it was almost unreadable for the average programmer.
@@ -54,7 +54,7 @@ Employing C++20 features (e.g. concepts) this has evolved to something readable 
 The talk is very practically in the sense that he works with many examples and very few formal definitions.
 The main example is about an entity (e.g. a `concept` later) that can specify if its argument is a standard container or not, i.e `is_container`.
 
-# Example 1: Custom `is_same`
+## Example 1: Custom `is_same`
 
 We implement the functionality to test at compile-time if two types are the same.
 
@@ -96,12 +96,12 @@ int main() {
 The point here is that this looks complicated and there is functionality from the C++ standard library which makes this simpler.
 Especially that it will get easier with each newer release (e.g. C++11 < C++17 < C++20).
 
-# The traits Library
+## The traits Library
 
 The above custom implemented `is_same` is already availabe within the [`<type_traits>`](https://en.cppreference.com/w/cpp/header/type_traits) header as [`std::is_same`](https://en.cppreference.com/w/cpp/types/is_same).
 The key takeaway is to always check the standard for pre-implemented features to be used.
 
-# The `is_container` Example
+## The `is_container` Example
 
 This is the main example of the talk which will be expanded as we go along.
 Its goal is to identify containers during compilation time, e.g.
@@ -110,9 +110,9 @@ template <typename T>
 struct is_container { static const bool value = ???; };
 ```
 
-## First Attempt: Naive Check for Iterator
+### First Attempt: Naive Check for Iterator
 
-### Background Knowledge: Ellipses
+#### Background Knowledge: Ellipses
 
 A function containing the ellipses `...` can match any number of arguments (variadic template) and is inferior in overload resolution.
 Example:
@@ -128,7 +128,7 @@ int main() {
 }
 ```
 
-### Background Knowledge: SFINAE
+#### Background Knowledge: SFINAE
 
 _Substition Failure Is Not An Error_.
 A function template is allowed to cause a compilation error during type substitution.
@@ -181,7 +181,7 @@ SFINAE is used in multiple places in that example:
 
 `std::enable_if_t` is a functionality to conditionally compile a construct leveraging SFINAE for pre-C++20.
 
-### Implementation
+#### Implementation
 
 ```cpp
 #include <cstddef> // byte, size_t
@@ -236,16 +236,16 @@ int main() {
 }
 ```
 
-## Main Example: `are_all_integral` Concept
+### Main Example: `are_all_integral` Concept
 
-### Background Knowledge: Variadic Templates and Fold Expressions
+#### Background Knowledge: Variadic Templates and Fold Expressions
 
 A [_Variadic Template_](https://en.cppreference.com/w/cpp/language/parameter_pack) is a template accepting a variable number of arguments (i.e. `number >= 0`), called a _parameter pack_.
 
 [_Fold expressions_](https://en.cppreference.com/w/cpp/language/fold) reduce a parameter pack over a given operator.
 See the examples in the previous link.
 
-### Implementation
+#### Implementation
 
 The following `are_all_integral` concept checks for each template argument if `std::is_integral` holds and combines those results via the `std::conjunction` which performs a fold expression (see comments in code).
 
@@ -275,7 +275,7 @@ int main() {
 }
 ```
 
-## Container Definition
+### Container Definition
 
 A C++ container `C` must implement the following interface:
 - `std::begin(C&)` must return a begin iterator
@@ -288,9 +288,9 @@ A C++ container `C` must implement the following interface:
 The following examples will check for all those requirements.
 Expect longer code samples ...
 
-## Second Attempt: Performing all checks at once
+### Second Attempt: Performing all checks at once
 
-### Background Knowdledge: `std::void_t`
+#### Background Knowdledge: `std::void_t`
 
 To employ SFINAE we previously made use of `std::enable_if_t<b, T>`.
 If the boolean condition `b` evaluated `false` then a compilation error is signaled and the template function is removed from the overload set.
@@ -298,7 +298,7 @@ If the boolean condition `b` evaluated `false` then a compilation error is signa
 `std::void_t` works in a similar fashion.
 It accepts a parameter pack and if any argument is ill-formed then it is itself ill-formed.
 
-### Implementation
+#### Implementation
 
 An implementation which should mostly proof that templates can be quite scarry for the average programmer.
 This is *hard to maintain, hard to debug, and error messages are just plain crazy*.
@@ -371,9 +371,9 @@ int main() {
 
 Note, that every test refers to one requirement listed in the Container Definition section.
 
-## Concepts To The Resue
+### Concepts To The Resue
 
-### Background: Concepts
+#### Background: Concepts
 
 _Concepts_ are a functionality to restrict possible arguments to a template.
 The [`<concepts>` library](https://en.cppreference.com/w/cpp/concepts) introduces already general concepts, e.g. `std::same_as, std::integral`.
@@ -478,7 +478,7 @@ int main() {
 }
 ```
 
-### Third Attempt: Concepts For Each Requirement
+#### Third Attempt: Concepts For Each Requirement
 
 The following implementation uses seperate concepts for each requirement.
 This results in more maintainable/readable code as well as more descriptive error messages.
