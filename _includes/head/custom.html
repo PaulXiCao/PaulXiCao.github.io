@@ -1,3 +1,26 @@
+<style>
+    .coliru-button {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .coliru-button:hover {
+        background-color: #0056b3;
+    }
+
+    .coliru-button-container {
+        text-align: right;
+    }
+</style>
+
 <script>
     window.addEventListener('DOMContentLoaded', async () => {
         const elements = document.querySelectorAll(".language-cpp");
@@ -17,7 +40,11 @@
             button.href = `https://coliru.stacked-crooked.com/a/${hash}`;
             button.target = '_blank';
             button.innerText = "Open in Coliru";
-            element.parentNode.insertBefore(button, element.nextSibling);
+            button.classList.add('coliru-button');
+            const container = document.createElement('div');
+            container.classList.add('coliru-button-container');
+            container.appendChild(button);
+            element.parentNode.insertBefore(container, element.nextSibling);
         }
     });
 </script>
