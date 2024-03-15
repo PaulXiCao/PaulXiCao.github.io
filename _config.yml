@@ -48,6 +48,9 @@ collections:
     name: "Data Structure and Algorithms"
     output: true
     sort-by: lesson
+  rezepte:
+    name: "Rezepte (German)"
+    output: true
 
 # Plugins (previously gems:)
 plugins:
