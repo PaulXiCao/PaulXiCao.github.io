@@ -1,5 +1,5 @@
 ---
-title: "OS: Signals, and Race Conditions (II)"
+title: "OS: Signals, and Race Conditions"
 date: 2024-03-05
 lesson: 2
 layout: posts

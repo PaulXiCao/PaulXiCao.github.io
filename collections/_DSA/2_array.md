@@ -1,5 +1,5 @@
 ---
-title: "DSA: Data Structures (II)"
+title: "DSA: Data Structures"
 date: 2024-03-14
 lesson: 2
 layout: posts

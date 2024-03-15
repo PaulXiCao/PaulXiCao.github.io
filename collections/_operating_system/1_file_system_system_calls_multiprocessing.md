@@ -1,5 +1,5 @@
 ---
-title: "OS: File Systems, System Calls, Multiprocessing (I)"
+title: "OS: File Systems, System Calls, Multiprocessing"
 date: 2024-03-04
 lesson: 1
 layout: posts

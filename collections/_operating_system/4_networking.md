@@ -1,5 +1,5 @@
 ---
-title: "OS: Networking (IV)"
+title: "OS: Networking"
 date: 2024-03-09
 lesson: 4
 layout: posts

@@ -1,5 +1,5 @@
 ---
-title: "DSA: Introduction (I)"
+title: "DSA: Introduction"
 date: 2024-03-14
 lesson: 1
 layout: posts

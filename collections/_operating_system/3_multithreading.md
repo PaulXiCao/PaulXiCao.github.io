@@ -1,5 +1,5 @@
 ---
-title: "OS: Multithreading (III)"
+title: "OS: Multithreading"
 date: 2024-03-06
 lesson: 3
 layout: posts
