@@ -1,7 +1,6 @@
 # My personal page on GitHub
 
 This blog is mostly about IT-related content, e.g. C++.
-It is available under: https://paulxicao.github.io/.
 
 ## How to start your own page/blog hosted on GitHub
 
