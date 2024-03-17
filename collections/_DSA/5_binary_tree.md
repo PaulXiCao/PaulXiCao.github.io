@@ -63,3 +63,39 @@ For a Set Problem: The traversal order is determined by ordering the keys.
 For a Sequence Problem: We need to support operations similar to finding the i-th item `find(i)`.
 Possible if we save the number of children nodes of the full subtree per node.
 This is a special case of _augmentation_, i.e. saving additional data in nodes.
+
+## Height balanced tree
+
+A _(height) balanced tree_ is defined to have minimal height, i.e. $$ h = O(\log n) $$.
+The _height balancing property_ is stricter and states that each node's subtrees differ at most by 1, i.e.
+
+$$
+\text{skew}(X) := \text{height}(X.right) - \text{height}(X.left) \in \{ -1, 0, 1 \}
+$$
+
+Many balancing schemes are available
+- _AVL tree_: first proposed by Adelson-Velsky, and Landis in 1962
+- Red-Black, Splay, 2-3, ...
+
+### Rotation
+
+Changing height but keeping traversal order is possible via _rotations_.
+Example:
+```txt
+     _____<D>__     rotate_right(<D>)     __<B>_____
+  __<B>__    <E>        =>               <A>    __<D>__
+ <A>   <C>   / \                         / \   <C>   <E>
+ / \   / \  /___\       <=              /___\  / \   / \
+/___\ /___\         rotate_left(<B>)          /___\ /___\
+```
+
+### AVL tree
+
+An _AVL tree_ maintains strictly the _height balancing property_.
+Rebalancing might be needed for insertion/deletion which can be implemented as $$ O(\log n) $$ operation using rotations.
+This needs node's height to be augmented into the node's item.
+
+### Implementation
+
+Usually a _Red-Black tree_ is used, e.g. C++ STL `std::map`.
+It has a relaxed balancing method s.t. balancing occurs less frequently.
