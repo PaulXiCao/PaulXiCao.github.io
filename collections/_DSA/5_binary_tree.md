@@ -8,6 +8,8 @@ categories:
 tags:
   - DSA
   - binary tree
+  - binary heap
+  - heap sort
 ---
 
 Our goal is to have a data structure that is $$ O(\log n) $$ cost fast for all operations, e.g. `find()`, `insert()`, `find_min()`.
@@ -99,3 +101,66 @@ This needs node's height to be augmented into the node's item.
 
 Usually a _Red-Black tree_ is used, e.g. C++ STL `std::map`.
 It has a relaxed balancing method s.t. balancing occurs less frequently.
+
+## Binary heap
+
+A _binary heap_ is a complete tree satisfying the max-heap property.
+It is useful to represent a priority queue, e.g. tasks to perform next.
+
+### Implicit complete tree
+
+A _complete tree_ is a tree for which all upper levels are filled and the last is partially filled starting from the left.
+Such a tree can be implicitly represented by an array.
+Consider the following example
+```txt
+                                       ______0____
+[0,1,2,3,4,5,6,7,8,9]   <=>        ____1____   __2__
+                                __3__    __4   5   6
+                                7   8    9
+```
+
+Neighbors can be computed using index arithmetics:
+
+$$
+\text{left}(i) = 2i+1\,, \quad
+\text{right}(i) = 2i+2\,, \quad
+\text{parent}(i) = \left \lfloor \frac{i-1}{2} \right \rfloor
+$$
+
+Using arrays is important in practice for cache-friendliness.
+
+### Max-heap property
+
+We can declare an order in which each node's value must be greater or equal than its children's values.
+
+### Dynamic operations
+
+To _insert_ an element:
+
+- Append new element to end.
+- Check max-heap property of new element and parent.
+    - If failed, then swap with parent and recurse.
+
+Running cost is $$ O(\log n) $$.
+
+To _pop_ the maximal element:
+
+- Swap max with last element.
+- Remove last element.
+- Check max-heap property of new max/root/current element with its children.
+    - Exit if satisfied.
+    - Else: Swap with largest child. Recurse.
+
+Running cost is $$ O(\log n) $$.
+
+### Implementations
+
+C++ provides [`std::make_heap()`](https://en.cppreference.com/w/cpp/algorithm/make_heap), and [`std::priority_queue`](https://en.cppreference.com/w/cpp/container/priority_queue).
+
+
+## Heap sort
+
+Builds up a binary heap by appending one item at a time with cost $$ O(n \log n) $$.
+
+In-place optimization possible by using an increasing prefix of the input array `A`.
+E.g. start with first element `A[0]`, push back `A[1]`, ...
