@@ -60,3 +60,30 @@ Goal: Compute minimal distances `d(s, v)`, and parents `P(v)`.
     - Walk edge and check if new vertex is unvisited (not in any previous level set).
 
 Running time is $$ O ( | V | + | E | ) $$ .
+
+## Bellman-Ford
+
+For a general, weighted graph we can only get an algorithm in $$ O (|V| \cdot |E|) $$ which can scale as bad as $$ O(|V|^3) $$ for nearly complete graphs.
+
+### Algorithm
+
+Iteration works like this:
+- initialization:
+  - distance[s] = 0
+  - distance[v] = inf for v not s
+- iterate for layers `i=1,..,|V|-1`:
+  - for all edges (u,v): if `distance[u] + weight[u,v] < distance[v]` then update `distance[v]`
+- layer `i=|V|`:
+  - same check as for pervious layers. if update needed, then negative cycle must be present on path.
+
+### Reasoning
+
+To differentiate between simple paths and paths containing cycles we look at paths containing $$ |V|-1 $$ and $$ |V| $$ vertices.
+Therefore, we copy the original graph $$ |V| $$ times and position them in layers.
+
+Now, we define paths by following an edge of the original graph and going one layer up at the same time.
+This way we created a DAG for which we can already find solutions to the SSSP problem.
+Note that these paths between graph copies/layers imitate short paths by staying at the same original vertex as it moves up one layer.
+
+We keep track of the minimal distance as we build up the paths.
+One layer at a time.
