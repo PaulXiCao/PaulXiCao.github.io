@@ -61,6 +61,23 @@ Goal: Compute minimal distances `d(s, v)`, and parents `P(v)`.
 
 Running time is $$ O ( | V | + | E | ) $$ .
 
+## DAG Relaxation
+
+Allowing non-constant weights of _positive and negative_ integral values can be solved in linear runtime $$ O ( | V | + | E | ) $$ under the _assumption of a DAG_.
+The algorithm is usually called _DAG relaxation_ where distances are upper bounded and consecutively lowered aka "relaxed".
+
+### Algorithm
+
+- initialization
+  - `distance[s,s] = 0`
+  - `distance[s,v] = inf` for v not s
+- for vertices `u` in G (in topological sort order)
+  - for outgoing edges `(u,v)` from `u`
+    - update `distance[s,v]` if `distance[s,u] + weight[u,v]` is smaller (aka "_relax_ edge")
+
+Note, each DAG `G` has at least one topological sort order.
+[Definition from Wikipedia](https://en.wikipedia.org/wiki/Topological_sorting): "...for every directed edge (u,v) from vertex u to vertex v, u comes before v in the ordering."
+
 ## Bellman-Ford
 
 For a general, weighted graph we can only get an algorithm in $$ O (|V| \cdot |E|) $$ which can scale as bad as $$ O(|V|^3) $$ for nearly complete graphs.
@@ -68,11 +85,12 @@ For a general, weighted graph we can only get an algorithm in $$ O (|V| \cdot |E
 ### Algorithm
 
 Iteration works like this:
-- initialization:
-  - distance[s] = 0
-  - distance[v] = inf for v not s
-- iterate for layers `i=1,..,|V|-1`:
-  - for all edges (u,v): if `distance[u] + weight[u,v] < distance[v]` then update `distance[v]`
+- initialization
+  - `distance[s,s] = 0`
+  - `distance[s,v] = inf` for v not s
+- iterate for layers `i=1,..,|V|-1`
+  - for edges `(u,v)`
+    - update `distance[s,v]` if `distance[s,u] + weight[u,v]` is smaller
 - layer `i=|V|`:
   - same check as for pervious layers. if update needed, then negative cycle must be present on path.
 
