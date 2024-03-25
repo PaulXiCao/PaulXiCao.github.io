@@ -135,3 +135,21 @@ In the general case one can use a [Fibonacci Heap](https://en.wikipedia.org/wiki
 Usually one has problem specific a-priori knowledge of the graph such that one can use simpler data structures instead:
 - for dense graphs: use an array
 - for sparse graphs: use a binary heap
+
+## Depth-first search
+
+Solves a different path finding problem: `Single_Source_Reachability(G, s)`.
+Which needs to return a parent tree of pointers back to `s` (aka which vertex is reachable and parents along which one would reach source `s`).
+Note, this does not return distances nor does it return the shortest path!
+
+### Algorithm
+
+- initialization: `P(s) = None`
+- start at root: `visit(s)`
+  - definition of `visit(u)`:
+    - for edges `(u,v)`
+      - if `v` not in `P`
+        - set `P(v)=u`
+        - call `visit(v)`
+
+Runtime is only $$ O (|E|) $$.
