@@ -87,3 +87,33 @@ Note that these paths between graph copies/layers imitate short paths by staying
 
 We keep track of the minimal distance as we build up the paths.
 One layer at a time.
+
+## Dijkstra
+
+[_Dijkstra's Algorithm_](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) reduces the runtime of Bellman-Ford to $$ O (|V| \log |V| + |E|) $$ which is almost linear.
+It applies to general graphs under the assumption of non-negative edge weights.
+
+### Algorithm
+
+We make use of a _changeable priority queue_ `Q` which stores items `x = (x.id, x.key)` and supports the following operations:
+- priority queue's interface: `Q.build(X)`, `Q.delete_min()`
+- update item: `Q.decrease_key(id, newKey)`
+
+Algorithm:
+- initialization:
+  - `distance[s,s] = 0`
+  - `distance[s,v] = inf` for v not s
+- build up changeable priority queue `Q` with items `(vertexId, distance)`
+- visit all vertices and update distances:
+  - while Q not empty: pop minimum `(u, distance[s,u])`
+    - for all outgoing edges `(u,v)` from `u`
+      - update `distance[s,v]` in `Q` if `distance[s,u] + weight[u,v]` is smaller
+
+### Implementation
+
+The changeable priority queue needs to cross-link a priority queue with a dictionary.
+In the general case one can use a [Fibonacci Heap](https://en.wikipedia.org/wiki/Fibonacci_heap).
+
+Usually one has problem specific a-priori knowledge of the graph such that one can use simpler data structures instead:
+- for dense graphs: use an array
+- for sparse graphs: use a binary heap
