@@ -61,13 +61,9 @@ Habt ihr die richtige Wassermenge mit euren Fingerspitzen gefunden, würzt ihr d
 - (optional) Kardamomkapseln (Anzahl merken!)
 - (optional) getrocknetem Korianderpulver
 
+### Schritt 5: Kochen
+
 Sind alle Gewürze untergemischt, setzt ihr den Topf mit einem vollständig schließenden Deckel auf den Herd.
 Anfangs sollte die Herdplatte bei maximaler Hitze sein.
-Kocht das Wasser wird die Hitze reduziert (auf ca. ein Drittel der Maximalstärke).
-Nach weiteren 15 Minuten empfehle ich, die Konsistenz vom Reis zu überprüfen.
-
-### Schritt 5: Konsistenz überprüfen
-
-Ist der Reis zu weich, lasst den Topf einfach ohne Deckel noch etwas weiterziehen.
-
-Ist der Reis zu hart, fügt noch etwas Wasser hinzu (ca. 30ml) und lasst ihn noch etwas weiterköcheln.
+Sobald das Wasser stark kocht kann die Herdplatte ausgeschalten werden, jedoch den Topf weiterhin auf ihr stehen lassen.
+Nach ca. 20 Minuten ist der Reis verzehr fertig.
