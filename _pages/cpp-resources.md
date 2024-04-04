@@ -1,12 +1,11 @@
 ---
-title: 'Link collection for C++ community resources'
-categories:
-- programming
-tags:
-- c++
+permalink: /cpp-resources/
+title: "C++ Resources"
+read_time: false
 ---
 
 This will be an ever-increasing list of useful links.
+Mostly related to learning C++.
 
 ## Learning Resources
 
@@ -47,8 +46,6 @@ This will be an ever-increasing list of useful links.
 - [Before/after C++17 comparison](https://github.com/tvaneerd/cpp17_in_TTs)
 - [Before/after C++20 comparison](https://github.com/tvaneerd/cpp20_in_TTs)
 
----
-
 ## Tools
 
 ### General
@@ -85,8 +82,6 @@ This will be an ever-increasing list of useful links.
 - [C++ CMake repository template](https://github.com/TheLartians/ModernCppStarter)
 - clang-format: Formatting of code according to a predefined style guide.
 - cmake-format: Formatting of CMake code.
-
----
 
 ## General Programming Related Content
 
