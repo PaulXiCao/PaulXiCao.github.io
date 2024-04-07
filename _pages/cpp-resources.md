@@ -45,6 +45,7 @@ Mostly related to learning C++.
 - [STL learning resource](https://www.fluentcpp.com/STL/)
 - [Before/after C++17 comparison](https://github.com/tvaneerd/cpp17_in_TTs)
 - [Before/after C++20 comparison](https://github.com/tvaneerd/cpp20_in_TTs)
+- [New Features in C++23](https://www.youtube.com/watch?v=Cttb8vMuq-Y)
 
 ## Tools
 
