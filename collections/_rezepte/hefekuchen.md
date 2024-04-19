@@ -16,14 +16,14 @@ categories:
 - 110g Margarine
 - Zitronenschale: 1/3 einer grosser Zitrone
 - 1/2TL Salz
-- 50g Zucker
+- 30g Zucker
 - Zimt: 10x gross streuen
 
 ### Streusel
 
 - 330g Mehl: 40% Vollkorn
 - 200g kalte Margarine
-- 80g Zucker
+- 60g Zucker
 - 80g geriebene Mandeln
 - Zitronenschale: 1/6 einer grosser Zitrone
 - Zimt: 6x gross streuen
