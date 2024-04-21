@@ -70,6 +70,9 @@ Mostly related to learning C++.
     - [Basics of profiling with perf.](https://easyperf.net/blog/2018/08/26/Basics-of-profiling-with-perf)
     - [tutorial at perf.wiki.kernel.org](https://perf.wiki.kernel.org/index.php/Main_Page)
 - [List of profiling/benchmarking tools on hackingcpp.com](https://hackingcpp.com/cpp/tools/profilers.html)
+- Profiling Videos
+    - [Chandler Carruth:Going Nowhere Faster (CppCon 2017)](https://www.youtube.com/watch?v=2EWejmkKlxs)
+    - [Mathieu Ropert: The Basics of Profiling (CppCon 2021)](https://www.youtube.com/watch?v=dToaepIXW4s)
 
 ### Online Tools
 
