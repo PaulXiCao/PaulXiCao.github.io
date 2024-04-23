@@ -73,6 +73,7 @@ Mostly related to learning C++.
 - Profiling Videos
     - [Chandler Carruth:Going Nowhere Faster (CppCon 2017)](https://www.youtube.com/watch?v=2EWejmkKlxs)
     - [Mathieu Ropert: The Basics of Profiling (CppCon 2021)](https://www.youtube.com/watch?v=dToaepIXW4s)
+- [list of C++ performance resources: talks, articles, books, libraries, tools](https://fenbf.github.io/AwesomePerfCpp/)
 
 ### Online Tools
 
