@@ -8,7 +8,7 @@ tags:
 - C++20
 ---
 
-This blog posts will discuss how to enable a dual build configuration for C++20 modules: Either use old-school header includes (x)or import modules instead.
+This blog post will discuss enabling a dual build configuration for C++20 modules: Either use old-school header includes (x)or import modules instead.
 
 C++20 modules is a feature rich topic and there are many online resources on how to write them from scratch, e.g.
 - [Rainer Grimm's modernescpp.com](https://www.modernescpp.com/index.php/cpp20-modules/)
@@ -19,7 +19,7 @@ C++20 modules is a feature rich topic and there are many online resources on how
 
 # Motivation
 
-Using modules provides certain benefits to the standard header include method (see the above linked pages for in-detail discussions of benefits).
+Using modules provides certain benefits to the old header include method (see the above linked pages for in-detail discussions of benefits).
 For a working legacy code base one of the most promising features is a potential reduction in compilation time.
 
 Switching to modules-only implementation might not be possible for a corporation as many still need to support older environments.
@@ -30,7 +30,7 @@ To be precise, the developers might use the current versions of CMake, ninja, cl
 # The {fmt} way
 
 While searching the internet for ideas I came across this post by Daniela E on [reddit](https://www.reddit.com/r/cpp/comments/1busseu/comment/kxvfayf).
-She explains that she took the header-only library and created a wrapper module which includes the headers.
+She explains that she took the header-only `fmt` library and created a wrapper module which includes the headers.
 Thus, one can consume the library either via header includes or module import.
 She employed some non-trivial CMake functions and preprocessor macros (fmt can be found [here](https://github.com/fmtlib/fmt)).
 Unfortunately, I did not find any further information on that which is why I am writing this post.
@@ -51,8 +51,8 @@ I will try to explain the important parts but reading the code will probably sti
 
 ## The big picture
 
-We start off with a given library (hpp/cpp files) and plan to enabling that library via a module but with minimal changes to the original files.
-The module will include the libraries hpp _and_ cpp files and export only the API entities.
+We start off with a given library (hpp/cpp files) and plan to enable importing that library via a module but with minimal changes to the original files.
+The module will include the library's hpp _and_ cpp files and export only the API entities.
 For that we will need to introduce some macros that split the files into seperate sections (e.g. std includes, library includes, external includes, non-include content).
 
 On the CMake side of the business we introduce an option (e.g. `-D ENABLE_MODULES=ON/OFF`) and employ `target_sources(.. FILE_SET CXX_MODULES ..)` to work with modules.
@@ -61,7 +61,7 @@ On the CMake side of the business we introduce an option (e.g. `-D ENABLE_MODULE
 
 Lets take a look the code in the [folder 06](https://github.com/PaulXiCao/cpp-module-dual-build/tree/master/06_multipleLibraries).
 
-It contains two seperate libraries (e.g. in folders `Lib{1,2}/`) and one main.cpp executable.
+It contains two seperate libraries (e.g. in folders `Lib{1,2}/`) and one `main.cpp` executable.
 The `main.cpp` either imports modules or does header includes depending on the CMake option `ENABLE_MODULES`.
 
 The libraries themself contain the original hpp/cpp files (e.g. `Lib1/Lib1_header*`) as well as 2 files needed to build the wrapper module for each library (e.g. `Lib1/Lib1_module*`).
@@ -72,7 +72,7 @@ Lets look at `Lib1/Lib1_header1.hpp` for example.
 
 ## Normal header include build
 
-At first lets make sure that the normal header include should still works fine.
+At first lets make sure that the normal header include still works fine.
 Thus we define the macros s.t. `#pragma once` is used, all headers get included (e.g. `<string>`), and `MODULE_EXPORT` expands to an empty value.
 
 ## The `MODULE_EXPORT` macro
