@@ -12,7 +12,7 @@ This blog post will discuss enabling a dual build configuration for C++20 module
 
 C++20 modules is a feature rich topic and there are many online resources on how to write them from scratch, e.g.
 - [Rainer Grimm's modernescpp.com](https://www.modernescpp.com/index.php/cpp20-modules/)
-- [MicroSofts's documentation](https://learn.microsoft.com/en-us/cpp/cpp/modules-cpp?view=msvc-170)
+- [MicroSoft's documentation](https://learn.microsoft.com/en-us/cpp/cpp/modules-cpp?view=msvc-170)
 - [clang's documentation](https://clang.llvm.org/docs/StandardCPlusPlusModules.html)
 - [cppreference on modules](https://en.cppreference.com/w/cpp/language/modules)
 - [my own post on a minimal introduction to modules (wip)]({% link _posts/old/2024-01-10-turbo-introduction-of-c20-modules.html %})
@@ -53,7 +53,7 @@ I will try to explain the important parts but reading the code will probably sti
 
 We start off with a given library (hpp/cpp files) and plan to enable importing that library via a module but with minimal changes to the original files.
 The module will include the library's hpp _and_ cpp files and export only the API entities.
-For that we will need to introduce some macros that split the files into seperate sections (e.g. std includes, library includes, external includes, non-include content).
+For that we will need to introduce some macros that split the files into separate sections (e.g. std includes, library includes, external includes, non-include content).
 
 On the CMake side of the business we introduce an option (e.g. `-D ENABLE_MODULES=ON/OFF`) and employ `target_sources(.. FILE_SET CXX_MODULES ..)` to work with modules.
 
@@ -61,12 +61,12 @@ On the CMake side of the business we introduce an option (e.g. `-D ENABLE_MODULE
 
 Lets take a look the code in the [folder 06](https://github.com/PaulXiCao/cpp-module-dual-build/tree/master/06_multipleLibraries).
 
-It contains two seperate libraries (e.g. in folders `Lib{1,2}/`) and one `main.cpp` executable.
+It contains two separate libraries (e.g. in folders `Lib{1,2}/`) and one `main.cpp` executable.
 The `main.cpp` either imports modules or does header includes depending on the CMake option `ENABLE_MODULES`.
 
-The libraries themself contain the original hpp/cpp files (e.g. `Lib1/Lib1_header*`) as well as 2 files needed to build the wrapper module for each library (e.g. `Lib1/Lib1_module*`).
+The libraries themselves contain the original hpp/cpp files (e.g. `Lib1/Lib1_header*`) as well as 2 files needed to build the wrapper module for each library (e.g. `Lib1/Lib1_module*`).
 
-The complex parts are which seperation to introduce in the original files (using macros) and where to include them into the named module.
+The complex parts are which separation to introduce in the original files (using macros) and where to include them into the named module.
 
 Lets look at `Lib1/Lib1_header1.hpp` for example.
 
@@ -84,12 +84,12 @@ We achieve this by prepending the struct with the `MODULE_EXPORT` macro which ex
 
 The `#pragma once` include guard cannot be used in the module build because we need to include the file twice in the primary module interface unit (e.g. `Lib1/Lib1_module.cpp`).
 
-## Seperating includes
+## Separating includes
 
 The includes are grouped into 3 different sections, i.e. `USE_INCLUDES_FROM_STD`, `USE_INCLUDES_FROM_THIS_LIBRARY`, `USE_INCLUDES_FROM_OTHER_LIBRARIES`.
 This is necessary because the includes need to be pasted into different sections of the module.
 
-(We could make our lifes easier by either `import std;` in the module or hard-coding them in the module.
+(We could make our lives easier by either `import std;` in the module or hard-coding them in the module.
 But I wanted to see how precise I could make this.)
 
 ### `USE_INCLUDES_FROM_STD`
@@ -99,7 +99,7 @@ Thus, this can be achieved by extracting only the standard headers by only defin
 
 ### `USE_INCLUDES_FROM_THIS_LIBRARY`
 
-This seperates includes from this library to others (either standard or external).
+This separates includes from this library to others (either standard or external).
 As we plan to write a wrapper of this library which includes all headers via hard-coded includes we do not need to include them again.
 Thus, this macro is currently never set in module build.
 
@@ -125,7 +125,7 @@ This should resemble a combination of the library's headers.
 
 The standard headers get included in the global module fragment (e.g. between the `module;` and `export module lib1;` lines).
 
-In the module fragment part (e.g. after `export module lib1;`) we want the declarations and defintions of all headers as well as specifying which entities get `export`ed.
+In the module fragment part (e.g. after `export module lib1;`) we want the declarations and definitions of all headers as well as specifying which entities get `export`ed.
 
 ## Module implementation unit
 
