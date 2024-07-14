@@ -17,6 +17,8 @@ C++20 modules is a feature rich topic and there are many online resources on how
 - [cppreference on modules](https://en.cppreference.com/w/cpp/language/modules)
 - [my own post on a minimal introduction to modules (wip)]({% link _posts/old/2024-01-10-turbo-introduction-of-c20-modules.html %})
 
+There is a [reddit discussion](https://www.reddit.com/r/cpp/comments/1e37dd6/dual_build_mode_header_includes_or_module_imports/) about this dual build idea.
+
 # Motivation
 
 Using modules provides certain benefits to the old header include method (see the above linked pages for in-detail discussions of benefits).
