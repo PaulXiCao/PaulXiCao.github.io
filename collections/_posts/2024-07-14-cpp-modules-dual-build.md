@@ -161,11 +161,16 @@ I found this a worthwhile deep-dive into the C++ module world.
 I learned quite a lot :)
 
 Ideas for further investigation:
-- How to treat external libraries automatically (instead of checking a library specific macro multiple times)?
-- Are there any issues with shared/static libraries?
-- How should one treat the case when only part of the library has been modularized?
-- Typical unity-build issues (e.g. static functions with the same name/arguments in different cpp files)?
-- Discuss expected compile-time benefits/regressions
-  - benefit: `import`ing should be faster than `include`ing headers multiple times
-  - regression: modularizing a library under development might be result in long compilation times of the module implementation unit `*module_impl.cpp`)?
-- Investigate wrongful `include`ing of headers when the module was build instead (should not be possible for correctly set include directories)?
+
+- [ ] How to treat external libraries automatically (instead of checking a library specific macro multiple times)?
+- [ ] Are there any issues with shared/static libraries?
+- [ ] How should one treat the case when only part of the library has been modularized?
+- [ ] Typical unity-build issues (e.g. static functions with the same name/arguments in different cpp files)?
+- [ ] Discuss expected compile-time benefits/regressions
+  - [ ] benefit: `import`ing should be faster than `include`ing headers multiple times
+  - [ ] regression: modularizing a library under development might be result in long compilation times of the module implementation unit `*module_impl.cpp`)?
+- [ ] Investigate wrongful `include`ing of headers when the module was build instead (should not be possible for correctly set include directories)?
+- [ ] Does ccache work with modules in general?
+- [ ] Can we import the same module in a primary module interface and in one of its module implementation units? 
+  If so, then we could get rid of the ugly `ONLY_SCAN_OTHER_LIBRARIES_FOR_IMPORT` macro.
+- [ ] Try out `import std;` instead of scanning specifically for STD headers.
