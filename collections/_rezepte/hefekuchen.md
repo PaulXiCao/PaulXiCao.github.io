@@ -11,19 +11,19 @@ categories:
 ### Teig
 
 - 500g Mehl: 40% Vollkorn
-- 260ml warme Milch
+- 260g warme Milch
 - 10g frische Hefe
 - 110g Margarine
 - Zitronenschale: 1/3 einer grosser Zitrone
 - 1/2TL Salz
-- 30g Zucker
+- 30g Zucker (normal: 100g)
 - Zimt: 10x gross streuen
 
 ### Streusel
 
 - 330g Mehl: 40% Vollkorn
 - 200g kalte Margarine
-- 60g Zucker
+- 60g Zucker (normal: 130g)
 - 80g geriebene Mandeln
 - Zitronenschale: 1/6 einer grosser Zitrone
 - Zimt: 6x gross streuen
