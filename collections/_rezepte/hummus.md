@@ -10,16 +10,17 @@ categories:
 
 - 450 g Kichererbsen (Abtropfgewicht)
 - 40 g Tahini
-- 25 g Olivenöl
 - 1 TL Salz
-- 4 TL [Ras el hanout](https://www.rewe.de/gewuerzlexikon/ras-el-hanout/)
-- 3 TL Gewürzmischung
+- 2 TL [Ras el hanout](https://www.rewe.de/gewuerzlexikon/ras-el-hanout/)
+- 2 TL Gewürzmischung
 - 1/2 TL [Sumak](https://www.rewe.de/gewuerzlexikon/sumach/)
 - 15 Drehungen Pfeffermühle
 - 30 g Tomatenmark
 - 1 kleine Zitrone
-- Wasser
-- (zum Verzieren: [Zatar](https://www.rewe.de/gewuerzlexikon/zatar/))
+- Wasser bis bedeckt
+- zum Verzieren: 
+  - [Zatar](https://www.rewe.de/gewuerzlexikon/zatar/)
+  - 25 g Olivenöl
 
 ## Hilfsmittel
 
