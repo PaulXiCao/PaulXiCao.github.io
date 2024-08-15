@@ -44,7 +44,7 @@ cd llvm-project
         {
             "name": "systemClang",
             "description": "system-wide clang, mold, ccache",
-            "inherits": "mold",
+            "inherits": "gcc",
             "cacheVariables": {
                 "CMAKE_C_COMPILER": "clang",
                 "CMAKE_CXX_COMPILER": "clang++"
