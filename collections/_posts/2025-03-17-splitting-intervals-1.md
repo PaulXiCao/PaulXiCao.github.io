@@ -1,5 +1,5 @@
 ---
-title: 'Splitting intervals or Let me try out this variadic template thingy (Part 1/n)'
+title: 'Splitting intervals - Part 1'
 categories:
 - C++
 tags:
