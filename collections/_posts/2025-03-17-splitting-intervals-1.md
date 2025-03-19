@@ -9,7 +9,7 @@ tags:
 - C++20
 ---
 
-This will be a story on how to reduce repeating code via variadic templates (hello modern C++ ;) ).
+This will be a story on how to reduce repetitive code via [variadic templates](https://en.cppreference.com/w/cpp/language/pack) (hello modern C++ ;) ).
 
 The base problem starts with trying to split a custom interval type into smaller sub-intervals, e.g.
 ```cpp
