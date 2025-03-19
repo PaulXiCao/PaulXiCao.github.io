@@ -83,7 +83,7 @@ class interval {
 };
 ```
 The implementation is non-trivial.
-Lets delve deeper into its details:
+Lets dive deeper into its details:
 - `template <class... Args>` This is the syntax for variadic templates. The function could get instantiated for an arbitrary number of arguments. In our case for example as `split<string_view, float, string_view>`.
 - `auto` return type. We want to return different number of sub-intervals, depending on the input. This is possible by not explicitly stating the return type here.
 - `Args&&...` varidic template types of universal references.
