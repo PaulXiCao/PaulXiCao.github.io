@@ -40,7 +40,7 @@ categories:
 1. Streusel vorbereiten
   - kalte Margarine klein quetschen/schneiden
   - restliche Zutaten hinzugeben
-  - kneten bis einheitlicher Teig (~5min)
+  - mit der Hand kneten bis einheitlicher Teig (~5min)
   - im Kuehlschrank lagern
 2. Teig zubereiten
   - Milch und Hefe vermengen
