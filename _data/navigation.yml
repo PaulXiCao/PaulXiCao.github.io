@@ -1,13 +1,15 @@
 main:
   - title: "Posts"
     url: /posts/
-  - title: "C++ Resources"
-    url: /cpp-resources/
   - title: "Collections"
     url: /collections/
   - title: "Categories"
     url: /categories/
   - title: "Tags"
     url: /tags/
+  - title: "Rust Resources"
+    url: /rust-resources/
+  - title: "C++ Resources"
+    url: /cpp-resources/
   - title: "About"
     url: /about/
