@@ -47,10 +47,10 @@ The final solution was to replace the corrupted `proxmoxlib.js` manually with th
 mkdir /tmp/A
 cd /tmp/A
 apt-get download proxmox-widget-toolkit
-dpkg -x proxmox-widget-toolkit*.deb
+dpkg -x proxmox-widget-toolkit*.deb extracted
 
 # Copy the correct file
-cp ./usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
+cp ./extracted/usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
 
 # Restart the proxy service
 systemctl restart pveproxy.service
