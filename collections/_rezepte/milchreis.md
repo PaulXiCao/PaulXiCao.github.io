@@ -6,7 +6,7 @@ categories:
   - Rezepte
 ---
 
-Zutaten:
+Zutaten für 10 Portionen:
 - 1kg Milchreis
 - 2 Dosen Kokosnussmilch
 - 1TL Salz
