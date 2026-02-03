@@ -8,15 +8,15 @@ categories:
 
 ## Zutaten
 
-- 450 g Kichererbsen (Abtropfgewicht)
-- 40 g Tahini
+- 500 g Kichererbsen (Abtropfgewicht)
+- 60 g Tahini
 - 1 TL Salz
 - 2 TL [Ras el hanout](https://www.rewe.de/gewuerzlexikon/ras-el-hanout/)
-- 2 TL Gewürzmischung
+- 1 TL Gewürzmischung
 - 1/2 TL [Sumak](https://www.rewe.de/gewuerzlexikon/sumach/)
 - 15 Drehungen Pfeffermühle
 - 30 g Tomatenmark
-- 1 kleine Zitrone
+- 1 Zitrone
 - Wasser bis bedeckt
 - zum Verzieren: 
   - [Zatar](https://www.rewe.de/gewuerzlexikon/zatar/)
