@@ -67,3 +67,9 @@ Sind alle Gewürze untergemischt, setzt ihr den Topf mit einem vollständig schl
 Anfangs sollte die Herdplatte bei maximaler Hitze sein.
 Sobald das Wasser stark kocht kann die Herdplatte ausgeschalten werden, jedoch den Topf weiterhin auf ihr stehen lassen.
 Nach ca. 20 Minuten ist der Reis verzehr fertig.
+
+## Naturreis
+
+Das Kochen von Naturreis muss leicht angepasst werden:
+- volle Fingerkuppe Wasser
+- 30min kochen
