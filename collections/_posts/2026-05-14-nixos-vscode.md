@@ -1,8 +1,11 @@
 ---
-layout: post
 title: "clangd in VSCode/Codium on NixOS: fixing missing standard headers"
-date: 2026-05-14
-tags: [nixos, clangd, vscode, cpp]
+categories:
+- C++
+tags:
+- nixos
+- clangd
+- vscode
 ---
 
 If you use the clangd VSCode extension on NixOS, you've probably seen this in the clangd log:
