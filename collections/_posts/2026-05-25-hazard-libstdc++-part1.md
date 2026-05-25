@@ -28,7 +28,7 @@ Reader and writer threads concurrently access a shared atomic pointer; hazard po
 
 ```cpp
 #include <atomic>
-#include <hazard_pointer>
+#include <hazard_pointer> // <-- NEW
 #include <thread>
 
 struct Config : std::hazard_pointer_obj_base<Config> {
@@ -50,10 +50,10 @@ void writer() {
 }
 
 int main() {
-    std::thread r(reader);
-    std::thread w(writer);
-    r.join();
-    w.join();
+    {
+        std::jthread _(reader);
+        std::jthread _(writer);
+    }
     delete g_cfg.load();  // current node was never retired, delete directly
 }
 ```
