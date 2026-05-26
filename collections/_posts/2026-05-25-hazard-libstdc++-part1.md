@@ -63,7 +63,7 @@ int main() {
 During the last weeks I have been working on implementing a proper prototype.
 This now includes the full API for the standard, e.g. `std::hazard_pointer`, `std::hazard_pointer_obj_base`, `std::make_hazard_pointer`.
 
-The public repo can be found here: https://github.com/PaulXiCao/hazard_pointer_prototype
+The public repo can be found [here](https://github.com/PaulXiCao/hazard_pointer_prototype):
 It includes
 - CMake build files
 - hazard_ptr.hpp: single file, header-only implementation
@@ -74,7 +74,7 @@ It includes
 ## libstdc++ integration
 
 The goal is to integrate this into gcc's libstdc++.
-There is still some implementation work needed (see PORTING_NOTES.md in repo), but I have already started a RFC thread on their mailing list: https://gcc.gnu.org/pipermail/libstdc++/2026-May/066648.html
+There is still some implementation work needed (see PORTING_NOTES.md in repo), but I have already started a [RFC thread](https://gcc.gnu.org/pipermail/libstdc++/2026-May/066648.html) on their mailing list.
 I am quite curious about the feedback.
 Let's see how long and extensive those discussions will become!
 
@@ -82,7 +82,7 @@ Let's see how long and extensive those discussions will become!
 
 While implementing this I came across an ICE in gcc.
 I have done the honorable act and filed a bug report :)
-See this blog post: {% link _posts/2026-05-24-gcc-ICE-contracts.md %} .
+See [this blog post]( {% link _posts/2026-05-24-gcc-ICE-contracts.md %} ).
 
 ## AI experience
 
@@ -101,17 +101,17 @@ I will give a short list of things that went well as well as pointing out defici
 ## References/link collection
 
 I have looked at and read most of the following official resources to some degree:
-- the paper for adding hazard pointers to the std: http://wg21.link/p2530
-- the original reference paper: https://www.cs.otago.ac.nz/cosc440/readings/hazard-pointers.pdf
-- cppreference: https://en.cppreference.com/cpp/header/hazard_pointer
-- the C++26 std section about hazard pointers: https://eel.is/c++draft/saferecl.hp#hazard.pointer.syn
-- the reference implementation from Meta's folly: https://github.com/facebook/folly/blob/main/folly/synchronization/Hazptr.h
-- Wikipedia: https://en.wikipedia.org/wiki/Hazard_pointer
+- [the paper for adding hazard pointers to the std](http://wg21.link/p2530)
+- [the original reference paper](https://www.cs.otago.ac.nz/cosc440/readings/hazard-pointers.pdf)
+- [cppreference/hazard_pointer](https://en.cppreference.com/cpp/header/hazard_pointer)
+- [the C++26 std section about hazard pointers](https://eel.is/c++draft/saferecl.hp#hazard.pointer.syn)
+- [the reference implementation from Meta's folly](https://github.com/facebook/folly/blob/main/folly/synchronization/Hazptr.h)
+- [Wikipedia/Hazard_pointer](https://en.wikipedia.org/wiki/Hazard_pointer)
 
 Personal links:
-- prototype repo: https://github.com/PaulXiCao/hazard_pointer_prototype
-- RFC on libstdc++ mailing list: https://gcc.gnu.org/pipermail/libstdc++/2026-May/066648.html
-- gcc ICE blog post: {% link _posts/2026-05-24-gcc-ICE-contracts.md %}
+- [prototype repo](https://github.com/PaulXiCao/hazard_pointer_prototype)
+- [RFC on libstdc++ mailing list](https://gcc.gnu.org/pipermail/libstdc++/2026-May/066648.html)
+- [gcc ICE blog post]( {% link _posts/2026-05-24-gcc-ICE-contracts.md %} )
 
 ## Coming next
 
