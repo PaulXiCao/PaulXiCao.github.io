@@ -18,6 +18,6 @@ class Foo {
 
 GCC crashes during compilation instead of producing a diagnostic.
 
-Since compiler crashes are always worth reporting, I filed a bug report on the GCC Bugzilla tracker as well: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=125403
+Since compiler crashes are always worth reporting, I filed a bug report on the GCC Bugzilla tracker as well: [bugreport](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=125403).
 
 It is still early days for contracts support, so rough edges are expected, but hitting an ICE on the very first experiment raises concerns.
